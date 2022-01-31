@@ -11,6 +11,7 @@ import MembershipTypeEdit from '../views/main/membership_types/Edit'
 import TurnIndex from '../views/main/turns/Index'
 import TurnCreate from '../views/main/turns/Create'
 import TurnEdit from '../views/main/turns/Edit'
+import AssistanceIndex from '../views/main/assistances/Index'
 
 Vue.use(VueRouter)
 
@@ -69,6 +70,11 @@ const routes = [
         path: 'turnos/:id/editar',
         name: 'turns.edit',
         component: TurnEdit
+      },
+      {
+        path: 'asistencia',
+        name: 'assistances.index',
+        component: AssistanceIndex
       },
     ]
   },

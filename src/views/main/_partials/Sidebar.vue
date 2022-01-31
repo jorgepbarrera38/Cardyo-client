@@ -61,10 +61,16 @@
                                         </li>
                                     </ul>
                                 </li>
-                                <li  >
+                                <li>
                                     <a href="#" @click.prevent="$router.push({ name: 'clients.index' })">
                                         <i class="metismenu-icon pe-7s-display2"></i>
                                         Clientes
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="#" @click.prevent="$router.push({ name: 'assistances.index' })">
+                                        <i class="metismenu-icon pe-7s-display2"></i>
+                                        Asistencia
                                     </a>
                                 </li>
                             </ul>

@@ -9,7 +9,7 @@
             </div>
         </div>
         <div class="table-responsive">
-            <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+            <table class="table table-borderless table-striped table-hover">
                 <thead>
                 <tr>
                     <th></th>
@@ -30,9 +30,9 @@
                         <td class="text-center">{{ membership.quantity }}</td>
                         <td class="text-center">{{ convertMoney(membership.price) }}</td>
                         <td class="text-center">{{ convertMoney(membership.total_price) }}</td>
-                        <td class="text-center">{{ membership.date_start }}</td>
-                        <td class="text-center">{{ membership.date_finish }}</td>
-                        <td class="text-center">{{ membership.turn.name + ' ' + membership.turn.time_start + ' - ' + membership.turn.time_finish }}</td>
+                        <td class="text-center" nowrap>{{ membership.date_start }}</td>
+                        <td class="text-center" nowrap>{{ membership.date_finish }}</td>
+                        <td class="text-center" nowrap>{{ membership.turn.name + ' ' + membership.turn.time_start + ' - ' + membership.turn.time_finish }}</td>
                         <td class="text-center">
                             <div class="badge badge-warning" v-if="membershipIsPending(membership.date_start)">Pendiente</div>
                             <div class="badge badge-success" v-if="membershipIsActive(membership.date_start, membership.date_finish)">Activa</div>
