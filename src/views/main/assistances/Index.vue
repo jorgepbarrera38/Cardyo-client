@@ -1,7 +1,7 @@
 <template>
     <div class="app-main__inner">
         <!--Titulo página-->
-        <PageTitle title="Asistencias" subtitle=""/>     
+        <PageTitle title="Asistencias" icon="pe-7s-note2" subtitle=""/>     
         <!--Fin titulo página-->
         <!--Contenido-->
         <div class="row">
@@ -24,28 +24,94 @@
                     </div>
                 </div>
             </div>
+            <div class="col-md-2 col-lg-2" v-if="Object.keys(client).length">
+                <div class="card">
+                    <img class="card-img-top" :src="client.photo ? 'http://localhost:8000/' + client.photo : require('../../../assets/user.png') " 
+                        alt="Card image cap">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ client.full_names }}</h5>
+                        <p class="card-text">
+                            <i class="fa fa-id-card"></i> {{ client.identification }} <br>
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-10 col-lg-10" v-if="Object.keys(client).length">
+                <div class="main-card mb-3 card">
+                    <div class="card-header">
+                        Membresías activas
+                    </div>
+                     <div class="table-responsive">
+                        <table class="table table-borderless table-striped table-hover">
+                            <thead>
+                            <tr>
+                                <th></th>
+                                <th>Membresía</th>
+                                <th class="text-center">Fecha de inicio</th>
+                                <th class="text-center">Fecha final</th>
+                                <th class="text-center">Turno</th>
+                                <th class="text-center"></th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(membership, index) in client.memberships" :key="membership.id" :title="membership.observations ? membership.observations : 'No hay observaciónes'">
+                                    <td class="text"></td>
+                                    <td class="text" nowrap>{{ membership.membership_type.name }}</td>
+                                    <td class="text-center" nowrap>{{ membership.date_start }}</td>
+                                    <td class="text-center" nowrap>{{ membership.date_finish }}</td>
+                                    <td class="text-center" nowrap>{{ membership.turn.name + ' ' + membership.turn.time_start + ' - ' + membership.turn.time_finish }}</td>
+                                    
+                                    <td class="text-center" nowrap>
+                                        <i class="fa fa-check-circle" v-if="membership.clientMembershipHasAssistanceToday"></i>
+                                        <button type="button" v-else @click="markAttendance(membership)" :disabled="membership.markingAttendance"
+                                            class="btn btn-success btn-sm">
+                                            <div class="spinner-border spinner-border-sm" v-if="membership.markingAttendance"
+                                                role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                            <i class="fa fa-check-circle" v-else></i> Marcar asistencia
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-block text-center card-footer">
+                        
+                    </div>
+                </div>
+            </div>
+            
         </div>
         <!--Fin contenido-->
     </div>
 </template>
 <script>
 import PageTitle from '../components/PageTitle.vue'
+import moment from 'moment'
 export default {
     components: { PageTitle },
     data () {
         return {
             identification: '',
             searching: false,
-            saving: false
+            client: {
+            },
+            saving: false,
         }
     },
     methods: {
         searchClientMembership () {
-            this.searching = true
+            this.client = {}
+            this.searching = true,
 
             this.$http.get(`assitances/get-active-memberships?identification=${this.identification}`)
                 .then( response => {
-                console.log(response.data);
+                this.client = response.data
+                this.client.memberships.forEach(membership => {
+                    this.$set(membership, 'markingAttendance', false)
+                    this.$set(membership, 'clientMembershipHasAssistanceToday', this.clientMembershipHasAssistanceToday(membership))
+                });
                 this.searching = false
             }).catch( error => {
                 this.searching = false
@@ -54,7 +120,31 @@ export default {
                 }
             })
         },
+        markAttendance (membership) {
+            membership.markingAttendance = true
+            this.$http.post(`assitances/mark-attendance`, { client_membership_id: membership.id })
+                .then( () => {
+                membership.clientMembershipHasAssistanceToday = true
+                this.$toastr.success('Asistencia marcada')
+                membership.markingAttendance = false
+            }).catch( error => {
+                membership.markingAttendance = false
+                if (error.response.status == 422) {
+                    this.$toastr.error(error.response.data.errors.memsbership_id[0])
+                }
+            })
+        },
         clearData () {
+        },
+        clientMembershipHasAssistanceToday (membership) {
+            let clientMembershipHasAssistanceToday = membership.client_membership_assistances.find(client_membership_assistance => {
+                return moment().startOf('days').isSame(client_membership_assistance.date)
+            })
+            if (clientMembershipHasAssistanceToday) {
+                return true
+            } else {
+                return false
+            }
         }
     }
 }

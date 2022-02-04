@@ -12,6 +12,7 @@ import TurnIndex from '../views/main/turns/Index'
 import TurnCreate from '../views/main/turns/Create'
 import TurnEdit from '../views/main/turns/Edit'
 import AssistanceIndex from '../views/main/assistances/Index'
+import Dashboard from '../views/dashboard/Dashboard'
 
 Vue.use(VueRouter)
 
@@ -21,6 +22,11 @@ const routes = [
     name: 'Main',
     component: Main,
     children: [
+      {
+        path: '/',
+        name: 'dashboard.index',
+        component: Dashboard
+      },
       {
         path: 'clientes',
         name: 'clients.index',

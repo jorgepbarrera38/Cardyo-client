@@ -34,15 +34,15 @@
                             <ul class="vertical-nav-menu">
                                 <li class="app-sidebar__heading">Dashboard</li>
                                 <li>
-                                    <a href="index.html" class="mm-active">
+                                    <a href="#" class="mm-active" @click.prevent="$router.push({ name: 'dashboard.index' })">
                                         <i class="metismenu-icon pe-7s-rocket"></i>
-                                        Dashboard Example 1
+                                        Dashboard
                                     </a>
                                 </li>
                                 <li class="app-sidebar__heading">UI Components</li>
                                 <li>
                                     <a href="#">
-                                        <i class="metismenu-icon pe-7s-diamond"></i>
+                                        <i class="metismenu-icon pe-7s-config"></i>
                                         General
                                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                     </a>
@@ -63,13 +63,13 @@
                                 </li>
                                 <li>
                                     <a href="#" @click.prevent="$router.push({ name: 'clients.index' })">
-                                        <i class="metismenu-icon pe-7s-display2"></i>
+                                        <i class="metismenu-icon pe-7s-users"></i>
                                         Clientes
                                     </a>
                                 </li>
                                 <li>
                                     <a href="#" @click.prevent="$router.push({ name: 'assistances.index' })">
-                                        <i class="metismenu-icon pe-7s-display2"></i>
+                                        <i class="metismenu-icon pe-7s-note2"></i>
                                         Asistencia
                                     </a>
                                 </li>

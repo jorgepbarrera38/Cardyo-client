@@ -5,7 +5,7 @@
                 <center>
                     <vue-skeleton-loader
                         type="rect"
-                        :width="100"
+                        :width="113"
                         :height="15"
                         animation="fade"
                     />

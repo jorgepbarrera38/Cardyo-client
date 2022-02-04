@@ -3,7 +3,7 @@
         <div class="page-title-wrapper">
             <div class="page-title-heading">
                 <div class="page-title-icon">
-                    <i class="pe-7s-car icon-gradient bg-mean-fruit">
+                    <i :class="styleIcon">
                     </i>
                 </div>
                 <div>{{ title }}
@@ -25,6 +25,15 @@ export default {
         subtitle: {
             type: String,
             required: true,
+        },
+        icon: {
+            type: String,
+            required: true,
+        },
+    },
+    computed: {
+        styleIcon () {
+            return `${ this.icon } icon-gradient bg-mean-fruit`
         }
     }
 }

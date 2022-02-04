@@ -1,7 +1,7 @@
 <template>
     <div class="app-main__inner">
         <!--Titulo página-->
-        <PageTitle title="Tipos de membresías" subtitle=""/>     
+        <PageTitle title="Tipos de membresías" icon="pe-7s-id" subtitle=""/>     
         <!--Fin titulo página-->
         <!--Contenido-->
         <div class="row">

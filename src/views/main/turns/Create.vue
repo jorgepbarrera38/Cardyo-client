@@ -1,7 +1,7 @@
 <template>
     <div class="app-main__inner">
         <!--Titulo página-->
-        <PageTitle title="Turnos" subtitle=""/>     
+        <PageTitle title="Turnos" icon="pe-7s-clock" subtitle=""/>     
         <!--Fin titulo página-->
         <!--Contenido-->
         <div class="row">

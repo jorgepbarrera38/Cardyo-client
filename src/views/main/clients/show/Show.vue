@@ -1,7 +1,7 @@
 <template>
     <div class="app-main__inner">
         <!--Titulo página-->
-        <PageTitle title="Clientes" subtitle=""/>     
+        <PageTitle title="Clientes" icon="pe-7s-users" subtitle=""/>     
         <!--Fin titulo página-->
         <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
             <li class="nav-item">
@@ -34,7 +34,7 @@
 </template>
 <script>
 import PageTitle from '../../components/PageTitle'
-import Profile from './Profile'
+import Profile from './profile/Profile'
 import Membership from './membership/Index'
 export default {
     components: { PageTitle, Profile, Membership },

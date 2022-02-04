@@ -1,7 +1,7 @@
 <template>
     <div class="app-main__inner">
         <!--Titulo página-->
-        <PageTitle title="Clientes" subtitle=""/>     
+        <PageTitle title="Clientes" icon="pe-7s-users" subtitle=""/>     
         <!--Fin titulo página-->
         <!--Contenido-->
         <div class="row">
