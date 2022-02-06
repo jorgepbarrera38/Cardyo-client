@@ -12,7 +12,13 @@ import TurnIndex from '../views/main/turns/Index'
 import TurnCreate from '../views/main/turns/Create'
 import TurnEdit from '../views/main/turns/Edit'
 import AssistanceIndex from '../views/main/assistances/Index'
-import Dashboard from '../views/dashboard/Dashboard'
+import Dashboard from '../views/main/dashboard/Dashboard'
+import InventoryProductIndex from '../views/main/inventories/products/Index'
+import InventoryProductCreate from '../views/main/inventories/products/Create'
+import InventoryProductEdit from '../views/main/inventories/products/Edit'
+import InventoryCategoryIndex from '../views/main/inventories/categories/Index'
+import InventoryCategoryCreate from '../views/main/inventories/categories/Create'
+import InventoryCategoryEdit from '../views/main/inventories/categories/Edit'
 
 Vue.use(VueRouter)
 
@@ -81,6 +87,36 @@ const routes = [
         path: 'asistencia',
         name: 'assistances.index',
         component: AssistanceIndex
+      },
+      {
+        path: 'inventario/categorias',
+        name: 'inventory-categories.index',
+        component: InventoryCategoryIndex
+      },
+      {
+        path: 'inventario/categorias/nuevo',
+        name: 'inventory-categories.create',
+        component: InventoryCategoryCreate
+      },
+      {
+        path: 'inventario/categorias/:id/editar',
+        name: 'inventory-categories.edit',
+        component: InventoryCategoryEdit
+      },
+      {
+        path: 'inventario/productos',
+        name: 'inventory-products.index',
+        component: InventoryProductIndex
+      },
+      {
+        path: 'inventario/productos/nuevo',
+        name: 'inventory-products.create',
+        component: InventoryProductCreate
+      },
+      {
+        path: 'inventario/productos/:id/editar',
+        name: 'inventory-products.edit',
+        component: InventoryProductEdit
       },
     ]
   },

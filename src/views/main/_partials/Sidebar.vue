@@ -73,6 +73,45 @@
                                         Asistencia
                                     </a>
                                 </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="metismenu-icon pe-7s-box1"></i>
+                                        Inventario
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="#" @click.prevent="$router.push({ name: 'inventory-categories.index' })">
+                                                <i class="metismenu-icon"></i>
+                                                Categorías
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" @click.prevent="$router.push({ name: 'inventory-products.index' })">
+                                                <i class="metismenu-icon"></i>
+                                                Productos
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" @click.prevent="$router.push({ name: 'inventory-products.index' })">
+                                                <i class="metismenu-icon"></i>
+                                                Proveedores
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" @click.prevent="$router.push({ name: 'turns.index' })">
+                                                <i class="metismenu-icon"></i>
+                                                Compras
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" @click.prevent="$router.push({ name: 'turns.index' })">
+                                                <i class="metismenu-icon"></i>
+                                                Devolución de compras
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
                             </ul>
                         </div>
                     </div>
