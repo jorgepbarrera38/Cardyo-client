@@ -7,6 +7,9 @@ import Croppa from 'vue-croppa'
 import toastr from 'toastr'
 import VueSkeletonLoader from 'skeleton-loader-vue';
 import vSelect from 'vue-select'
+import moment from 'moment'
+
+moment.locale('es')
 
 Vue.component('v-select', vSelect)
 import 'vue-select/dist/vue-select.css';

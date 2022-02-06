@@ -24,13 +24,14 @@ import InventoryProviderCreate from '../views/main/inventories/providers/Create'
 import InventoryProviderEdit from '../views/main/inventories/providers/Edit'
 import InventoryPurchaseIndex from '../views/main/inventories/purchases/Index'
 import InventoryPurchaseCreate from '../views/main/inventories/purchases/Create'
+import InventoryPurchaseShow from '../views/main/inventories/purchases/Show'
 
 Vue.use(VueRouter)
 
 const routes = [
   {
     path: '/',
-    name: 'Main',
+    //name: 'Main',
     component: Main,
     children: [
       {
@@ -147,6 +148,11 @@ const routes = [
         path: 'inventario/compras/nuevo',
         name: 'inventory-purchases.create',
         component: InventoryPurchaseCreate
+      },
+      {
+        path: 'inventario/compras/:id',
+        name: 'inventory-purchases.show',
+        component: InventoryPurchaseShow
       },
     ]
   },

@@ -24,15 +24,24 @@
                                 <th>Factura</th>
                                 <th>Fecha factura</th>
                                 <th>Proveedor</th>
+                                <th>Total</th>
+                                <th></th>
                             </tr>
                             </thead>
                             <transition-group tag="tbody" name="fade" v-if="!searching">>
                                     <tr v-for="(purchase, index) in purchases.data" :key="purchase.id">
                                         <td class="text"></td>
-                                        <td class="text" nowrap>{{ purchase.created_at }}</td>
+                                        <td class="text" nowrap>{{ dateWithHour(purchase.created_at) }}</td>
                                         <td class="text" nowrap>{{ purchase.bill }}</td>
-                                        <td class="text" nowrap>{{ purchase.date_bill }}</td>
-                                        <td class="text" nowrap>{{ purchase.provider.name }}</td>
+                                        <td class="text" nowrap>{{ date(purchase.date_bill) }}</td>
+                                        <td class="text" nowrap>{{ purchase.provider.code + ' - ' + purchase.provider.name }}</td>
+                                        <td class="text" nowrap>{{ convertMoney(purchase.total) }}</td>
+                                        <td class="text-center">
+                                            <button type="button" @click="$router.push({ name: 'inventory-purchases.show', params: { id: purchase.id } })"
+                                                class="btn btn-info btn-sm mr-1">
+                                                <i class="fa fa-eye"></i> 
+                                            </button>
+                                        </td>
                                     </tr>
                             </transition-group>
                             <Skeleton v-else/>
@@ -51,6 +60,7 @@
 import PageTitle from '../../components/PageTitle'
 import Skeleton from './_partials/Skeleton'
 import formatNum from 'format-num'
+import moment from 'moment'
 export default {
     components: { PageTitle, Skeleton },
     created () {
@@ -71,7 +81,13 @@ export default {
             })
         },
         convertMoney (value) {
-            return formatNum(value)
+            return `$${formatNum(value)}`
+        },
+        date (date) {
+            return moment(date).format('L')
+        },
+        dateWithHour (date) {
+            return moment(date).format('lll')
         }
     }
 }
