@@ -93,13 +93,13 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" @click.prevent="$router.push({ name: 'inventory-products.index' })">
+                                            <a href="#" @click.prevent="$router.push({ name: 'inventory-providers.index' })">
                                                 <i class="metismenu-icon"></i>
                                                 Proveedores
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" @click.prevent="$router.push({ name: 'turns.index' })">
+                                            <a href="#" @click.prevent="$router.push({ name: 'inventory-purchases.index' })">
                                                 <i class="metismenu-icon"></i>
                                                 Compras
                                             </a>

@@ -19,6 +19,11 @@ import InventoryProductEdit from '../views/main/inventories/products/Edit'
 import InventoryCategoryIndex from '../views/main/inventories/categories/Index'
 import InventoryCategoryCreate from '../views/main/inventories/categories/Create'
 import InventoryCategoryEdit from '../views/main/inventories/categories/Edit'
+import InventoryProviderIndex from '../views/main/inventories/providers/Index'
+import InventoryProviderCreate from '../views/main/inventories/providers/Create'
+import InventoryProviderEdit from '../views/main/inventories/providers/Edit'
+import InventoryPurchaseIndex from '../views/main/inventories/purchases/Index'
+import InventoryPurchaseCreate from '../views/main/inventories/purchases/Create'
 
 Vue.use(VueRouter)
 
@@ -117,6 +122,31 @@ const routes = [
         path: 'inventario/productos/:id/editar',
         name: 'inventory-products.edit',
         component: InventoryProductEdit
+      },
+      {
+        path: 'inventario/proveedores',
+        name: 'inventory-providers.index',
+        component: InventoryProviderIndex
+      },
+      {
+        path: 'inventario/proveedores/nuevo',
+        name: 'inventory-providers.create',
+        component: InventoryProviderCreate
+      },
+      {
+        path: 'inventario/proveedores/:id/editar',
+        name: 'inventory-providers.edit',
+        component: InventoryProviderEdit
+      },
+      {
+        path: 'inventario/compras',
+        name: 'inventory-purchases.index',
+        component: InventoryPurchaseIndex
+      },
+      {
+        path: 'inventario/compras/nuevo',
+        name: 'inventory-purchases.create',
+        component: InventoryPurchaseCreate
       },
     ]
   },
