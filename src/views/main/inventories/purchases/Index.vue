@@ -20,6 +20,7 @@
                             <thead>
                             <tr>
                                 <th></th>
+                                <th>Consecutivo</th>
                                 <th>Fecha registro</th>
                                 <th>Factura</th>
                                 <th>Fecha factura</th>
@@ -31,6 +32,7 @@
                             <transition-group tag="tbody" name="fade" v-if="!searching">>
                                     <tr v-for="(purchase, index) in purchases.data" :key="purchase.id">
                                         <td class="text"></td>
+                                        <td class="text" nowrap>{{ purchase.id }}</td>
                                         <td class="text" nowrap>{{ dateWithHour(purchase.created_at) }}</td>
                                         <td class="text" nowrap>{{ purchase.bill }}</td>
                                         <td class="text" nowrap>{{ date(purchase.date_bill) }}</td>

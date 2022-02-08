@@ -105,7 +105,7 @@
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" @click.prevent="$router.push({ name: 'turns.index' })">
+                                            <a href="#" @click.prevent="$router.push({ name: 'inventory-purchase-returns.index' })">
                                                 <i class="metismenu-icon"></i>
                                                 Devolución de compras
                                             </a>

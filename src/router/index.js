@@ -25,6 +25,9 @@ import InventoryProviderEdit from '../views/main/inventories/providers/Edit'
 import InventoryPurchaseIndex from '../views/main/inventories/purchases/Index'
 import InventoryPurchaseCreate from '../views/main/inventories/purchases/Create'
 import InventoryPurchaseShow from '../views/main/inventories/purchases/Show'
+import InventoryPurchaseReturnIndex from '../views/main/inventories/purchase_returns/Index'
+import InventoryPurchaseReturnCreate from '../views/main/inventories/purchase_returns/Create'
+import InventoryPurchaseReturnShow from '../views/main/inventories/purchase_returns/Show'
 
 Vue.use(VueRouter)
 
@@ -153,6 +156,21 @@ const routes = [
         path: 'inventario/compras/:id',
         name: 'inventory-purchases.show',
         component: InventoryPurchaseShow
+      },
+      {
+        path: 'inventario/devolucion-de-compras',
+        name: 'inventory-purchase-returns.index',
+        component: InventoryPurchaseReturnIndex
+      },
+      {
+        path: 'inventario/devolucion-de-compras/nuevo',
+        name: 'inventory-purchase-returns.create',
+        component: InventoryPurchaseReturnCreate
+      },
+      {
+        path: 'inventario/devolucion-de-compras/:id',
+        name: 'inventory-purchase-returns.show',
+        component: InventoryPurchaseReturnShow
       },
     ]
   },
