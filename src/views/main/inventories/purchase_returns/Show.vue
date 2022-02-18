@@ -1,39 +1,70 @@
 <template>
     <div class="app-main__inner">
         <!--Titulo página-->
-        <PageTitle title="Devolución de compras" icon="pe-7s-ticket" subtitle=""/>     
+        <PageTitle title="Devolución de compras2" icon="pe-7s-ticket" subtitle=""/>     
         <!--Fin titulo página-->
         <!--Contenido-->
         <div class="row">
             <div class="col-md-12 col-lg-12">
                 <div class="main-card mb-3 card">
                     <div class="card-body"><h5 class="card-title">Ver devolución de compra</h5>
-                        <div class="alert alert-danger fade show" role="alert" v-if="errors">
-                            <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
-                        </div>
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-2">
                                 <div class="position-relative form-group">
-                                    <label for="" class="">Proveedor</label>
-                                    <input type="text" class="form-control" :value="purchase.provider.code ? purchase.provider.code + ' - ' + purchase.provider.name : ''" disabled>
+                                    <label for="" class="">Consecutivo</label>
+                                    <input type="text" class="form-control" v-model="purchaseReturn.id" disabled>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="position-relative form-group">
-                                    <label for="" class="">Factura</label>
-                                    <input type="text" class="form-control" v-model="purchase.bill" disabled>
-                                </div>
-                            </div>
-                            <div class="col-md-4">
-                                <div class="position-relative form-group">
-                                    <label for="" class="">Fecha factura</label>
-                                    <input type="date" class="form-control" v-model="purchase.date_bill" disabled>
+                                    <label for="" class="">Fecha registro</label>
+                                    <input type="text" class="form-control" :value="dateWithHour(purchaseReturn.created_at)" disabled>
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="position-relative form-group">
                                     <label for="" class="">Observaciónes</label>
-                                    <textarea rows="4" class="form-control" v-model="purchase.observations" disabled></textarea>
+                                    <textarea rows="4" class="form-control" v-model="purchaseReturn.observations" disabled></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Consecutivo</label>
+                                    <input type="text" class="form-control" v-model="purchaseReturn.purchase.id" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Fecha registro</label>
+                                    <input type="text" class="form-control" :value="dateWithHour(purchaseReturn.purchase.created_at)" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Proveedor</label>
+                                    <input type="text" class="form-control" 
+                                     :value="purchaseReturn.purchase.provider.code ? purchaseReturn.purchase.provider.code + ' - ' + purchaseReturn.purchase.provider.name : ''" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Factura</label>
+                                    <input type="text" class="form-control" v-model="purchaseReturn.purchase.bill" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Fecha factura</label>
+                                    <input type="date" class="form-control" v-model="purchaseReturn.purchase.date_bill" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Observaciónes</label>
+                                    <textarea rows="4" class="form-control" v-model="purchaseReturn.purchase.observations" disabled></textarea>
                                 </div>
                             </div>
                         </div>
@@ -44,24 +75,24 @@
                                 <tr>
                                     <th></th>
                                     <th>Producto</th>
-                                    <th>Cantidad</th>
                                     <th>Precio unitario</th>
-                                    <th>Total</th>
+                                    <th>Cantidad compra</th>
+                                    <th>Cantidad devuelta</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    <tr v-for="(detail, index) in purchase.purchase_details" :key="'detail-' + index">
+                                    <tr v-for="(purchase_return_detail, index) in purchaseReturn.purchase_return_details" :key="'detail-' + index">
                                         <td class="text"></td>
-                                        <td class="text" nowrap>{{ detail.product.name }}</td>
-                                        <td class="text" nowrap>{{ detail.quantity }}</td>
-                                        <td class="text" nowrap>{{ convertMoney(detail.price_unit) }}</td>
-                                        <td class="text" nowrap>{{ convertMoney(detail.quantity * detail.price_unit) }}</td>
+                                        <td class="text" nowrap>{{ purchase_return_detail.inventory_purchase_detail.product.name }}</td>
+                                        <td class="text" nowrap>{{ convertMoney(purchase_return_detail.inventory_purchase_detail.price_unit) }}</td>
+                                        <td class="text" nowrap>{{ purchase_return_detail.inventory_purchase_detail.quantity }}</td>
+                                        <td class="text" nowrap>{{ purchase_return_detail.quantity }}</td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
                         <hr>
-                        <a href="#" :class="{'mt-1 btn btn-secondary mr-1': true, disabled: saving}" @click.prevent="$router.push({ name: 'inventory-purchases.index' })">
+                        <a href="#" :class="{'mt-1 btn btn-secondary mr-1': true, disabled: saving}" @click.prevent="$router.push({ name: 'inventory-purchase-returns.index' })">
                             <i class="fa fa-undo"></i> Atrás
                         </a>
                     </div>
@@ -74,30 +105,36 @@
 <script>
 import PageTitle from '../../components/PageTitle.vue'
 import formatNum from 'format-num'
+import moment from 'moment'
 export default {
     components: { PageTitle },
     created () {
-        this.getPurchase()
+        this.getPurchaseReturn()
     },
     data () {
         return {
-            purchase: {
-                provider: {},
-                purchase_details: []
+            purchaseReturn: {
+                purchase: {
+                    provider: {},
+                },
+                purchase_return_details: []
             },
             errors: null,
             saving: false
         }
     },
     methods: {
-        getPurchase () {
-            this.$http.get(`inventory-purchases/${ this.$route.params.id }`).then( response => {
+        getPurchaseReturn () {
+            this.$http.get(`inventory-purchase-returns/${ this.$route.params.id }`).then( response => {
                 console.log(response.data)
-                this.purchase = response.data
+                this.purchaseReturn = response.data
             })
         },
         convertMoney (value) {
             return `$${formatNum(value)}`
+        },
+        dateWithHour (date) {
+            return moment(date).format('lll')
         }
     }
 }

@@ -6,7 +6,7 @@
             <td class="text">
                     <vue-skeleton-loader
                         type="rect"
-                        :width="150"
+                        :width="120"
                         :height="15"
                         animation="fade"
                     />
@@ -14,13 +14,13 @@
             <td class="text">
                 <vue-skeleton-loader
                     type="rect"
-                    :width="70"
+                    :width="170"
                     :height="15"
                     animation="fade"
                 />
             </td>
             <td class="text-center">
-                <center>
+                <center style="margin-top:7.1px;margin-bottom:7.1px;">
                     <vue-skeleton-loader
                         type="rect"
                         :width="70"

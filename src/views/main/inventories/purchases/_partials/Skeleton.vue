@@ -6,7 +6,15 @@
             <td class="text">
                     <vue-skeleton-loader
                         type="rect"
-                        :width="150"
+                        :width="40"
+                        :height="15"
+                        animation="fade"
+                    />
+            </td>
+            <td class="text">
+                    <vue-skeleton-loader
+                        type="rect"
+                        :width="140"
                         :height="15"
                         animation="fade"
                     />
@@ -22,15 +30,7 @@
             <td class="text">
                     <vue-skeleton-loader
                         type="rect"
-                        :width="70"
-                        :height="15"
-                        animation="fade"
-                    />
-            </td>
-            <td class="text">
-                    <vue-skeleton-loader
-                        type="rect"
-                        :width="200"
+                        :width="100"
                         :height="15"
                         animation="fade"
                     />
@@ -46,10 +46,20 @@
             <td class="text">
                     <vue-skeleton-loader
                         type="rect"
+                        :width="70"
+                        :height="15"
+                        animation="fade"
+                    />
+            </td>
+            <td class="text">
+                <center style="margin-top:7.1px;margin-bottom:7.1px;">
+                    <vue-skeleton-loader
+                        type="rect"
                         :width="30"
                         :height="15"
                         animation="fade"
                     />
+                </center>
             </td>
         </tr>
     </tbody>

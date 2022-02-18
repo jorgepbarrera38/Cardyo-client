@@ -12,19 +12,31 @@
                             <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
                         </div>
                         <div class="row">
+                            <div class="col-md-2">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Consecutivo</label>
+                                    <input type="text" class="form-control" v-model="purchase.id" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Fecha registro</label>
+                                    <input type="text" class="form-control" :value="dateWithHour(purchase.created_at)" disabled>
+                                </div>
+                            </div>
                             <div class="col-md-4">
                                 <div class="position-relative form-group">
                                     <label for="" class="">Proveedor</label>
                                     <input type="text" class="form-control" :value="purchase.provider.code ? purchase.provider.code + ' - ' + purchase.provider.name : ''" disabled>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="position-relative form-group">
                                     <label for="" class="">Factura</label>
                                     <input type="text" class="form-control" v-model="purchase.bill" disabled>
                                 </div>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-3">
                                 <div class="position-relative form-group">
                                     <label for="" class="">Fecha factura</label>
                                     <input type="date" class="form-control" v-model="purchase.date_bill" disabled>
@@ -44,9 +56,10 @@
                                 <tr>
                                     <th></th>
                                     <th>Producto</th>
-                                    <th>Cantidad</th>
+                                    <th>Cantidad inicial</th>
                                     <th>Precio unitario</th>
                                     <th>Total</th>
+                                    <th>Cantidades devueltas</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -56,6 +69,12 @@
                                         <td class="text" nowrap>{{ detail.quantity }}</td>
                                         <td class="text" nowrap>{{ convertMoney(detail.price_unit) }}</td>
                                         <td class="text" nowrap>{{ convertMoney(detail.quantity * detail.price_unit) }}</td>
+                                        <td class="text" nowrap>
+                                            <li v-for="purchase_return_detail in detail.purchase_return_details" 
+                                                :key="`purchase-return-detail-${purchase_return_detail.id}`">
+                                                {{ `Devolución de compra: ${purchase_return_detail.inventory_purchase_return.id}, cantidad: ${purchase_return_detail.quantity}` }}
+                                            </li>
+                                        </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -74,6 +93,7 @@
 <script>
 import PageTitle from '../../components/PageTitle.vue'
 import formatNum from 'format-num'
+import moment from 'moment'
 export default {
     components: { PageTitle },
     created () {
@@ -98,6 +118,9 @@ export default {
         },
         convertMoney (value) {
             return `$${formatNum(value)}`
+        },
+        dateWithHour (date) {
+            return moment(date).format('lll')
         }
     }
 }

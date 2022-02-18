@@ -58,27 +58,23 @@
                 </center>
             </td>
             <td class="text-center">
-                <center style="margin-top:7.1px;margin-bottom:7.1px;">
                     <vue-skeleton-loader
                         type="rect"
                         :width="50"
                         :height="15"
                         animation="fade"
                     />
-                </center>
             </td>
             <td class="text-center">
-                <center style="margin-top:7.1px;margin-bottom:7.1px;">
                     <vue-skeleton-loader
                         type="rect"
                         :width="50"
                         :height="15"
                         animation="fade"
                     />
-                </center>
             </td>
             <td class="text-center">
-                <center style="margin-top:7.1px;margin-bottom:7.1px;">
+                <center style="margin-top:13.6px;margin-bottom:13.6px;">
                     <vue-skeleton-loader
                         type="rect"
                         :width="50"
