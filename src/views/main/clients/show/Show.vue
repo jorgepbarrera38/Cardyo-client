@@ -54,6 +54,7 @@ export default {
                 this.client = response.data
                 this.client.memberships.forEach(membership => {
                     this.$set(membership, 'deleting', false)
+                    this.$set(membership, 'searchingAssistances', false)
                 });
                 this.searching = false
             })
