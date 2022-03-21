@@ -32,7 +32,9 @@
                   <component v-bind:is="tab" 
                     :client="client"
                     @membershipSaved="getClient"
-                    @membershipDeleted="membershipDeleted">
+                    @membershipDeleted="membershipDeleted"
+                    @bodyMeasurementDeleted="bodyMeasurementDeleted"
+                    >
                   </component>
             </div>
         </div>
@@ -60,15 +62,25 @@ export default {
         getClient () {
             this.$http.get(`clients/${ this.$route.params.id }`).then( response => {
                 this.client = response.data
+
                 this.client.memberships.forEach(membership => {
                     this.$set(membership, 'deleting', false)
                     this.$set(membership, 'searchingAssistances', false)
-                });
+                })
+
+                this.client.body_measurements.forEach(bodyMeasurement => {
+                    this.$set(bodyMeasurement, 'deleting', false)
+                })
+
                 this.searching = false
+                console.log(this.client);
             })
         },
         membershipDeleted (index) {
             this.client.memberships.splice(index, 1)
+        },
+        bodyMeasurementDeleted (index) {
+            this.client.body_measurements.splice(index, 1)
         }
     }
 }

@@ -29,13 +29,13 @@
                             </select>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <div class="position-relative form-group">
                             <label for="" class="">Precio</label>
                             <input type="number" class="form-control" disabled v-model="membership.price">
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-md-2">
                         <div class="position-relative form-group">
                             <label for="" class="">Cantidad (*)</label>
                             <input type="number" class="form-control" v-model="membership.quantity" min="1" max="1000">
@@ -53,6 +53,12 @@
                             <input type="date" class="form-control" v-model="membership.date_finish" disabled>
                         </div>
                     </div>
+                    <div class="col-md-4">
+                        <div class="position-relative form-group">
+                            <label for="" class="">Precio total</label>
+                            <input type="number" class="form-control" disabled :value="membership.price * membership.quantity">
+                        </div>
+                    </div> 
                     <div class="col-md-12">
                         <div class="position-relative form-group">
                             <label for="" class="">Observaciónes</label>
