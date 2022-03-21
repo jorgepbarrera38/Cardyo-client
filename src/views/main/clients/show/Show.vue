@@ -18,6 +18,13 @@
                     <span>Membresías</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a role="tab" class="nav-link" id="tab-2" data-toggle="tab" 
+                    @click.prevent="tab = 'BodyMeasurement'"
+                    href="#">
+                    <span>Medidas corporales</span>
+                </a>
+            </li>
         </ul>
         <!--Contenido-->
         <div class="row">
@@ -36,8 +43,9 @@
 import PageTitle from '../../components/PageTitle'
 import Profile from './profile/Profile'
 import Membership from './membership/Index'
+import BodyMeasurement from './body_measurement/Index'
 export default {
-    components: { PageTitle, Profile, Membership },
+    components: { PageTitle, Profile, Membership, BodyMeasurement },
     created () {
         this.getClient()
     },
