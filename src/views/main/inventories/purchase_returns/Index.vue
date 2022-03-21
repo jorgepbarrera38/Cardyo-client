@@ -22,7 +22,7 @@
                                 <th></th>
                                 <th>Consecutivo</th>
                                 <th>Fecha registro</th>
-                                <th>Compra</th>
+                                <th>Consecutivo compra</th>
                                 <th></th>
                             </tr>
                             </thead>

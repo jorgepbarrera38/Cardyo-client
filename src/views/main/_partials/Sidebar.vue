@@ -112,6 +112,12 @@
                                         </li>
                                     </ul>
                                 </li>
+                                <li>
+                                    <a href="#" @click.prevent="$router.push({ name: 'assistances.index' })">
+                                        <i class="metismenu-icon pe-7s-cart"></i>
+                                        Ventas
+                                    </a>
+                                </li>
                             </ul>
                         </div>
                     </div>

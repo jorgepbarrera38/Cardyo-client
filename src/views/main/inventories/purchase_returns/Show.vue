@@ -1,7 +1,7 @@
 <template>
     <div class="app-main__inner">
         <!--Titulo página-->
-        <PageTitle title="Devolución de compras2" icon="pe-7s-ticket" subtitle=""/>     
+        <PageTitle title="Devolución de compras" icon="pe-7s-ticket" subtitle=""/>     
         <!--Fin titulo página-->
         <!--Contenido-->
         <div class="row">
