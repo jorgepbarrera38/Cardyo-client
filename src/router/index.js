@@ -29,6 +29,10 @@ import InventoryPurchaseReturnIndex from '../views/main/inventories/purchase_ret
 import InventoryPurchaseReturnCreate from '../views/main/inventories/purchase_returns/Create'
 import InventoryPurchaseReturnShow from '../views/main/inventories/purchase_returns/Show'
 
+import SaleIndex from '../views/main/sales/Index'
+import SaleShow from '../views/main/sales/Show'
+import SaleCreate from '../views/main/sales/Create'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -171,6 +175,22 @@ const routes = [
         path: 'inventario/devolucion-de-compras/:id',
         name: 'inventory-purchase-returns.show',
         component: InventoryPurchaseReturnShow
+      },
+
+      {
+        path: 'ventas',
+        name: 'sales.index',
+        component: SaleIndex
+      },
+      {
+        path: 'ventas/nuevo',
+        name: 'sales.create',
+        component: SaleCreate
+      },
+      {
+        path: 'ventas/:id',
+        name: 'sales.show',
+        component: SaleShow
       },
     ]
   },
