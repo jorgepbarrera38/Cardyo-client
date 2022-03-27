@@ -43,6 +43,8 @@ import UserCreate from '../views/main/users/Create'
 import UserEdit from '../views/main/users/Edit'
 import UserUpdatePermission from '../views/main/users/UpdatePermission'
 
+import CompanyIndex from '../views/main/company/Index'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -241,6 +243,11 @@ const routes = [
         path: 'usuarios/:id/actualizar-permisos',
         name: 'users.update_permissions',
         component: UserUpdatePermission
+      },
+      {
+        path: 'empresa',
+        name: 'company.index',
+        component: CompanyIndex
       },
     ]
   },

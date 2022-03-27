@@ -21,7 +21,7 @@
                             <div class="col-md-3">
                                 <div class="position-relative form-group">
                                     <label for="" class="">Fecha registro</label>
-                                    <input type="text" class="form-control" :value="dateWithHour(purchase.created_at)" disabled>
+                                    <input type="text" class="form-control" :value="purchase.created_at ? dateWithHour(purchase.created_at) : ''" disabled>
                                 </div>
                             </div>
                             <div class="col-md-4">

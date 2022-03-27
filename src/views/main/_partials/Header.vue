@@ -1,7 +1,9 @@
 <template>
     <div class="app-header header-shadow">
             <div class="app-header__logo">
-                <div class="logo-sr">SG-GYM</div>
+                <div class="logo-src">
+                    
+                </div>
                 <div class="header__pane ml-auto">
                     <div>
                         <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
@@ -30,7 +32,7 @@
                     </button>
                 </span>
             </div>    <div class="app-header__content">
-                <div class="app-header-left">
+                <!--<div class="app-header-left">
                     <ul class="header-menu nav">
                         <li class="nav-item">
                             <a href="javascript:void(0);" class="nav-link">
@@ -50,7 +52,8 @@
                                 Settings
                             </a>
                         </li>
-                    </ul>        </div>
+                    </ul>        
+                </div>-->
                 <div class="app-header-right">
                     <div class="header-btn-lg pr-0">
                         <div class="widget-content p-0">
@@ -61,13 +64,14 @@
                                             <img width="42" class="rounded-circle" src="assets/images/avatars/1.jpg" alt="">
                                             <i class="fa fa-angle-down ml-2 opacity-8"></i>
                                         </a>
-                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right">
-                                            <button type="button" tabindex="0" class="dropdown-item">User Account</button>
-                                            <button type="button" tabindex="0" class="dropdown-item">Settings</button>
-                                            <h6 tabindex="-1" class="dropdown-header">Header</h6>
-                                            <button type="button" tabindex="0" class="dropdown-item">Actions</button>
-                                            <div tabindex="-1" class="dropdown-divider"></div>
-                                            <button @click="logout" type="button" tabindex="0" class="dropdown-item">Cerrar sesión</button>
+                                        <div tabindex="-1" role="menu" aria-hidden="true" class="dropdown-menu dropdown-menu-right" id="menuUser">
+                                            <button @click="logout" type="button" tabindex="0" class="dropdown-item" :disabled="logouting || !authenticated">
+                                                <span class="mr-1">Cerrar sesión</span>
+                                                <div class="spinner-border spinner-border-sm" v-if="logouting"
+                                                    role="status">
+                                                    <span class="sr-only">Loading...</span>
+                                                </div>
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
@@ -75,9 +79,9 @@
                                     <div class="widget-heading">
                                         {{ namesUser }}
                                     </div>
-                                    <div class="widget-subheading">
+                                    <!--<div class="widget-subheading">
                                         VP People Manager
-                                    </div>
+                                    </div>-->
                                 </div>
                             </div>
                         </div>
@@ -91,13 +95,13 @@ export default {
     data () {
         return {
             errors: null,
-            logining: false
+            logouting: false
         }
     },
     methods: {
         ...mapMutations(['changeStateAuthUser', 'setNamesUser', 'setPermissionsUser']),
         logout () {
-            //this.logining = true
+            this.logouting = true
 
             this.$http.post('auth/logout').then( response => {
                 localStorage.removeItem('permissionsUser')
@@ -106,6 +110,8 @@ export default {
                 localStorage.removeItem('access_token')
                 this.setNamesUser('Usuario')
                 this.changeStateAuthUser(false)
+                document.getElementById('menuUser').classList.remove('show')
+                this.logouting = false
                 this.$router.push({ name: 'login' })
             }).catch( error => {
                 localStorage.removeItem('permissionsUser')
@@ -114,12 +120,14 @@ export default {
                 localStorage.removeItem('access_token')
                 this.setNamesUser('Usuario')
                 this.changeStateAuthUser(false)
+                document.getElementById('menuUser').classList.remove('show')
+                this.logouting = false
                 this.$router.push({ name: 'login' })
             })
         },
     },
     computed: {
-        ...mapState(['namesUser'])
+        ...mapState(['namesUser', 'authenticated'])
     }
 }
 </script>

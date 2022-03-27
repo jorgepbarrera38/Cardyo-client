@@ -12,6 +12,18 @@
                             <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
                         </div>
                         <div class="row">
+                            <div class="col-md-2">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Consecutivo</label>
+                                    <input type="text" class="form-control" v-model="inventoryTweak.id" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Fecha registro</label>
+                                    <input type="text" class="form-control" :value="inventoryTweak.created_at ? dateWithHour(inventoryTweak.created_at) : ''" disabled>
+                                </div>
+                            </div>
                             <div class="col-md-4">
                                 <div class="position-relative form-group">
                                     <label for="" class="">Tipo (*)</label>
@@ -57,7 +69,7 @@
 </template>
 <script>
 import PageTitle from '../../components/PageTitle.vue'
-import formatNum from 'format-num'
+import moment from 'moment'
 export default {
     components: { PageTitle },
     created () {
@@ -75,6 +87,9 @@ export default {
             this.$http.get(`inventory-tweaks/${this.$route.params.id}`).then( response => {
                 this.inventoryTweak = response.data
             })
+        },
+        dateWithHour (date) {
+            return moment(date).format('lll')
         }
     },
 }

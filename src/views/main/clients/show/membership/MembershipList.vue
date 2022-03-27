@@ -17,6 +17,7 @@
                             <th></th>
                             <th>Membresía</th>
                             <th class="text-center">Cantidad</th>
+                            <th class="text-center">Tipo</th>
                             <th class="text-center">Precio unitario</th>
                             <th class="text-center">Precio total</th>
                             <th class="text-center">Fecha de inicio</th>
@@ -30,6 +31,7 @@
                                 <td class="text"></td>
                                 <td class="text" nowrap>{{ membership.membership_type.name }}</td>
                                 <td class="text-center">{{ membership.quantity }}</td>
+                                <td class="text-center">{{ membership.membership_type.type }}</td>
                                 <td class="text-center">{{ convertMoney(membership.price) }}</td>
                                 <td class="text-center">{{ convertMoney(membership.total_price) }}</td>
                                 <td class="text-center" nowrap>{{ membership.date_start }}</td>
@@ -86,7 +88,13 @@
                         </button>
                     </div>
                 </div>
-                <div class="table-responsive">
+                
+                    <v-calendar :attributes='attributesAssistancesCalendar' :columns="2" is-expanded
+                            :min-date="minDate"
+                            :max-date="maxDate"
+                            :from-page="{ month: getFirstMonthFromAssistance, year: getFirstYearFromAssistance }"/>
+                
+                <!--<div class="table-responsive">
                     <table class="table table-borderless table-striped table-hover">
                         <thead>
                         <tr>
@@ -100,22 +108,19 @@
                                 <td class="text"></td>
                                 <td class="text" nowrap>{{ assistanceFromMembership.date }}</td>
                                 <td class="text-center" nowrap>
-                                    <!--<button type="button" @click="deleteMembership(membership, index)" :disabled="membership.deleting" title="Eliminar asistencia"
+                                    <button type="button" @click="deleteMembership(membership, index)" :disabled="membership.deleting" title="Eliminar asistencia"
                                         class="btn btn-danger btn-sm">
                                         <div class="spinner-border spinner-border-sm" v-if="membership.deleting"
                                             role="status">
                                             <span class="sr-only">Loading...</span>
                                         </div>
                                         <i class="fa fa-trash-alt" v-else></i> 
-                                    </button>-->
+                                    </button>
                                 </td>
                             </tr>
                         </tbody>
                     </table>
-                </div>
-                <div class="d-block text-center card-footer">
-                    
-                </div>
+                </div>-->
         </div>
     </div>
 </div>
@@ -123,6 +128,7 @@
 <script>
 import formatNum from 'format-num'
 import moment from 'moment'
+import LoginVue from '../../../../login/Login.vue'
 export default {
     props: {
         client: {
@@ -168,6 +174,42 @@ export default {
                 this.assistancesFromMembership = response.data
                 membership.searchingAssistances = false
             })
+        }
+    },
+    computed: {
+        attributesAssistancesCalendar () {
+            let data = []
+
+            data = this.assistancesFromMembership.map(assistance => {
+                return {
+                    key: assistance.id,
+                    highlight: true,
+                    dates: Date.parse(moment(assistance.date).format()),
+                }
+            })
+            return data
+        },
+        getFirstMonthFromAssistance () {
+            if (this.assistancesFromMembership.length) {
+                return Number(moment(this.assistancesFromMembership[0].date).format('M'))
+            }
+            return Number(moment().format('M'))
+        },
+        getFirstYearFromAssistance () {
+            if (this.assistancesFromMembership.length) {
+                return Number(moment(this.assistancesFromMembership[0].date).format('Y'))
+            }
+            return Number(moment().format('Y'))
+        },
+        minDate () {
+            if (this.assistancesFromMembership.length) {
+                return Date.parse(moment(this.assistancesFromMembership[0].date).format())
+            }
+        },
+        maxDate () {
+            if (this.assistancesFromMembership.length) {
+                return Date.parse(moment(this.assistancesFromMembership[this.assistancesFromMembership.length - 1].date).format())
+            }
         }
     }
 }

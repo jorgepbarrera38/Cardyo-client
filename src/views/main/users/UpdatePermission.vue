@@ -84,7 +84,6 @@ export default {
 
             this.$http.put(`users/${this.$route.params.id}/update-permissions`, { permissionsFromUser: this.permissionsFromUser }).then( response => {
                 this.saving = false
-                console.log(response.data);
                 this.$toastr.success('Permisos actualizados')
             }).catch( error => {
                 this.saving = false

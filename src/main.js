@@ -9,6 +9,10 @@ import VueSkeletonLoader from 'skeleton-loader-vue';
 import vSelect from 'vue-select'
 import moment from 'moment'
 
+import VCalendar from 'v-calendar'
+
+Vue.use(VCalendar)
+
 if (localStorage.getItem('access_token')) {
   axios.defaults.headers.common['Authorization'] = `bearer ${localStorage.getItem('access_token')}`
 }
