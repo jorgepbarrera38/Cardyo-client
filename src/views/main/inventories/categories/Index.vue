@@ -10,7 +10,8 @@
                     <div class="card-header">
                         Categorías
                         <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" @click="$router.push({ name: 'inventory-categories.create' })">
+                            <button class="active btn btn-success" 
+                                @click="hasPermission('inventory_categories.store') ? $router.push({ name: 'inventory-categories.create' }) : ''">
                                 <i class="fa fa-plus"></i> Nuevo
                             </button>
                         </div>
@@ -29,11 +30,15 @@
                                         <td class="text"></td>
                                         <td class="text" nowrap>{{ category.name }}</td>
                                         <td class="text-center" nowrap>
-                                            <button type="button" @click="$router.push({ name: 'inventory-categories.edit', params: { id: category.id } })"
+                                            <button type="button" 
+                                                @click="hasPermission('inventory_categories.update') ? $router.push({ name: 'inventory-categories.edit', params: { id: category.id } }) : ''"
+                                                title="Editar"
                                                 class="btn btn-warning btn-sm mr-1">
                                                 <i class="fa fa-edit"></i> 
                                             </button>
-                                            <button type="button" @click="deleteCategory(category, index)" :disabled="category.deleting"
+                                            <button type="button" 
+                                                @click="hasPermission('inventory_categories.delete') ? deleteCategory(category, index) : ''" :disabled="category.deleting"
+                                                title="Eliminar"
                                                 class="btn btn-danger btn-sm">
                                                 <div class="spinner-border spinner-border-sm" v-if="category.deleting"
                                                     role="status">

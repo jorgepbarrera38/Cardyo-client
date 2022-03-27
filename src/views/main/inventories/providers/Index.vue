@@ -10,7 +10,8 @@
                     <div class="card-header">
                         Proveedores
                         <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" @click="$router.push({ name: 'inventory-providers.create' })">
+                            <button class="active btn btn-success" 
+                                @click="hasPermission('inventory_providers.store') ? $router.push({ name: 'inventory-providers.create' }) : ''">
                                 <i class="fa fa-plus"></i> Nuevo
                             </button>
                         </div>
@@ -31,11 +32,15 @@
                                         <td class="text" nowrap>{{ provider.code }}</td>
                                         <td class="text" nowrap>{{ provider.name }}</td>
                                         <td class="text-center" nowrap>
-                                            <button type="button" @click="$router.push({ name: 'inventory-providers.edit', params: { id: provider.id } })"
+                                            <button type="button"
+                                                @click="hasPermission('inventory_providers.update') ? $router.push({ name: 'inventory-providers.edit', params: { id: provider.id } }) : ''"
+                                                title="Editar"
                                                 class="btn btn-warning btn-sm mr-1">
                                                 <i class="fa fa-edit"></i> 
                                             </button>
-                                            <button type="button" @click="deleteProvider(provider, index)" :disabled="provider.deleting"
+                                            <button type="button" 
+                                                @click="hasPermission('inventory_providers.delete') ? deleteProvider(provider, index) : ''" :disabled="provider.deleting"
+                                                title="Eliminar"
                                                 class="btn btn-danger btn-sm">
                                                 <div class="spinner-border spinner-border-sm" v-if="provider.deleting"
                                                     role="status">

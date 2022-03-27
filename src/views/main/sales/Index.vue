@@ -10,7 +10,8 @@
                     <div class="card-header">
                         Ventas
                         <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" @click="$router.push({ name: 'sales.create' })">
+                            <button class="active btn btn-success" 
+                                @click="hasPermission('sales.store') ? $router.push({ name: 'sales.create' }) : ''">
                                 <i class="fa fa-plus"></i> Nuevo
                             </button>
                         </div>
@@ -33,11 +34,15 @@
                                         <td class="text" nowrap>{{ dateWithHour(sale.created_at) }}</td>
                                         <td class="text-center">${{ convertMoney(sale.total) }}</td>
                                         <td class="text-center" nowrap>
-                                            <button type="button" @click="$router.push({ name: 'sales.show', params: { id: sale.id } })"
+                                            <button type="button" 
+                                                @click="hasPermission('sales.show') ? $router.push({ name: 'sales.show', params: { id: sale.id } }) : ''"
+                                                title="Ver información"
                                                 class="btn btn-info btn-sm mr-1">
                                                 <i class="fa fa-eye"></i> 
                                             </button>
-                                            <button type="button" @click="deleteSale(sale, index)" :disabled="sale.deleting"
+                                            <button type="button" 
+                                                @click="hasPermission('sales.delete') ? deleteSale(sale, index) : ''" :disabled="sale.deleting"
+                                                title="Anular"
                                                 class="btn btn-danger btn-sm">
                                                 <div class="spinner-border spinner-border-sm" v-if="sale.deleting"
                                                     role="status">

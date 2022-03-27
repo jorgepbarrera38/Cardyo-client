@@ -10,7 +10,8 @@
                     <div class="card-header">
                         Ajustes de inventario
                         <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" @click="$router.push({ name: 'inventory-tweaks.create' })">
+                            <button class="active btn btn-success" 
+                                @click="hasPermission('inventory_tweaks.store') ? $router.push({ name: 'inventory-tweaks.create' }) : ''">
                                 <i class="fa fa-plus"></i> Nuevo
                             </button>
                         </div>
@@ -33,7 +34,9 @@
                                         <td class="text" nowrap>{{ dateWithHour(inventoryTweak.created_at) }}</td>
                                         <td class="text" nowrap>{{ inventoryTweak.type }}</td>
                                         <td class="text-center">
-                                            <button type="button" @click="$router.push({ name: 'inventory-tweaks.show', params: { id: inventoryTweak.id } })"
+                                            <button type="button" 
+                                                @click="hasPermission('inventory_tweaks.show') ? $router.push({ name: 'inventory-tweaks.show', params: { id: inventoryTweak.id } }) : ''"
+                                                title="Ver información"
                                                 class="btn btn-info btn-sm mr-1">
                                                 <i class="fa fa-eye"></i> 
                                             </button>

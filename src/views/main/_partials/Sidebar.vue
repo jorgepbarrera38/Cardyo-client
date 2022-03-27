@@ -35,7 +35,7 @@
                                 <li class="app-sidebar__heading">Dashboard</li>
                                 <li>
                                     <a href="#" class="mm-active" @click.prevent="$router.push({ name: 'dashboard.index' })">
-                                        <i class="metismenu-icon pe-7s-rocket"></i>
+                                        <i class="metismenu-icon pe-7s-home"></i>
                                         Dashboard
                                     </a>
                                 </li>
@@ -48,13 +48,14 @@
                                     </a>
                                     <ul>
                                         <li>
-                                            <a href="#" @click.prevent="$router.push({ name: 'membership_types.index' })">
+                                            <a href="#" 
+                                            @click.prevent="hasPermission('membership_types.index') ? $router.push({ name: 'membership_types.index' }) : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Tipos de membresías
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" @click.prevent="$router.push({ name: 'turns.index' })">
+                                            <a href="#" @click.prevent="hasPermission('turns.index') ? $router.push({ name: 'turns.index' }) : ''">
                                                 <i class="metismenu-icon">
                                                 </i>Turnos
                                             </a>
@@ -62,13 +63,13 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="#" @click.prevent="$router.push({ name: 'clients.index' })">
+                                    <a href="#" @click.prevent="hasPermission('clients.index') ? $router.push({ name: 'clients.index' }) : ''">
                                         <i class="metismenu-icon pe-7s-users"></i>
                                         Clientes
                                     </a>
                                 </li>
                                 <li>
-                                    <a href="#" @click.prevent="$router.push({ name: 'assistances.index' })">
+                                    <a href="#" @click.prevent="hasPermission('assistances.mark_attendance') ? $router.push({ name: 'assistances.index' }) : ''">
                                         <i class="metismenu-icon pe-7s-note2"></i>
                                         Asistencia
                                     </a>
@@ -81,37 +82,43 @@
                                     </a>
                                     <ul>
                                         <li>
-                                            <a href="#" @click.prevent="$router.push({ name: 'inventory-categories.index' })">
+                                            <a href="#" 
+                                                @click.prevent="hasPermission('inventory_categories.index') ? $router.push({ name: 'inventory-categories.index' }) : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Categorías
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" @click.prevent="$router.push({ name: 'inventory-products.index' })">
+                                            <a href="#" 
+                                                @click.prevent="hasPermission('inventory_products.index') ? $router.push({ name: 'inventory-products.index' }) : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Productos
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" @click.prevent="$router.push({ name: 'inventory-providers.index' })">
+                                            <a href="#" 
+                                                @click.prevent="hasPermission('inventory_providers.index') ? $router.push({ name: 'inventory-providers.index' }) : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Proveedores
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" @click.prevent="$router.push({ name: 'inventory-purchases.index' })">
+                                            <a href="#" 
+                                                @click.prevent="hasPermission('inventory_purchases.index') ? $router.push({ name: 'inventory-purchases.index' }) : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Compras
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" @click.prevent="$router.push({ name: 'inventory-purchase-returns.index' })">
+                                            <a href="#" 
+                                                @click.prevent="hasPermission('inventory_purchase_returns.index') ? $router.push({ name: 'inventory-purchase-returns.index' }) : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Devolución de compras
                                             </a>
                                         </li>
                                         <li>
-                                            <a href="#" @click.prevent="$router.push({ name: 'inventory-tweaks.index' })">
+                                            <a href="#" 
+                                                @click.prevent="hasPermission('inventory_tweaks.index') ? $router.push({ name: 'inventory-tweaks.index' }) : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Ajustes de inventario
                                             </a>
@@ -119,7 +126,8 @@
                                     </ul>
                                 </li>
                                 <li>
-                                    <a href="#" @click.prevent="$router.push({ name: 'sales.index' })">
+                                    <a href="#" 
+                                        @click.prevent="hasPermission('sales.index') ? $router.push({ name: 'sales.index' }) : ''">
                                         <i class="metismenu-icon pe-7s-cart"></i>
                                         Ventas
                                     </a>
@@ -132,7 +140,8 @@
                                     </a>
                                     <ul>
                                         <li>
-                                            <a href="#" @click.prevent="$router.push({ name: 'users.index' })">
+                                            <a href="#" 
+                                                @click.prevent="hasPermission('users.index') ? $router.push({ name: 'users.index' }) : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Usuarios
                                             </a>

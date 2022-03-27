@@ -5,7 +5,7 @@
                 <div class="card-header">
                     Membresías
                     <div class="btn-actions-pane-right">
-                        <button class="active btn btn-success" @click="$emit('createMembership')">
+                        <button class="active btn btn-success" @click="hasPermission('client_memberships.store') ? $emit('createMembership') : ''">
                             <i class="fa fa-plus"></i> Nuevo
                         </button>
                     </div>
@@ -41,11 +41,16 @@
                                     <div class="badge badge-secondary" v-if="membershipIsFinished(membership.date_finish)">Finalizada</div>
                                 </td>
                                 <td class="text-center" nowrap>
-                                    <button type="button" @click="$emit('editMembership', membership.id)" title="Editar membresía"
+                                    <button type="button" 
+                                        @click="hasPermission('client_memberships.update') ? $emit('editMembership', membership.id) : ''" 
+                                        title="Editar membresía"
                                         class="btn btn-warning btn-sm mr-1">
                                         <i class="fa fa-edit"></i> 
                                     </button>
-                                    <button type="button" @click="deleteMembership(membership, index)" :disabled="membership.deleting" title="Eliminar membresía"
+                                    <button type="button" 
+                                        @click="hasPermission('client_memberships.delete') ? deleteMembership(membership, index) : ''"
+                                        :disabled="membership.deleting" 
+                                        title="Eliminar membresía"
                                         class="btn btn-danger btn-sm mr-1">
                                         <div class="spinner-border spinner-border-sm" v-if="membership.deleting"
                                             role="status">

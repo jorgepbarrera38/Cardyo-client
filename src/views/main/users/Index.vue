@@ -10,7 +10,8 @@
                     <div class="card-header">
                         Usuarios
                         <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" @click="$router.push({ name: 'users.create' })">
+                            <button class="active btn btn-success" 
+                                @click="hasPermission('users.store') ? $router.push({ name: 'users.create' }) : ''">
                                 <i class="fa fa-plus"></i> Nuevo
                             </button>
                         </div>
@@ -31,15 +32,21 @@
                                         <td class="text" nowrap>{{ user.names }}</td>
                                         <td class="text-center">{{ user.username }}</td>
                                         <td class="text-center" nowrap>
-                                            <button type="button" @click="$router.push({ name: 'users.update_permissions', params: { id: user.id } })" title="Actualizar permisos"
+                                            <button type="button" 
+                                                @click="hasPermission('users.update_permissions') ? $router.push({ name: 'users.update_permissions', params: { id: user.id } }) : ''" 
+                                                title="Actualizar permisos"
                                                 class="btn btn-info btn-sm mr-1">
                                                 <i class="fa fa-key"></i>
                                             </button>
-                                            <button type="button" @click="$router.push({ name: 'users.edit', params: { id: user.id } })" title="Editar"
+                                            <button type="button" 
+                                                @click="hasPermission('users.update') ? $router.push({ name: 'users.edit', params: { id: user.id } }) : ''" 
+                                                title="Editar"
                                                 class="btn btn-warning btn-sm mr-1">
                                                 <i class="fa fa-edit"></i> 
                                             </button>
-                                            <button type="button" @click="deleteUser(user, index)" :disabled="user.deleting" title="Eliminar"
+                                            <button type="button" 
+                                                @click="hasPermission('users.delete') ? deleteUser(user, index) : ''" :disabled="user.deleting" 
+                                                title="Eliminar"
                                                 class="btn btn-danger btn-sm">
                                                 <div class="spinner-border spinner-border-sm" v-if="user.deleting"
                                                     role="status">

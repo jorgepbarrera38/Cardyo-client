@@ -5,7 +5,7 @@
         <!--Fin titulo página-->
         <!--Contenido-->
         <div class="row">
-            <div class="col-md-4 col-lg-4 offset-md-4">
+            <div class="col-md-6 col-lg-6 offset-md-3">
                 <div class="main-card mb-3 card">
                     <div class="card-body"><h5 class="card-title">Actualizar permisos de usuario</h5>
                         <div class="alert alert-danger fade show" role="alert" v-if="errors">

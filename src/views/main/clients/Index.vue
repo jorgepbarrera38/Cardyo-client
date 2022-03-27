@@ -10,7 +10,7 @@
                     <div class="card-header">
                         Clientes registrados
                         <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" @click="$router.push({ name: 'clients.create' })">
+                            <button class="active btn btn-success" @click="hasPermission('clients.store') ? $router.push({ name: 'clients.create' }) : ''">
                                 <i class="fa fa-plus"></i> Nuevo
                             </button>
                         </div>
@@ -51,15 +51,21 @@
                                         <td class="text-center">{{ client.email }}</td>
                                         <td class="text-center">{{ client.phonenumber }}</td>
                                         <td class="text-center" nowrap>
-                                            <button type="button" @click="$router.push({ name: 'clients.show', params: { id: client.id } })"
+                                            <button type="button" 
+                                                @click="hasPermission('clients.show') ? $router.push({ name: 'clients.show', params: { id: client.id } }) : ''"
+                                                title="Ver información"
                                                 class="btn btn-info btn-sm mr-1">
                                                 <i class="fa fa-eye"></i> 
                                             </button>
-                                            <button type="button" @click="$router.push({ name: 'clients.edit', params: { id: client.id } })"
+                                            <button type="button" 
+                                                @click="hasPermission('clients.update') ? $router.push({ name: 'clients.edit', params: { id: client.id } }) : ''"
+                                                title="Editar"
                                                 class="btn btn-warning btn-sm mr-1">
                                                 <i class="fa fa-edit"></i> 
                                             </button>
-                                            <button type="button" @click="deleteClient(client, index)" :disabled="client.deleting"
+                                            <button type="button" 
+                                                @click="hasPermission('clients.delete') ? deleteClient(client, index) : ''" :disabled="client.deleting"
+                                                title="Eliminar"
                                                 class="btn btn-danger btn-sm">
                                                 <div class="spinner-border spinner-border-sm" v-if="client.deleting"
                                                     role="status">

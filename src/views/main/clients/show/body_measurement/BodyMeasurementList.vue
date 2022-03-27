@@ -3,7 +3,7 @@
                 <div class="card-header">
                     Medidas corporales
                     <div class="btn-actions-pane-right">
-                        <button class="active btn btn-success" @click="$emit('createBodyMeasurement')">
+                        <button class="active btn btn-success" @click="hasPermission('client_body_measurements.store') ? $emit('createBodyMeasurement') : ''">
                             <i class="fa fa-plus"></i> Nuevo
                         </button>
                     </div>
@@ -45,11 +45,15 @@
                                 <td class="text-center">{{ bodyMeasurement.calves }} cm</td>
                                 
                                 <td class="text-center" nowrap>
-                                   <button type="button" @click="$emit('editBodyMeasurement', bodyMeasurement.id)" title="Editar medidas corporales"
+                                   <button type="button" 
+                                        @click="hasPermission('client_body_measurements.update') ? $emit('editBodyMeasurement', bodyMeasurement.id) : ''" 
+                                        title="Editar medidas corporales"
                                         class="btn btn-warning btn-sm mr-1">
                                         <i class="fa fa-edit"></i> 
                                     </button>
-                                    <button type="button" @click="deleteBodyMeasurement(bodyMeasurement, index)" :disabled="bodyMeasurement.deleting" title="Eliminar medidas corporales"
+                                    <button type="button" 
+                                        @click="hasPermission('client_body_measurements.delete') ? deleteBodyMeasurement(bodyMeasurement, index) : ''" 
+                                        :disabled="bodyMeasurement.deleting" title="Eliminar medidas corporales"
                                         class="btn btn-danger btn-sm mr-1">
                                         <div class="spinner-border spinner-border-sm" v-if="bodyMeasurement.deleting"
                                             role="status">

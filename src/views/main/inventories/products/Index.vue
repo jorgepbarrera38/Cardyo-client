@@ -10,7 +10,8 @@
                     <div class="card-header">
                         Productos
                         <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" @click="$router.push({ name: 'inventory-products.create' })">
+                            <button class="active btn btn-success" 
+                                @click="hasPermission('inventory_products.store') ? $router.push({ name: 'inventory-products.create' }) : ''">
                                 <i class="fa fa-plus"></i> Nuevo
                             </button>
                         </div>
@@ -54,11 +55,16 @@
                                         <td class="text-center">{{ product.stock_max }}</td>
                                         <td class="text-center" nowrap>
                                             
-                                            <button type="button" @click="$router.push({ name: 'inventory-products.edit', params: { id: product.id } })"
+                                            <button type="button" 
+                                                @click="hasPermission('inventory_products.update') ? $router.push({ name: 'inventory-products.edit', params: { id: product.id } }) : ''"
+                                                title="Editar"
                                                 class="btn btn-warning btn-sm mr-1">
                                                 <i class="fa fa-edit"></i> 
                                             </button>
-                                            <button type="button" @click="deleteProduct(product, index)" :disabled="product.deleting"
+                                            <button type="button" 
+                                                @click="hasPermission('inventory_products.delete') ? deleteProduct(product, index) : ''" 
+                                                title="Eliminar"
+                                                :disabled="product.deleting"
                                                 class="btn btn-danger btn-sm">
                                                 <div class="spinner-border spinner-border-sm" v-if="product.deleting"
                                                     role="status">

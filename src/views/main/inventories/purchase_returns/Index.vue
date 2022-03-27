@@ -10,7 +10,8 @@
                     <div class="card-header">
                         Devolución de compras
                         <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" @click="$router.push({ name: 'inventory-purchase-returns.create' })">
+                            <button class="active btn btn-success" 
+                                @click="hasPermission('inventory_purchase_returns.store') ? $router.push({ name: 'inventory-purchase-returns.create' }) : ''">
                                 <i class="fa fa-plus"></i> Nuevo
                             </button>
                         </div>
@@ -33,7 +34,9 @@
                                         <td class="text" nowrap>{{ dateWithHour(purchaseReturn.created_at) }}</td>
                                         <td class="text" nowrap>{{ purchaseReturn.purchase.id }}</td>
                                         <td class="text-center">
-                                            <button type="button" @click="$router.push({ name: 'inventory-purchase-returns.show', params: { id: purchaseReturn.id } })"
+                                            <button type="button" 
+                                                @click="hasPermission('inventory_purchase_returns.show') ? $router.push({ name: 'inventory-purchase-returns.show', params: { id: purchaseReturn.id } }) : ''"
+                                                title="Ver información"
                                                 class="btn btn-info btn-sm mr-1">
                                                 <i class="fa fa-eye"></i> 
                                             </button>

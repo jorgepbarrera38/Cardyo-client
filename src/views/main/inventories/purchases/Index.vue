@@ -10,7 +10,8 @@
                     <div class="card-header">
                         Compras
                         <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" @click="$router.push({ name: 'inventory-purchases.create' })">
+                            <button class="active btn btn-success" 
+                                @click="hasPermission('inventory_purchases.store') ? $router.push({ name: 'inventory-purchases.create' }) : ''">
                                 <i class="fa fa-plus"></i> Nuevo
                             </button>
                         </div>
@@ -39,7 +40,9 @@
                                         <td class="text" nowrap>{{ purchase.provider.code + ' - ' + purchase.provider.name }}</td>
                                         <td class="text" nowrap>{{ convertMoney(purchase.total) }}</td>
                                         <td class="text-center">
-                                            <button type="button" @click="$router.push({ name: 'inventory-purchases.show', params: { id: purchase.id } })"
+                                            <button type="button" 
+                                                title="Ver información"
+                                                @click="hasPermission('inventory_purchases.show') ? $router.push({ name: 'inventory-purchases.show', params: { id: purchase.id } }) : ''"
                                                 class="btn btn-info btn-sm mr-1">
                                                 <i class="fa fa-eye"></i> 
                                             </button>
