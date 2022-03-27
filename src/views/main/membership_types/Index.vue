@@ -10,7 +10,7 @@
                     <div class="card-header">
                         Tipos de membresías
                         <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" @click="$router.push({ name: 'membership_types.create' })">
+                            <button class="active btn btn-success" @click="hasPermission('membership_types.store') ? $router.push({ name: 'membership_types.create' }) : ''">
                                 <i class="fa fa-plus"></i> Nuevo
                             </button>
                         </div>
@@ -35,11 +35,15 @@
                                         <td class="text-center">{{ membershipType.quantity }}</td>
                                         <td class="text-center">${{ convertMoney(membershipType.price) }}</td>
                                         <td class="text-center" nowrap>
-                                            <button type="button" @click="$router.push({ name: 'membership_types.edit', params: { id: membershipType.id } })"
+                                            <button type="button" 
+                                                @click="hasPermission('membership_types.update') ? $router.push({ name: 'membership_types.edit', params: { id: membershipType.id } }) : ''"
+                                                title="Editar"
                                                 class="btn btn-warning btn-sm mr-1">
                                                 <i class="fa fa-edit"></i> 
                                             </button>
-                                            <button type="button" @click="deleteMembershipType(membershipType, index)" :disabled="membershipType.deleting"
+                                            <button type="button" 
+                                                @click="hasPermission('membership_types.delete') ? deleteMembershipType(membershipType, index) : ''" :disabled="membershipType.deleting"
+                                                title="Eliminar"
                                                 class="btn btn-danger btn-sm">
                                                 <div class="spinner-border spinner-border-sm" v-if="membershipType.deleting"
                                                     role="status">
@@ -97,7 +101,9 @@ export default {
                 this.$toastr.success('Tipo de membresía eliminada')
             }).catch(error => {
                 membershipType.deleting = false
-                this.$toastr.error('El tipo de membresía no se pudo eliminar')
+                if (error.response.status != 403) {
+                    this.$toastr.error('El tipo de membresía no se pudo eliminar')
+                }
             })
         },
         convertMoney (value) {

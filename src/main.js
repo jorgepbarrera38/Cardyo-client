@@ -9,6 +9,11 @@ import VueSkeletonLoader from 'skeleton-loader-vue';
 import vSelect from 'vue-select'
 import moment from 'moment'
 
+if (localStorage.getItem('access_token')) {
+  axios.defaults.headers.common['Authorization'] = `bearer ${localStorage.getItem('access_token')}`
+}
+
+
 moment.locale('es')
 
 Vue.component('v-select', vSelect)
@@ -34,6 +39,61 @@ Vue.prototype.$toastr = toastr
 //Axios
 axios.defaults.baseURL = 'http://localhost:8000/api'
 Vue.prototype.$http = axios
+
+// Add a response interceptor
+axios.interceptors.response.use(function (response) {
+  // Any status code that lie within the range of 2xx cause this function to trigger
+  // Do something with response data
+  return response;
+}, function (error) {
+  if (error.response.status == 401) {
+    localStorage.removeItem('namesUser')
+    store.commit('setNamesUser', 'Usuario')
+    localStorage.removeItem('permissionsUser')
+    store.commit('setPermissionsUser', [])
+    localStorage.removeItem('access_token')
+    store.commit('changeStateAuthUser', false)
+    router.push({ name: 'login' })
+  }
+
+  if (error.response.status == 403) {
+    toastr.error('No tiene permisos para esta acción')
+    //router.push({ name: 'dashboard.index' })
+  }
+  // Any status codes that falls outside the range of 2xx cause this function to trigger
+  // Do something with response error
+  return Promise.reject(error);
+});
+
+router.beforeEach((to, from, next) => {
+  if (to.name !== 'login' && !store.state.authenticated) {
+    localStorage.removeItem('namesUser')
+    store.commit('setNamesUser', 'Usuario')
+    localStorage.removeItem('permissionsUser')
+    store.commit('setPermissionsUser', [])
+    localStorage.removeItem('access_token')
+    next({ name: 'login' })
+  }
+  else if (to.name == 'login' && store.state.authenticated) {
+    next({ name: 'dashboard.index' })
+  }
+  else {
+    next() 
+  }
+})
+
+Vue.mixin({
+  methods: {
+    hasPermission (permission) {
+      let hasPermission = store.state.permissionsUser.some(permissionUser => permissionUser.name == permission)
+      if (!hasPermission) {
+        toastr.error('No tiene permisos para esta acción')
+        return false
+      }
+      return true
+    }
+  }
+})
 
 new Vue({
   router,

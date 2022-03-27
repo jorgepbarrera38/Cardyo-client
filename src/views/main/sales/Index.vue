@@ -20,22 +20,22 @@
                             <thead>
                             <tr>
                                 <th></th>
-                                <th>Nombre</th>
-                                <th class="text-center">Hora inicial</th>
-                                <th class="text-center">Hora final</th>
+                                <th>Consecutivo</th>
+                                <th>Fecha</th>
+                                <th class="text-center">Total</th>
                                 <th class="text-center"></th>
                             </tr>
                             </thead>
                             <transition-group tag="tbody" name="fade" v-if="!searching">>
                                     <tr v-for="(sale, index) in sales.data" :key="sale.id">
                                         <td class="text"></td>
-                                        <td class="text" nowrap>{{ sale.name }}</td>
-                                        <td class="text-center">{{ sale.time_start }}</td>
-                                        <td class="text-center">{{ sale.time_finish }}</td>
+                                        <td class="text" nowrap>{{ sale.id }}</td>
+                                        <td class="text" nowrap>{{ dateWithHour(sale.created_at) }}</td>
+                                        <td class="text-center">${{ convertMoney(sale.total) }}</td>
                                         <td class="text-center" nowrap>
-                                            <button type="button" @click="$router.push({ name: 'sales.edit', params: { id: sale.id } })"
-                                                class="btn btn-warning btn-sm mr-1">
-                                                <i class="fa fa-edit"></i> 
+                                            <button type="button" @click="$router.push({ name: 'sales.show', params: { id: sale.id } })"
+                                                class="btn btn-info btn-sm mr-1">
+                                                <i class="fa fa-eye"></i> 
                                             </button>
                                             <button type="button" @click="deleteSale(sale, index)" :disabled="sale.deleting"
                                                 class="btn btn-danger btn-sm">
@@ -64,6 +64,7 @@
 import PageTitle from '../components/PageTitle'
 import Skeleton from './_partials/Skeleton'
 import formatNum from 'format-num'
+import moment from 'moment'
 export default {
     components: { PageTitle, Skeleton },
     created () {
@@ -90,16 +91,21 @@ export default {
             sale.deleting = true
             this.$http.delete(`sales/${ sale.id }`).then( response => {
                 this.getSales()
-                this.sales.data.splice(index, 1)
+                //this.sales.data.splice(index, 1)
                 sale.deleting = false
-                this.$toastr.success('Saleo eliminado')
+                this.$toastr.success('Venta eliminada')
             }).catch(error => {
                 sale.deleting = false
-                this.$toastr.error('El registro no se pudo eliminar')
+                if (error.response.status != 403) {
+                    this.$toastr.error('El registro no se pudo eliminar')
+                }
             })
         },
         convertMoney (value) {
             return formatNum(value)
+        },
+        dateWithHour (date) {
+            return moment(date).format('lll')
         }
     }
 }

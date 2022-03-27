@@ -1,7 +1,7 @@
 <template>
     <div class="app-header header-shadow">
             <div class="app-header__logo">
-                <div class="logo-src"></div>
+                <div class="logo-sr">SG-GYM</div>
                 <div class="header__pane ml-auto">
                     <div>
                         <button type="button" class="hamburger close-sidebar-btn hamburger--elastic" data-class="closed-sidebar">
@@ -31,13 +31,6 @@
                 </span>
             </div>    <div class="app-header__content">
                 <div class="app-header-left">
-                    <div class="search-wrapper">
-                        <div class="input-holder">
-                            <input type="text" class="search-input" placeholder="Type to search">
-                            <button class="search-icon"><span></span></button>
-                        </div>
-                        <button class="close"></button>
-                    </div>
                     <ul class="header-menu nav">
                         <li class="nav-item">
                             <a href="javascript:void(0);" class="nav-link">
@@ -74,22 +67,17 @@
                                             <h6 tabindex="-1" class="dropdown-header">Header</h6>
                                             <button type="button" tabindex="0" class="dropdown-item">Actions</button>
                                             <div tabindex="-1" class="dropdown-divider"></div>
-                                            <button type="button" tabindex="0" class="dropdown-item">Dividers</button>
+                                            <button @click="logout" type="button" tabindex="0" class="dropdown-item">Cerrar sesión</button>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="widget-content-left  ml-3 header-user-info">
                                     <div class="widget-heading">
-                                        Alina Mclourd
+                                        {{ namesUser }}
                                     </div>
                                     <div class="widget-subheading">
                                         VP People Manager
                                     </div>
-                                </div>
-                                <div class="widget-content-right header-user-info ml-3">
-                                    <button type="button" class="btn-shadow p-1 btn btn-primary btn-sm show-toastr-example">
-                                        <i class="fa text-white fa-calendar pr-1 pl-1"></i>
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -97,3 +85,41 @@
             </div>
         </div>    
 </template>
+<script>
+import { mapState, mapMutations } from 'vuex'
+export default {
+    data () {
+        return {
+            errors: null,
+            logining: false
+        }
+    },
+    methods: {
+        ...mapMutations(['changeStateAuthUser', 'setNamesUser', 'setPermissionsUser']),
+        logout () {
+            //this.logining = true
+
+            this.$http.post('auth/logout').then( response => {
+                localStorage.removeItem('permissionsUser')
+                this.setPermissionsUser([])
+                localStorage.removeItem('namesUser')
+                localStorage.removeItem('access_token')
+                this.setNamesUser('Usuario')
+                this.changeStateAuthUser(false)
+                this.$router.push({ name: 'login' })
+            }).catch( error => {
+                localStorage.removeItem('permissionsUser')
+                this.setPermissionsUser([])
+                localStorage.removeItem('namesUser')
+                localStorage.removeItem('access_token')
+                this.setNamesUser('Usuario')
+                this.changeStateAuthUser(false)
+                this.$router.push({ name: 'login' })
+            })
+        },
+    },
+    computed: {
+        ...mapState(['namesUser'])
+    }
+}
+</script>

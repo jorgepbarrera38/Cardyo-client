@@ -93,6 +93,15 @@
                                             </button>
                                         </td>
                                     </tr>
+                                    <tr>
+                                        <td class="text"></td>
+                                        <td class="text" nowrap></td>
+                                        <td class="text-center"></td>
+                                        <td class="text-center"><strong>Total</strong></td>
+                                        <td class="text-center">{{ total }}</td>
+                                        <td class="text-center" nowrap>
+                                        </td>
+                                    </tr>
                                 </tbody>
                             </table>
                         </div>
@@ -231,6 +240,16 @@ export default {
         },
         convertMoney (value) {
             return `$${formatNum(value)}`
+        }
+    },
+    computed: {
+        total () {
+            let total = 0
+            this.purchase.details.forEach(detail => {
+                total += detail.quantity * detail.price_unit
+            })
+
+            return this.convertMoney(total)
         }
     }
 }

@@ -1,3 +1,104 @@
 <template>
-    <h1>Detalle de venta</h1>
+    <div class="app-main__inner">
+        <!--Titulo página-->
+        <PageTitle title="Ventas" icon="pe-7s-clock" subtitle=""/>     
+        <!--Fin titulo página-->
+        <!--Contenido-->
+        <div class="row">
+            <div class="col-md-12 col-lg-12">
+                <div class="main-card mb-3 card">
+                    <div class="card-body"><h5 class="card-title">Detalle de venta</h5>
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Fecha (*)</label>
+                                    <input type="text" class="form-control" disabled 
+                                        :value="sale.created_at ? dateWithHour(sale.created_at) : ''">                                    
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Cliente (*)</label>
+                                    <input type="text" class="form-control" disabled 
+                                        :value="sale.client.identification ? sale.client.identification + ' - ' + sale.client.full_names : ''">                                    
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive">
+                                    <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                        <thead>
+                                        <tr>
+                                            <th></th>
+                                            <th>Producto</th>
+                                            <th class="text-center">Precio unitario</th>
+                                            <th class="text-center">Cantidad</th>
+                                            <th class="text-center">Subtotal</th>
+                                        </tr>
+                                        </thead>
+                                            <tbody>
+                                                <tr v-for="(detail, index) in sale.sale_details" :key="detail.id">
+                                                    <td class="text"></td>
+                                                    <td class="text" nowrap>{{ detail.product_name }}</td>
+                                                    <td class="text-center">${{ convertMoney(detail.price_unit) }}</td>
+                                                    <td class="text-center">{{ detail.quantity }}</td>
+                                                    <td class="text-center">${{ convertMoney(detail.price_total) }}</td>
+                                                </tr>
+                                                <tr>
+                                                    <td class="text"></td>
+                                                    <td class="text" nowrap></td>
+                                                    <td class="text-center"></td>
+                                                    <td class="text-center"><strong>Total</strong></td>
+                                                    <td class="text-center">${{ convertMoney(sale.total) }}</td>
+                                                    <td class="text-center" nowrap>
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <hr>
+                        <a href="#" class="mt-1 btn btn-secondary mr-1" @click.prevent="$router.push({ name: 'sales.index' })">
+                            <i class="fa fa-undo"></i> Atrás
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--Fin contenido-->
+    </div>
 </template>
+<script>
+import PageTitle from '../components/PageTitle.vue'
+import Skeleton from './_partials/Skeleton'
+import formatNum from 'format-num'
+import moment from 'moment'
+export default {
+    components: { PageTitle, Skeleton },
+    created () {
+        this.getSale()
+    },
+    data () {
+        return {
+            sale: {
+                client: {}
+            },
+        }
+    },
+    methods: {
+        getSale () {
+            this.$http.get(`sales/${this.$route.params.id}`).then( response => {
+                this.sale = response.data
+            })
+        },
+        convertMoney (value) {
+            return formatNum(value)
+        },
+        dateWithHour (date) {
+            return moment(date).format('lll')
+        }
+    },
+}
+</script>

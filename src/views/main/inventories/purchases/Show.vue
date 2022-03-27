@@ -112,7 +112,6 @@ export default {
     methods: {
         getPurchase () {
             this.$http.get(`inventory-purchases/${ this.$route.params.id }`).then( response => {
-                console.log(response.data)
                 this.purchase = response.data
             })
         },

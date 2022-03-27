@@ -18,8 +18,12 @@ import Header from './_partials/Header'
 import ThemeAndColor from './_partials/ThemeAndColor'
 import Sidebar from './_partials/Sidebar'
 import Footer from './_partials/Footer'
+import { mapState } from 'vuex'
 
 export default ({
-    components: { Header, ThemeAndColor, Sidebar, Footer }
+    components: { Header, ThemeAndColor, Sidebar, Footer },
+    computed: {
+        ...mapState(['authenticated', 'permissionsUser'])
+    }
 })
 </script>

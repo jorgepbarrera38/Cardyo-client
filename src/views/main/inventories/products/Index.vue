@@ -116,7 +116,9 @@ export default {
                 this.$toastr.success('Producto eliminado')
             }).catch(error => {
                 product.deleting = false
-                this.$toastr.error('El producto no se pudo eliminar')
+                if (error.response.status != 403) {
+                    this.$toastr.error('El producto no se pudo eliminar')
+                }
             })
         },
         convertMoney (value) {

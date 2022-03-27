@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Login from '../views/login/Login'
 import Main from '../views/main/Main'
 import ClientIndex from '../views/main/clients/Index'
 import ClientShow from '../views/main/clients/show/Show'
@@ -33,6 +34,15 @@ import SaleIndex from '../views/main/sales/Index'
 import SaleShow from '../views/main/sales/Show'
 import SaleCreate from '../views/main/sales/Create'
 
+import InventoryTweakIndex from '../views/main/inventories/inventory_tweaks/Index'
+import InventoryTweakShow from '../views/main/inventories/inventory_tweaks/Show'
+import InventoryTweakCreate from '../views/main/inventories/inventory_tweaks/Create'
+
+import UserIndex from '../views/main/users/Index'
+import UserCreate from '../views/main/users/Create'
+import UserEdit from '../views/main/users/Edit'
+import UserUpdatePermission from '../views/main/users/UpdatePermission'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -41,6 +51,11 @@ const routes = [
     //name: 'Main',
     component: Main,
     children: [
+      {
+        path: 'login',
+        name: 'login',
+        component: Login
+      },
       {
         path: '/',
         name: 'dashboard.index',
@@ -178,6 +193,21 @@ const routes = [
       },
 
       {
+        path: 'inventario/ajustes-de-inventario',
+        name: 'inventory-tweaks.index',
+        component: InventoryTweakIndex
+      },
+      {
+        path: 'inventario/ajustes-de-inventario/nuevo',
+        name: 'inventory-tweaks.create',
+        component: InventoryTweakCreate
+      },
+      {
+        path: 'inventario/ajustes-de-inventario/:id',
+        name: 'inventory-tweaks.show',
+        component: InventoryTweakShow
+      },
+      {
         path: 'ventas',
         name: 'sales.index',
         component: SaleIndex
@@ -191,6 +221,26 @@ const routes = [
         path: 'ventas/:id',
         name: 'sales.show',
         component: SaleShow
+      },
+      {
+        path: 'usuarios',
+        name: 'users.index',
+        component: UserIndex
+      },
+      {
+        path: 'usuarios/nuevo',
+        name: 'users.create',
+        component: UserCreate
+      },
+      {
+        path: 'usuarios/:id/edit',
+        name: 'users.edit',
+        component: UserEdit
+      },
+      {
+        path: 'usuarios/:id/actualizar-permisos',
+        name: 'users.update_permissions',
+        component: UserUpdatePermission
       },
     ]
   },

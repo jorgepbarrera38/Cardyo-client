@@ -1,6 +1,6 @@
 <template>
     <div class="main-card mb-3 card">
-        <div class="card-body"><h5 class="card-title">Editar medidas corporales {{ bodyMeasurementId }}</h5>
+        <div class="card-body"><h5 class="card-title">Editar medidas corporales</h5>
             <div class="alert alert-danger fade show" role="alert" v-if="errors">
                 <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
             </div>

@@ -91,7 +91,9 @@ export default {
                 this.$toastr.success('Categoría eliminada')
             }).catch(error => {
                 category.deleting = false
-                this.$toastr.error('La categoría no se pudo eliminar')
+                if (error.response.status != 403) {
+                    this.$toastr.error('La categoría no se pudo eliminar')
+                }
             })
         },
         convertMoney (value) {

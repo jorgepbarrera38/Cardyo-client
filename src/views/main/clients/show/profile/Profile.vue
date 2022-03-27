@@ -12,7 +12,7 @@
                     <i class="fa fa-birthday-cake"></i> {{ client.date_of_birth }} <br>
                     <i class="fa fa-map-marker-alt"></i> {{ client.address }} <br>
                     <i class="fa fa-envelope"></i> {{ client.email }} <br>
-                    <i class="fa fa-envelope"></i> {{ client.phonenumber }} <br>
+                    <i class="fa fa-phone"></i> {{ client.phonenumber }} <br>
                 </p>
             </div>
         </div>
@@ -28,11 +28,6 @@ export default {
         client: {
             type: Object,
             required: true
-        }
-    },
-    watch: {
-        client () {
-            console.log('Cambió');
         }
     }
 }

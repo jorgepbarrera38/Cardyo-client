@@ -88,7 +88,7 @@ export default {
                 this.$emit('bodyMeasurementDeleted', index)
                 this.$toastr.success('Medida corporal eliminada')
             }).catch(error => {
-                membership.deleting = false
+                bodyMeasurement.deleting = false
                 this.$toastr.error(error.response.data.errors.message[0])
             })
         },

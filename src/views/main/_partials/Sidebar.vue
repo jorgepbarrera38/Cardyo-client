@@ -110,6 +110,12 @@
                                                 Devolución de compras
                                             </a>
                                         </li>
+                                        <li>
+                                            <a href="#" @click.prevent="$router.push({ name: 'inventory-tweaks.index' })">
+                                                <i class="metismenu-icon"></i>
+                                                Ajustes de inventario
+                                            </a>
+                                        </li>
                                     </ul>
                                 </li>
                                 <li>
@@ -117,6 +123,21 @@
                                         <i class="metismenu-icon pe-7s-cart"></i>
                                         Ventas
                                     </a>
+                                </li>
+                                <li>
+                                    <a href="#">
+                                        <i class="metismenu-icon pe-7s-edit"></i>
+                                        Sistema
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="#" @click.prevent="$router.push({ name: 'users.index' })">
+                                                <i class="metismenu-icon"></i>
+                                                Usuarios
+                                            </a>
+                                        </li>
+                                    </ul>
                                 </li>
                             </ul>
                         </div>

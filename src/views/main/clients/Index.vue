@@ -116,7 +116,9 @@ export default {
                 this.$toastr.success('Cliente eliminado')
             }).catch(error => {
                 client.deleting = false
-                this.$toastr.error('El cliente no se pudo eliminar')
+                if (error.response.status != 403) {
+                    this.$toastr.error('El cliente no se pudo eliminar')
+                }
             })
         }
     }

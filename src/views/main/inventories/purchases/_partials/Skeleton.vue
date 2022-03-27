@@ -6,7 +6,7 @@
             <td class="text">
                     <vue-skeleton-loader
                         type="rect"
-                        :width="40"
+                        :width="70"
                         :height="15"
                         animation="fade"
                     />
@@ -30,7 +30,7 @@
             <td class="text">
                     <vue-skeleton-loader
                         type="rect"
-                        :width="100"
+                        :width="80"
                         :height="15"
                         animation="fade"
                     />
@@ -38,7 +38,7 @@
             <td class="text">
                     <vue-skeleton-loader
                         type="rect"
-                        :width="80"
+                        :width="140"
                         :height="15"
                         animation="fade"
                     />

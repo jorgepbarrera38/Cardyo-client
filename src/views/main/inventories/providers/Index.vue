@@ -93,7 +93,9 @@ export default {
                 this.$toastr.success('Proveedor eliminado')
             }).catch(error => {
                 provider.deleting = false
-                this.$toastr.error('El proveedor no se pudo eliminar')
+                if (error.response.status != 403) {
+                    this.$toastr.error('El proveedor no se pudo eliminar')
+                }
             })
         },
         convertMoney (value) {

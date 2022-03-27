@@ -107,12 +107,18 @@ export default {
 
             this.$http.get(`assitances/get-active-memberships?identification=${this.identification}`)
                 .then( response => {
-                this.client = response.data
+
+                this.client = response.data.clientWithInfoMemberships
+                
                 this.client.memberships.forEach(membership => {
                     this.$set(membership, 'markingAttendance', false)
                     this.$set(membership, 'clientMembershipHasAssistanceToday', this.clientMembershipHasAssistanceToday(membership))
-                });
+                })
+
                 this.searching = false
+                if (!response.data.clientHasActiveMemberships) {
+                    this.$toastr.error('El cliente no tiene membresías activas')
+                }
             }).catch( error => {
                 this.searching = false
                 if (error.response.status == 422) {

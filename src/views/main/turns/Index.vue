@@ -10,7 +10,7 @@
                     <div class="card-header">
                         Turnos
                         <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" @click="$router.push({ name: 'turns.create' })">
+                            <button class="active btn btn-success" @click="hasPermission('turns.store') ? $router.push({ name: 'turns.create' }) : ''">
                                 <i class="fa fa-plus"></i> Nuevo
                             </button>
                         </div>
@@ -33,11 +33,13 @@
                                         <td class="text-center">{{ turn.time_start }}</td>
                                         <td class="text-center">{{ turn.time_finish }}</td>
                                         <td class="text-center" nowrap>
-                                            <button type="button" @click="$router.push({ name: 'turns.edit', params: { id: turn.id } })"
+                                            <button type="button" @click="hasPermission('turns.update') ? $router.push({ name: 'turns.edit', params: { id: turn.id } }) : ''"
+                                                title="Editar"
                                                 class="btn btn-warning btn-sm mr-1">
                                                 <i class="fa fa-edit"></i> 
                                             </button>
-                                            <button type="button" @click="deleteTurn(turn, index)" :disabled="turn.deleting"
+                                            <button type="button" @click="hasPermission('turns.delete') ? deleteTurn(turn, index) : ''" :disabled="turn.deleting"
+                                                title="Eliminar"
                                                 class="btn btn-danger btn-sm">
                                                 <div class="spinner-border spinner-border-sm" v-if="turn.deleting"
                                                     role="status">
@@ -95,7 +97,9 @@ export default {
                 this.$toastr.success('Turno eliminado')
             }).catch(error => {
                 turn.deleting = false
-                this.$toastr.error('El turno no se pudo eliminar')
+                if (error.response.status != 403) {
+                    this.$toastr.error('El turno no se pudo eliminar')
+                }
             })
         },
         convertMoney (value) {

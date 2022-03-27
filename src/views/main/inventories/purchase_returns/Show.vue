@@ -126,7 +126,6 @@ export default {
     methods: {
         getPurchaseReturn () {
             this.$http.get(`inventory-purchase-returns/${ this.$route.params.id }`).then( response => {
-                console.log(response.data)
                 this.purchaseReturn = response.data
             })
         },

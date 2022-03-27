@@ -25,6 +25,13 @@
                     <span>Medidas corporales</span>
                 </a>
             </li>
+            <li class="nav-item">
+                <a role="tab" class="nav-link" id="tab-2" data-toggle="tab" 
+                    @click.prevent="tab = 'Shopping'"
+                    href="#">
+                    <span>Compras realizadas</span>
+                </a>
+            </li>
         </ul>
         <!--Contenido-->
         <div class="row">
@@ -46,8 +53,9 @@ import PageTitle from '../../components/PageTitle'
 import Profile from './profile/Profile'
 import Membership from './membership/Index'
 import BodyMeasurement from './body_measurement/Index'
+import Shopping from './shopping/Index'
 export default {
-    components: { PageTitle, Profile, Membership, BodyMeasurement },
+    components: { PageTitle, Profile, Membership, BodyMeasurement, Shopping },
     created () {
         this.getClient()
     },
@@ -73,7 +81,6 @@ export default {
                 })
 
                 this.searching = false
-                console.log(this.client);
             })
         },
         membershipDeleted (index) {

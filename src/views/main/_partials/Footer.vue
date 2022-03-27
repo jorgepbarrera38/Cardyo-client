@@ -5,18 +5,18 @@
                             <div class="app-footer-left">
                                 <ul class="nav">
                                     <li class="nav-item">
-                                        <a href="javascript:void(0);" class="nav-link">
-                                            Footer Link 1
+                                        <a href="https://web.facebook.com/digitalappsoftware" target="_blank" class="nav-link">
+                                            Desarrollado por DigitalApp
                                         </a>
                                     </li>
-                                    <li class="nav-item">
+                                    <!--<li class="nav-item">
                                         <a href="javascript:void(0);" class="nav-link">
                                             Footer Link 2
                                         </a>
-                                    </li>
+                                    </li>-->
                                 </ul>
                             </div>
-                            <div class="app-footer-right">
+                            <!--<div class="app-footer-right">
                                 <ul class="nav">
                                     <li class="nav-item">
                                         <a href="javascript:void(0);" class="nav-link">
@@ -32,7 +32,7 @@
                                         </a>
                                     </li>
                                 </ul>
-                            </div>
+                            </div>-->
                         </div>
                     </div>
                 </div>  
