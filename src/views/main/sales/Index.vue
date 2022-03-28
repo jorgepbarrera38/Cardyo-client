@@ -16,6 +16,9 @@
                             </button>
                         </div>
                     </div>
+                    <div class="card-body">
+                        <Search placeholder="Consecutivo venta" @search="search"></Search>
+                    </div>
                     <div class="table-responsive">
                         <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                             <thead>
@@ -69,11 +72,12 @@
 </template>
 <script>
 import PageTitle from '../components/PageTitle'
+import Search from '../components/Search'
 import Skeleton from './_partials/Skeleton'
 import formatNum from 'format-num'
 import moment from 'moment'
 export default {
-    components: { PageTitle, Skeleton },
+    components: { PageTitle, Skeleton, Search },
     created () {
         this.getSales()
     },
@@ -84,9 +88,12 @@ export default {
         }
     },
     methods: {
-        getSales (page = 1) {
+        search (search) {
+            this.getSales(1, search)
+        },
+        getSales (page = 1, search = '') {
             this.searching = true
-            this.$http.get('sales?page=' + page).then( response => {
+            this.$http.get('sales?page=' + page + '&search=' + search).then( response => {
                 this.sales = response.data
                 this.sales.data.forEach(sale => {
                     this.$set(sale, 'deleting', false)

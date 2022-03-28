@@ -12,7 +12,8 @@
                             <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
                         </div>
                         <input type="text" placeholder="Buscar permiso" class="form-control mb-2" v-model="searchPermission">
-                        <div style="max-height:530px;overflow:auto">
+                        <vue-loading type="spin" color="#3F6AD8" :size="{ width: '50px', height: '50px' }" v-if="!allPermissions.length"></vue-loading>    
+                        <div style="max-height:530px;overflow:auto" v-else>
                             <div class="table-responsive">
                                 <table class="table">
                                     <thead>
@@ -51,8 +52,9 @@
 </template>
 <script>
 import PageTitle from '../components/PageTitle.vue'
+import { VueLoading } from 'vue-loading-template'
 export default {
-    components: { PageTitle },
+    components: { PageTitle, VueLoading },
     created () {
         this.getPermissionsFromUserAndAllPermissions()
     },

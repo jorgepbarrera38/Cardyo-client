@@ -15,6 +15,9 @@
                             </button>
                         </div>
                     </div>
+                    <div class="card-body">
+                        <Search placeholder="Nombre membresía" @search="search"></Search>
+                    </div>
                     <div class="table-responsive">
                         <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                             <thead>
@@ -68,10 +71,11 @@
 </template>
 <script>
 import PageTitle from '../components/PageTitle'
+import Search from '../components/Search'
 import Skeleton from './_partials/Skeleton'
 import formatNum from 'format-num'
 export default {
-    components: { PageTitle, Skeleton },
+    components: { PageTitle, Skeleton, Search },
     created () {
         this.getMembershipTypes()
     },
@@ -82,9 +86,13 @@ export default {
         }
     },
     methods: {
-        getMembershipTypes (page = 1) {
+        search (search) {
+            this.getMembershipTypes(1, search)
+        },
+        getMembershipTypes (page = 1, search = '') {
+            console.log(search);
             this.searching = true
-            this.$http.get('membership-types?page=' + page).then( response => {
+            this.$http.get('membership-types?page=' + page + '&search=' + search).then( response => {
                 this.membershipTypes = response.data
                 this.membershipTypes.data.forEach(membershipType => {
                     this.$set(membershipType, 'deleting', false)

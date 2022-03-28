@@ -16,6 +16,9 @@
                             </button>
                         </div>
                     </div>
+                    <div class="card-body">
+                        <Search placeholder="Consecutivo ajuste" @search="search"></Search>
+                    </div>
                     <div class="table-responsive">
                         <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                             <thead>
@@ -60,8 +63,9 @@ import PageTitle from '../../components/PageTitle'
 import Skeleton from './_partials/Skeleton'
 import formatNum from 'format-num'
 import moment from 'moment'
+import Search from '../../components/Search'
 export default {
-    components: { PageTitle, Skeleton },
+    components: { PageTitle, Skeleton, Search },
     created () {
         this.getInventoryTweaks()
     },
@@ -72,9 +76,12 @@ export default {
         }
     },
     methods: {
-        getInventoryTweaks (page = 1) {
+        search (search) {
+            this.getInventoryTweaks(1, search)
+        },
+        getInventoryTweaks (page = 1, search = '') {
             this.searching = true
-            this.$http.get('inventory-tweaks?page=' + page).then( response => {
+            this.$http.get('inventory-tweaks?page=' + page + '&search=' + search).then( response => {
                 this.inventoryTweaks = response.data
                 this.searching = false
             })

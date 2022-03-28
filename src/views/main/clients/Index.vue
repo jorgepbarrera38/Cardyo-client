@@ -15,6 +15,9 @@
                             </button>
                         </div>
                     </div>
+                    <div class="card-body">
+                        <Search placeholder="Identificación o nombres" @search="search"></Search>
+                    </div>
                     <div class="table-responsive">
                         <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                             <thead>
@@ -91,8 +94,9 @@
 <script>
 import PageTitle from '../components/PageTitle'
 import Skeleton from './_partials/Skeleton'
+import Search from '../components/Search'
 export default {
-    components: { PageTitle, Skeleton },
+    components: { PageTitle, Skeleton, Search },
     created () {
         this.getClients()
     },
@@ -103,9 +107,12 @@ export default {
         }
     },
     methods: {
-        getClients (page = 1) {
+        search (search) {
+            this.getClients(1, search)
+        },
+        getClients (page = 1, search = '') {
             this.searching = true
-            this.$http.get('clients?page=' + page).then( response => {
+            this.$http.get('clients?page=' + page + '&search=' + search).then( response => {
                 this.clients = response.data
                 this.clients.data.forEach(client => {
                     this.$set(client, 'deleting', false)

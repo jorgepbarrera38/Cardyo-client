@@ -86,7 +86,7 @@
                             </select>
                         </div>
                         <div class="col-md-12">
-                            <TrendChart v-if="bodyMeasurement"
+                            <TrendChart v-if="bodyMeasurement && client.body_measurements.length"
                                 :datasets="datasetsChart"
                                 :grid="{
                                     verticalLines: true,

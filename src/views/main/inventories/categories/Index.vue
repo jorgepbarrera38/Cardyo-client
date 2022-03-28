@@ -16,6 +16,9 @@
                             </button>
                         </div>
                     </div>
+                    <div class="card-body">
+                        <Search placeholder="Nombre categoría" @search="search"></Search>
+                    </div>
                     <div class="table-responsive">
                         <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                             <thead>
@@ -63,10 +66,11 @@
 </template>
 <script>
 import PageTitle from '../../components/PageTitle'
+import Search from '../../components/Search'
 import Skeleton from './_partials/Skeleton'
 import formatNum from 'format-num'
 export default {
-    components: { PageTitle, Skeleton },
+    components: { PageTitle, Skeleton, Search },
     created () {
         this.getCategories()
     },
@@ -77,9 +81,12 @@ export default {
         }
     },
     methods: {
-        getCategories (page = 1) {
+        search (search) {
+            this.getCategories(1, search)
+        },
+        getCategories (page = 1, search = '') {
             this.searching = true
-            this.$http.get('inventory-categories?page=' + page).then( response => {
+            this.$http.get('inventory-categories?page=' + page + '&search=' + search).then( response => {
                 this.categories = response.data
                 this.categories.data.forEach(category => {
                     this.$set(category, 'deleting', false)

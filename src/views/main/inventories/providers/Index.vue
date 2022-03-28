@@ -16,6 +16,9 @@
                             </button>
                         </div>
                     </div>
+                    <div class="card-body">
+                        <Search placeholder="Código o nombre proveedor" @search="search"></Search>
+                    </div>
                     <div class="table-responsive">
                         <table class="align-middle mb-0 table table-borderless table-striped table-hover">
                             <thead>
@@ -65,10 +68,11 @@
 </template>
 <script>
 import PageTitle from '../../components/PageTitle'
+import Search from '../../components/Search'
 import Skeleton from './_partials/Skeleton'
 import formatNum from 'format-num'
 export default {
-    components: { PageTitle, Skeleton },
+    components: { PageTitle, Skeleton, Search },
     created () {
         this.getProviders()
     },
@@ -79,9 +83,12 @@ export default {
         }
     },
     methods: {
-        getProviders (page = 1) {
+        search (search) {
+            this.getProviders(1, search)
+        },
+        getProviders (page = 1, search = '') {
             this.searching = true
-            this.$http.get('inventory-providers?page=' + page).then( response => {
+            this.$http.get('inventory-providers?page=' + page + '&search=' + search).then( response => {
                 this.providers = response.data
                 this.providers.data.forEach(provider => {
                     this.$set(provider, 'deleting', false)
