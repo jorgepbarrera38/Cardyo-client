@@ -66,14 +66,47 @@
                         </tbody>
                     </table>
                 </div>
+                    <hr>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3 mb-3">
+                            <select class="form-control" v-model="bodyMeasurement">
+                                <option value="">Seleccione medida corporal</option>
+                                <option value="height">Altura</option>
+                                <option value="weight">Peso</option>
+                                <option value="biceps">Bíceps</option>
+                                <option value="forearms">Antebrazos</option>
+                                <option value="shoulders">Hombros</option>
+                                <option value="chest">Pecho</option>
+                                <option value="waist_width">Anchura cintura</option>
+                                <option value="width_at_navel_level">Anchura a nivel del ombligo</option>
+                                <option value="buttocks_or_hip">Glúteos o cadera</option>
+                                <option value="thigh">Muslo</option>
+                                <option value="calves">Pantorrillas</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <TrendChart v-if="bodyMeasurement"
+                                :datasets="datasetsChart"
+                                :grid="{
+                                    verticalLines: true,
+                                    horizontalLines: true,
+                                    //verticalLinesNumber: 1,
+                                    //horizontalLinesNumber: 7,
+                                }"
+                                :labels="labels"
+                                :min="minDataChart">
+                                </TrendChart>
+                        </div>
+                    </div>
+
+                </div>
                 <div class="d-block text-center card-footer">
                     
                 </div>
         </div>
 </template>
 <script>
-import formatNum from 'format-num'
-import moment from 'moment'
 export default {
     props: {
         client: {
@@ -83,6 +116,19 @@ export default {
     },
     data () {
         return {
+            bodyMeasurement: '',
+            datasetsChart: [
+                {
+                    data: [1, 2],
+                    smooth: true,
+                    fill: true
+                }
+            ],
+            labels: {
+                xLabels: [1, 2],
+                yLabels: 1
+            },
+            minDataChart: 1
         }
     },
     methods: {
@@ -96,6 +142,127 @@ export default {
                 this.$toastr.error(error.response.data.errors.message[0])
             })
         },
+    },
+    watch: {
+        bodyMeasurement () {            
+            if (this.bodyMeasurement && this.client && this.client.body_measurements && this.client.body_measurements.length > 1) {   
+                let months = this.client.body_measurements.map(body_measurement => body_measurement.date)
+                this.labels = { xLabels: months, yLabels: 5, yLabelsTextFormatter: val => Math.round(val * 100) / 100 }
+    
+                let weights = this.client.body_measurements.map(body_measurement => body_measurement[this.bodyMeasurement])
+                this.datasetsChart = [{
+                                data: weights,
+                                smooth: true,
+                                fill: true,
+                                showPoints: true,
+                                className: "curve1"
+                            }]
+                
+                let data =  [...this.client.body_measurements]
+                data.sort((a, b) => a[this.bodyMeasurement] - b[this.bodyMeasurement])
+                this.minDataChart = data[0][this.bodyMeasurement]
+                /*let p = document.querySelectorAll('[dy="5"]')
+                for (const iterator of p) {
+                    console.log(iterator);
+                    iterator.setAttribute('dy', 11)
+                }*/
+                
+            } else {
+                this.$toastr.info('Se requieren por lo menos 2 registros para generar la gráfica')
+            }
+        }
     }
 }
 </script>
+<style>
+ .curve1 .stroke {
+  stroke: #fbac91;
+  stroke-width: 2;
+}
+ .curve1 .fill {
+  fill: #fbac91;
+  opacity: 0.05;
+}
+ .curve1 .point {
+  fill: #fbac91;
+  stroke: #fbac91;
+}
+.point {
+  stroke-width: 2;
+  transition: stroke-width 0.2s;
+}
+.point.is-active {
+  stroke-width: 5;
+}
+* {
+  box-sizing: border-box;
+}
+
+strong {
+  font-weight: 600;
+}
+
+body {
+  padding: 0;
+  margin: 0;
+  font-family: "Source Sans Pro", sans-serif;
+  color: #2f4053;
+}
+
+ .vtc {
+  height: 160;
+  font-size: 12px;
+}
+@media (min-width: 699px) {
+   .vtc {
+    height: 160px;
+  }
+}
+ .curve1 .stroke {
+  stroke: #fbac91;
+  stroke-width: 2;
+}
+ .curve1 .fill {
+  fill: #fbac91;
+  opacity: 0.05;
+}
+ .curve1 .point {
+  fill: #fbac91;
+  stroke: #fbac91;
+}
+ .tooltip {
+  padding: 10px;
+  background: #fff;
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+  pointer-events: none;
+}
+.tooltip:not(.is-active) {
+  display: none;
+}
+ .tooltip-data {
+  display: flex;
+}
+ .tooltip-data-item {
+  display: flex;
+  align-items: center;
+}
+ .tooltip-data-item:not(:first-child) {
+  margin-left: 20px;
+}
+ .tooltip-data-item:before {
+  content: "";
+  display: block;
+  width: 15px;
+  height: 15px;
+  margin-right: 5px;
+}
+ .tooltip-data-item--1:before {
+  background: #fbac91;
+}
+ .tooltip-data-item--2:before {
+  background: #fbe1b6;
+}
+ .tooltip-data-item--3:before {
+  background: #7fdfd4;
+}
+</style>

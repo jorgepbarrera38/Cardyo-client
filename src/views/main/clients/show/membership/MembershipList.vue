@@ -88,11 +88,15 @@
                         </button>
                     </div>
                 </div>
-                
-                    <v-calendar :attributes='attributesAssistancesCalendar' :columns="2" is-expanded
+                <div class="card-body">
+
+                    <v-calendar :attributes='attributesAssistancesCalendar' is-expanded
                             :min-date="minDate"
                             :max-date="maxDate"
                             :from-page="{ month: getFirstMonthFromAssistance, year: getFirstYearFromAssistance }"/>
+                </div>
+                
+                    <!--:columns="2" is-expanded-->
                 
                 <!--<div class="table-responsive">
                     <table class="table table-borderless table-striped table-hover">
@@ -170,9 +174,14 @@ export default {
             membership.searchingAssistances = true
             this.assistancesFromMembership = []
             this.$http.get(`client-memberships/${ membership.id }/get-asistances-from-membership`).then( response => {
-                this.showAssistancesFromMembership = true
                 this.assistancesFromMembership = response.data
                 membership.searchingAssistances = false
+                
+                if (!this.assistancesFromMembership.length) {
+                    return this.$toastr.info('No hay registros de asistencias')
+                }
+                
+                this.showAssistancesFromMembership = true
             })
         }
     },
