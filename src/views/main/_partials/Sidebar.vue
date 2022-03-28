@@ -100,7 +100,7 @@
                                 <li>
                                     <a href="#">
                                         <i class="metismenu-icon pe-7s-box1"></i>
-                                        Inventario
+                                        Inventarios
                                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
                                     </a>
                                     <ul>

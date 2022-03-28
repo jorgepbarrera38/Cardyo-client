@@ -23,6 +23,7 @@
                                 <th></th>
                                 <th>Consecutivo</th>
                                 <th>Fecha</th>
+                                <th>Estado</th>
                                 <th class="text-center">Total</th>
                                 <th class="text-center"></th>
                             </tr>
@@ -32,6 +33,7 @@
                                         <td class="text"></td>
                                         <td class="text" nowrap>{{ sale.id }}</td>
                                         <td class="text" nowrap>{{ dateWithHour(sale.created_at) }}</td>
+                                        <td class="text" nowrap>{{ sale.status }}</td>
                                         <td class="text-center">${{ convertMoney(sale.total) }}</td>
                                         <td class="text-center" nowrap>
                                             <button type="button" 
@@ -98,7 +100,7 @@ export default {
                 this.getSales()
                 //this.sales.data.splice(index, 1)
                 sale.deleting = false
-                this.$toastr.success('Venta eliminada')
+                this.$toastr.success('Venta anulada')
             }).catch(error => {
                 sale.deleting = false
                 if (error.response.status != 403) {

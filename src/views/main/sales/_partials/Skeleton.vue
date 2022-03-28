@@ -20,6 +20,14 @@
                 />
             </td>
             <td class="text-center">
+                    <vue-skeleton-loader
+                        type="rect"
+                        :width="70"
+                        :height="15"
+                        animation="fade"
+                    />
+            </td>
+            <td class="text-center">
                 <center>
                     <vue-skeleton-loader
                         type="rect"
