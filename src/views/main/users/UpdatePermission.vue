@@ -11,6 +11,7 @@
                         <div class="alert alert-danger fade show" role="alert" v-if="errors">
                             <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
                         </div>
+                        <input type="text" placeholder="Buscar permiso" class="form-control mb-2" v-model="searchPermission">
                         <div style="max-height:530px;overflow:auto">
                             <div class="table-responsive">
                                 <table class="table">
@@ -22,7 +23,7 @@
                                         </th>
                                     </thead>
                                     <tbody>
-                                        <tr v-for="permission in allPermissions" :key="permission.id">
+                                        <tr v-for="permission in allPermissionsFiltered" :key="permission.id">
                                             <td>{{ permission.description }}</td>
                                             <td class="text-center">
                                                 <input type="checkbox" v-model="permissionsFromUser" :value="permission">
@@ -59,6 +60,7 @@ export default {
         return {
             allPermissions: [],
             permissionsFromUser: [],
+            searchPermission: '',
             errors: null,
             saving: false
         }
@@ -99,6 +101,14 @@ export default {
         },
         unSelectAll () {
             this.permissionsFromUser = []
+        }
+    },
+    computed: {
+        allPermissionsFiltered () {
+            if (this.searchPermission) {
+                return this.allPermissions.filter(permission => permission.description.includes(this.searchPermission))
+            }
+            return this.allPermissions
         }
     }
 }
