@@ -12,21 +12,21 @@
                 </a>
             </li>
             <li class="nav-item">
-                <a role="tab" class="nav-link" id="tab-2" data-toggle="tab" 
+                <a role="tab" :class="{'nav-link': true, disabled: searching}" id="tab-2" data-toggle="tab" 
                     @click.prevent="tab = 'Membership'"
                     href="#">
                     <span>Membresías</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a role="tab" class="nav-link" id="tab-2" data-toggle="tab" 
+                <a role="tab" :class="{'nav-link': true, disabled: searching}" id="tab-2" data-toggle="tab" 
                     @click.prevent="tab = 'BodyMeasurement'"
                     href="#">
                     <span>Medidas corporales</span>
                 </a>
             </li>
             <li class="nav-item">
-                <a role="tab" class="nav-link" id="tab-2" data-toggle="tab" 
+                <a role="tab" :class="{'nav-link': true, disabled: searching}" id="tab-2" data-toggle="tab" 
                     @click.prevent="tab = 'Shopping'"
                     href="#">
                     <span>Compras realizadas</span>
