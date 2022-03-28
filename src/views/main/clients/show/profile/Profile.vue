@@ -10,9 +10,15 @@
                     <i :class="{'fa': true, 'fa-venus': client.sex == 'Femenino', 'fa-mars': client.sex == 'Masculino'}"></i> {{ client.sex }} <br>
                     <i class="fa fa-id-card"></i> {{ client.identification }} <br>
                     <i class="fa fa-birthday-cake"></i> {{ client.date_of_birth }} <br>
-                    <i class="fa fa-map-marker-alt"></i> {{ client.address }} <br>
-                    <i class="fa fa-envelope"></i> {{ client.email }} <br>
-                    <i class="fa fa-phone"></i> {{ client.phonenumber }} <br>
+                    <span v-if="client.address">
+                        <i class="fa fa-map-marker-alt"></i> {{ client.address }} <br>
+                    </span>
+                    <span v-if="client.email">
+                        <i class="fa fa-envelope"></i> {{ client.email }} <br>
+                    </span>
+                    <span v-if="client.phonenumber">
+                        <i class="fa fa-phone"></i> {{ client.phonenumber }} <br>
+                    </span>
                 </p>
             </div>
         </div>
