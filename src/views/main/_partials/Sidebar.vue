@@ -192,6 +192,39 @@
                                 </li>
                                 <li>
                                     <a href="#">
+                                        <i class="metismenu-icon pe-7s-news-paper"></i>
+                                        Reportes
+                                        <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>
+                                    </a>
+                                    <ul>
+                                        <li>
+                                            <a href="#" v-if="authenticated"
+                                            @click.prevent="hasPermission('membership_types.index') ? $router.push({ name: 'reports.asistances' }) : ''">
+                                                <i class="metismenu-icon"></i>
+                                                Asistencias
+                                            </a>
+                                            <a href="#" v-else
+                                            @click.prevent="">
+                                                <i class="metismenu-icon"></i>
+                                                Asistencias
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" v-if="authenticated"
+                                                @click.prevent="hasPermission('turns.index') ? $router.push({ name: 'reports.sales' }) : ''">
+                                                <i class="metismenu-icon"></i>
+                                                Ventas
+                                            </a>
+                                            <a href="#" v-else
+                                            @click.prevent="">
+                                                <i class="metismenu-icon"></i>
+                                                Ventas
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <a href="#">
                                         <i class="metismenu-icon pe-7s-edit"></i>
                                         Sistema
                                         <i class="metismenu-state-icon pe-7s-angle-down caret-left"></i>

@@ -45,6 +45,9 @@ import UserUpdatePermission from '../views/main/users/UpdatePermission'
 
 import CompanyIndex from '../views/main/company/Index'
 
+import ReportAsistance from '../views/main/reports/Assistance'
+import ReportSale from '../views/main/reports/Sale'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -248,6 +251,17 @@ const routes = [
         path: 'empresa',
         name: 'company.index',
         component: CompanyIndex
+      },
+
+      {
+        path: 'reportes/asistencias',
+        name: 'reports.asistances',
+        component: ReportAsistance
+      },
+      {
+        path: 'reportes/ventas',
+        name: 'reports.sales',
+        component: ReportSale
       },
     ]
   },
