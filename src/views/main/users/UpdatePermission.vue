@@ -108,7 +108,7 @@ export default {
     computed: {
         allPermissionsFiltered () {
             if (this.searchPermission) {
-                return this.allPermissions.filter(permission => permission.description.includes(this.searchPermission))
+                return this.allPermissions.filter(permission => permission.description.toLowerCase().includes(this.searchPermission.toLowerCase()))
             }
             return this.allPermissions
         }

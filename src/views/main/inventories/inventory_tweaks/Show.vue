@@ -7,7 +7,10 @@
         <div class="row">
             <div class="col-md-12 col-lg-12">
                 <div class="main-card mb-3 card">
-                    <div class="card-body"><h5 class="card-title">Ver ajuste de inventario</h5>
+                    <div class="card-header">
+                        Ver detalle de ajuste de inventario
+                    </div>
+                    <div class="card-body">
                         <div class="alert alert-danger fade show" role="alert" v-if="errors">
                             <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
                         </div>
@@ -26,13 +29,13 @@
                             </div>
                             <div class="col-md-4">
                                 <div class="position-relative form-group">
-                                    <label for="" class="">Tipo (*)</label>
+                                    <label for="" class="">Tipo</label>
                                     <input type="text" class="form-control" disabled v-model="inventoryTweak.type">
                                 </div>
                             </div>
                             <div class="col-md-12">
                                 <div class="position-relative form-group">
-                                    <label for="" class="">Observaciónes (*)</label>
+                                    <label for="" class="">Observaciónes</label>
                                     <textarea rows="3" class="form-control" disabled v-model="inventoryTweak.observations"></textarea>
                                 </div>
                             </div>

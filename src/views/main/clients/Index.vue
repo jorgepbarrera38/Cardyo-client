@@ -39,7 +39,7 @@
                                                     <div class="widget-content-left mr-3">
                                                         <div class="widget-content-left">
                                                             <img width="40" class="rounded-circle" 
-                                                                :src="client.photo ? 'http://localhost:8000/' + client.photo : require('../../../assets/user.png') "
+                                                                :src="client.photo ? APP_URL + client.photo : require('../../../assets/user.png') "
                                                             alt="">
                                                         </div>
                                                     </div>
@@ -95,6 +95,7 @@
 import PageTitle from '../components/PageTitle'
 import Skeleton from './_partials/Skeleton'
 import Search from '../components/Search'
+import { mapState } from 'vuex'
 export default {
     components: { PageTitle, Skeleton, Search },
     created () {
@@ -134,6 +135,9 @@ export default {
                 }
             })
         }
+    },
+    computed: {
+        ...mapState(['APP_URL'])
     }
 }
 </script>

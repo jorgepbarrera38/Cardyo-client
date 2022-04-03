@@ -36,7 +36,9 @@
                                         <td class="text"></td>
                                         <td class="text" nowrap>{{ sale.id }}</td>
                                         <td class="text" nowrap>{{ dateWithHour(sale.created_at) }}</td>
-                                        <td class="text" nowrap>{{ sale.status }}</td>
+                                        <td class="text" nowrap>
+                                            <div :class="{ badge: true, 'badge-danger': sale.status == 'Anulado', 'badge-success': sale.status == 'Confirmado' }">{{ sale.status }}</div>
+                                        </td>
                                         <td class="text-center">${{ convertMoney(sale.total) }}</td>
                                         <td class="text-center" nowrap>
                                             <button type="button" 
@@ -44,16 +46,6 @@
                                                 title="Ver información"
                                                 class="btn btn-info btn-sm mr-1">
                                                 <i class="fa fa-eye"></i> 
-                                            </button>
-                                            <button type="button" 
-                                                @click="hasPermission('sales.delete') ? deleteSale(sale, index) : ''" :disabled="sale.deleting"
-                                                title="Anular"
-                                                class="btn btn-danger btn-sm">
-                                                <div class="spinner-border spinner-border-sm" v-if="sale.deleting"
-                                                    role="status">
-                                                    <span class="sr-only">Loading...</span>
-                                                </div>
-                                                <i class="fa fa-trash-alt" v-else></i> 
                                             </button>
                                         </td>
                                     </tr>
@@ -99,20 +91,6 @@ export default {
                     this.$set(sale, 'deleting', false)
                 })
                 this.searching = false
-            })
-        },
-        deleteSale (sale, index) {
-            sale.deleting = true
-            this.$http.delete(`sales/${ sale.id }`).then( response => {
-                this.getSales()
-                //this.sales.data.splice(index, 1)
-                sale.deleting = false
-                this.$toastr.success('Venta anulada')
-            }).catch(error => {
-                sale.deleting = false
-                if (error.response.status != 403) {
-                    this.$toastr.error('El registro no se pudo eliminar')
-                }
             })
         },
         convertMoney (value) {

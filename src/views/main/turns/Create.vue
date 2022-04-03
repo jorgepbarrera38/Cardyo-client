@@ -7,7 +7,10 @@
         <div class="row">
             <div class="col-md-12 col-lg-12">
                 <div class="main-card mb-3 card">
-                    <div class="card-body"><h5 class="card-title">Nuevo turno</h5>
+                    <div class="card-header">
+                        Nuevo turno
+                    </div>
+                    <div class="card-body">
                         <div class="alert alert-danger fade show" role="alert" v-if="errors">
                             <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
                         </div>

@@ -41,7 +41,7 @@
                                                     <div class="widget-content-left mr-3">
                                                         <div class="widget-content-left">
                                                             <img width="40" class="rounded-circle" 
-                                                                :src="product.photo ? 'http://localhost:8000/' + product.photo : require('../../../../assets/product.png') "
+                                                                :src="product.photo ? APP_URL + product.photo : require('../../../../assets/product.png') "
                                                             alt="">
                                                         </div>
                                                     </div>
@@ -95,6 +95,7 @@ import PageTitle from '../../components/PageTitle.vue'
 import Skeleton from './_partials/Skeleton'
 import Search from '../../components/Search'
 import formatNum from 'format-num'
+import { mapState } from 'vuex'
 export default {
     components: { PageTitle, Skeleton, Search },
     created () {
@@ -137,6 +138,9 @@ export default {
         convertMoney (value) {
             return `$${formatNum(value)}`
         }
+    },
+    computed: {
+        ...mapState(['APP_URL'])
     }
 }
 </script>

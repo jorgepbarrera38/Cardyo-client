@@ -152,7 +152,7 @@
                                                 Compras
                                             </a>
                                         </li>
-                                        <li>
+                                        <!--<li>
                                             <a href="#" v-if="authenticated"
                                                 @click.prevent="hasPermission('inventory_purchase_returns.index') ? $router.push({ name: 'inventory-purchase-returns.index' }) : ''">
                                                 <i class="metismenu-icon"></i>
@@ -163,7 +163,7 @@
                                                 <i class="metismenu-icon"></i>
                                                 Devolución de compras
                                             </a>
-                                        </li>
+                                        </li>-->
                                         <li>
                                             <a href="#" v-if="authenticated"
                                                 @click.prevent="hasPermission('inventory_tweaks.index') ? $router.push({ name: 'inventory-tweaks.index' }) : ''">

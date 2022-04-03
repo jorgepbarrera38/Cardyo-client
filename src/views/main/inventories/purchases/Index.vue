@@ -17,7 +17,7 @@
                         </div>
                     </div>
                     <div class="card-body">
-                        <Search placeholder="Consecutivo compra" @search="search"></Search>
+                        <Search placeholder="Consecutivo o factura compra" @search="search"></Search>
                     </div>
                     <div class="table-responsive">
                         <table class="align-middle mb-0 table table-borderless table-striped table-hover">
@@ -29,6 +29,7 @@
                                 <th>Factura</th>
                                 <th>Fecha factura</th>
                                 <th>Proveedor</th>
+                                <th>Estado</th>
                                 <th>Total</th>
                                 <th></th>
                             </tr>
@@ -41,6 +42,9 @@
                                         <td class="text" nowrap>{{ purchase.bill }}</td>
                                         <td class="text" nowrap>{{ date(purchase.date_bill) }}</td>
                                         <td class="text" nowrap>{{ purchase.provider.code + ' - ' + purchase.provider.name }}</td>
+                                        <td class="text" nowrap>
+                                            <div :class="{ badge: true, 'badge-danger': purchase.status == 'Anulado', 'badge-success': purchase.status == 'Confirmado' }">{{ purchase.status }}</div>
+                                        </td>
                                         <td class="text" nowrap>{{ convertMoney(purchase.total) }}</td>
                                         <td class="text-center">
                                             <button type="button" 
@@ -89,6 +93,9 @@ export default {
             this.searching = true
             this.$http.get('inventory-purchases?page=' + page + '&search=' + search).then( response => {
                 this.purchases = response.data
+                this.purchases.data.forEach(purchase => {
+                    this.$set(purchase, 'deleting', false)
+                })
                 this.searching = false
             })
         },
@@ -100,7 +107,8 @@ export default {
         },
         dateWithHour (date) {
             return moment(date).format('lll')
-        }
+        },
+        
     }
 }
 </script>

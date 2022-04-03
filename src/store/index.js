@@ -15,6 +15,7 @@ export default new Vuex.Store({
     productsWithStockBelowStockmin: '',
     productsWithStockOverStockmax: '',
     totalSalesToday: '',
+    APP_URL: '',
   },
   mutations: {
     changeStateAuthUser (state, value) {
@@ -43,6 +44,9 @@ export default new Vuex.Store({
     },
     setTotalSalesToday (state, totalSalesToday) {
       state.totalSalesToday = totalSalesToday
+    },
+    setAPP_URL (state, APP_URL) {
+      state.APP_URL = APP_URL
     },
   },
   actions: {

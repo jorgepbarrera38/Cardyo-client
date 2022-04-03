@@ -23,7 +23,7 @@ import { mapState } from 'vuex'
 export default ({
     components: { Header, ThemeAndColor, Sidebar, Footer },
     computed: {
-        ...mapState(['authenticated', 'permissionsUser'])
+        ...mapState(['authenticated', 'permissionsUser', 'APP_URL'])
     }
 })
 </script>
