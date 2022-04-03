@@ -68,6 +68,22 @@
                                             <tbody>
                                                 <tr v-for="(detail, index) in sale.sale_details" :key="detail.id">
                                                     <td class="text"></td>
+                                                    <td class="text" nowrap>
+                                                        <div class="widget-content p-0">
+                                                            <div class="widget-content-wrapper">
+                                                                <div class="widget-content-left mr-3">
+                                                                    <div class="widget-content-left">
+                                                                        <img width="40" 
+                                                                        :src="detail.product.photo ? APP_URL + detail.product.photo : require('../../../assets/product.png') "
+                                                                        alt="" class="rounded-circle">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="widget-content-left flex2">
+                                                                    <div class="">{{ detail.product.name }}</div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </td>
                                                     <td class="text" nowrap>{{ detail.product_name }}</td>
                                                     <td class="text-center">{{ detail.quantity }}</td>
                                                     <td class="text-center">${{ convertMoney(detail.price_unit) }}</td>
@@ -103,6 +119,7 @@ import PageTitle from '../components/PageTitle.vue'
 import Skeleton from './_partials/Skeleton'
 import formatNum from 'format-num'
 import moment from 'moment'
+import { mapState } from 'vuex'
 export default {
     components: { PageTitle, Skeleton },
     created () {
@@ -147,5 +164,8 @@ export default {
             })
         },
     },
+    computed: {
+        ...mapState(['APP_URL']),
+    }
 }
 </script>

@@ -64,7 +64,22 @@
                                 <tbody>
                                     <tr v-for="(detail, index) in inventoryTweak.details" :key="'detail-' + index">
                                         <td class="text"></td>
-                                        <td class="text" nowrap>{{ detail.inventory_product_name }}</td>
+                                        <td class="text" nowrap>
+                                            <div class="widget-content p-0">
+                                                <div class="widget-content-wrapper">
+                                                    <div class="widget-content-left mr-3">
+                                                        <div class="widget-content-left">
+                                                            <img width="40" 
+                                                            :src="detail.inventory_product_photo ? APP_URL + detail.inventory_product_photo : require('../../../../assets/product.png') "
+                                                            alt="" class="rounded-circle">
+                                                        </div>
+                                                    </div>
+                                                    <div class="widget-content-left flex2">
+                                                        <div class="">{{ detail.inventory_product_name }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td class="text" nowrap>
                                             <input type="number" class="form-control" v-model="detail.quantity">
                                         </td>
@@ -97,6 +112,7 @@
 <script>
 import PageTitle from '../../components/PageTitle.vue'
 import formatNum from 'format-num'
+import { mapState } from 'vuex'
 export default {
     components: { PageTitle },
     created () {
@@ -147,6 +163,7 @@ export default {
             this.inventoryTweak.details.push({
                 inventory_product_id: this.productToAdd.product.id,
                 inventory_product_name: this.productToAdd.product.name,
+                inventory_product_photo: this.productToAdd.product.photo,
                 quantity: this.productToAdd.quantity,
             })
             
@@ -190,5 +207,8 @@ export default {
             return `$${formatNum(value)}`
         }
     },
+    computed: {
+        ...mapState(['APP_URL']),
+    }
 }
 </script>

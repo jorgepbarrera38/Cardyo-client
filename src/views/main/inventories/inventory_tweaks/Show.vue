@@ -53,7 +53,22 @@
                                 <tbody>
                                     <tr v-for="(detail, index) in inventoryTweak.tweak_details" :key="'detail-' + index">
                                         <td class="text"></td>
-                                        <td class="text" nowrap>{{ detail.product.name }}</td>
+                                        <td class="text" nowrap>
+                                            <div class="widget-content p-0">
+                                                <div class="widget-content-wrapper">
+                                                    <div class="widget-content-left mr-3">
+                                                        <div class="widget-content-left">
+                                                            <img width="40" 
+                                                            :src="detail.product.photo ? APP_URL + detail.product.photo : require('../../../../assets/product.png') "
+                                                            alt="" class="rounded-circle">
+                                                        </div>
+                                                    </div>
+                                                    <div class="widget-content-left flex2">
+                                                        <div class="">{{ detail.product.name }}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </td>
                                         <td class="text" nowrap>{{ detail.quantity }}</td>
                                     </tr>
                                 </tbody>
@@ -73,6 +88,7 @@
 <script>
 import PageTitle from '../../components/PageTitle.vue'
 import moment from 'moment'
+import { mapState } from 'vuex'
 export default {
     components: { PageTitle },
     created () {
@@ -95,5 +111,8 @@ export default {
             return moment(date).format('lll')
         }
     },
+    computed: {
+        ...mapState(['APP_URL']),
+    }
 }
 </script>

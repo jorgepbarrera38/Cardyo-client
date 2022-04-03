@@ -43,14 +43,22 @@ toastr.options = {
 }
 Vue.prototype.$toastr = toastr
 
-require('../')
 //Axios
-axios.defaults.baseURL = ''
+
+let production = false
+
+if (production) {
+  axios.defaults.baseURL = 'api'
+} else {
+  axios.defaults.baseURL = 'http://localhost:8000/api'
+}
+
 Vue.prototype.$http = axios
 
-store.commit('setAPP_URL', response.data.APP_URL)
-/*axios.get('config').then(response => {
-})*/
+axios.get('config').then(response => {
+  store.commit('setAPP_URL', response.data.APP_URL)
+  console.log(store.state.APP_URL);
+})
 
 // Add a response interceptor
 axios.interceptors.response.use(function (response) {
