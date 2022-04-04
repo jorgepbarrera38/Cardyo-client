@@ -35,7 +35,7 @@
             <div class="col-md-9">
                 <div class="main-card mb-3 card">
                     <div class="card-header">
-                        Resultados <span> - Total registros: {{ totalRows }}</span>
+                        Resultados - Total registros: {{ assistances.total ? assistances.total : 0 }}
                         <div class="btn-actions-pane-right">
                             <button class="active btn btn-success" 
                                 @click="hasPermission('sales.store') ? $router.push({ name: 'sales.create' }) : ''">
@@ -99,7 +99,6 @@ export default {
             this.$http.get(`reports/get-assistances?page=${page}&dateInitial=${this.dates.dateInitial}&dateFinal=${this.dates.dateFinal}`)
                 .then( response => {
                 this.assistances = response.data
-                this.totalRows = response.data.total
                 this.errors = null
                 this.searching = false
             }).catch( error => {

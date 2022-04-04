@@ -40,7 +40,7 @@
             <div class="col-md-9">
                 <div class="main-card mb-3 card">
                     <div class="card-header">
-                        Resultados <span> - Total: ${{ convertMoney(totalSales) }}</span>
+                        Resultados - Total registros: {{ sales.total ? sales.total : 0 }}
                         <div class="btn-actions-pane-right">
                             <button class="active btn btn-success" 
                                 @click="hasPermission('sales.store') ? $router.push({ name: 'sales.create' }) : ''">
@@ -108,7 +108,6 @@ export default {
             this.$http.get(`reports/get-sales?page=${page}&dateInitial=${this.dates.dateInitial}&dateFinal=${this.dates.dateFinal}&status=${this.dates.status}`)
                 .then( response => {
                 this.sales = response.data.sales
-                this.totalSales = response.data.total
                 this.errors = null
                 this.searching = false
                 console.log(response.data);

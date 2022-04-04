@@ -199,7 +199,7 @@
                                     <ul>
                                         <li>
                                             <a href="#" v-if="authenticated"
-                                            @click.prevent="hasPermission('membership_types.index') ? $router.push({ name: 'reports.asistances' }) : ''">
+                                            @click.prevent="hasPermission('reports.show') ? $router.push({ name: 'reports.asistances' }) : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Asistencias
                                             </a>
@@ -209,9 +209,45 @@
                                                 Asistencias
                                             </a>
                                         </li>
+                                         <li>
+                                            <a href="#" v-if="authenticated"
+                                                @click.prevent="hasPermission('reports.show') ? $router.push({ name: 'reports.stock-products' }) : ''">
+                                                <i class="metismenu-icon"></i>
+                                                Stock de productos
+                                            </a>
+                                            <a href="#" v-else
+                                            @click.prevent="">
+                                                <i class="metismenu-icon"></i>
+                                                Stock de productos
+                                            </a>
+                                        </li>
                                         <li>
                                             <a href="#" v-if="authenticated"
-                                                @click.prevent="hasPermission('turns.index') ? $router.push({ name: 'reports.sales' }) : ''">
+                                                @click.prevent="hasPermission('reports.show') ? $router.push({ name: 'reports.purchases' }) : ''">
+                                                <i class="metismenu-icon"></i>
+                                                Compras
+                                            </a>
+                                            <a href="#" v-else
+                                            @click.prevent="">
+                                                <i class="metismenu-icon"></i>
+                                                Compras
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" v-if="authenticated"
+                                                @click.prevent="hasPermission('reports.show') ? $router.push({ name: 'reports.inventory-tweaks' }) : ''">
+                                                <i class="metismenu-icon"></i>
+                                                Ajustes de inventario
+                                            </a>
+                                            <a href="#" v-else
+                                            @click.prevent="">
+                                                <i class="metismenu-icon"></i>
+                                                Ajustes de inventario
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" v-if="authenticated"
+                                                @click.prevent="hasPermission('reports.show') ? $router.push({ name: 'reports.sales' }) : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Ventas
                                             </a>

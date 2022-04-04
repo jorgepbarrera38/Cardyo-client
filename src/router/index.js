@@ -46,7 +46,10 @@ import UserUpdatePermission from '../views/main/users/UpdatePermission'
 import CompanyIndex from '../views/main/company/Index'
 
 import ReportAsistance from '../views/main/reports/Assistance'
+import ReportPurchase from '../views/main/reports/Purchase'
+import ReportInventoryTweak from '../views/main/reports/InventoryTweak'
 import ReportSale from '../views/main/reports/Sale'
+import ReportStockProduct from '../views/main/reports/StockProduct'
 
 Vue.use(VueRouter)
 
@@ -259,9 +262,24 @@ const routes = [
         component: ReportAsistance
       },
       {
+        path: 'reportes/compras',
+        name: 'reports.purchases',
+        component: ReportPurchase
+      },
+      {
+        path: 'reportes/ajustes-de-inventario',
+        name: 'reports.inventory-tweaks',
+        component: ReportInventoryTweak
+      },
+      {
         path: 'reportes/ventas',
         name: 'reports.sales',
         component: ReportSale
+      },
+      {
+        path: 'reportes/stock-de-productos',
+        name: 'reports.stock-products',
+        component: ReportStockProduct
       },
     ]
   },
