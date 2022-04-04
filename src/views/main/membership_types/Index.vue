@@ -82,17 +82,18 @@ export default {
     data () {
         return {
             membershipTypes: {},
-            searching: true
+            searchBody: '',
+            searching: true,
         }
     },
     methods: {
         search (search) {
-            this.getMembershipTypes(1, search)
+            this.searchBody = search
+            this.getMembershipTypes()
         },
-        getMembershipTypes (page = 1, search = '') {
-            console.log(search);
-            this.searching = true
-            this.$http.get('membership-types?page=' + page + '&search=' + search).then( response => {
+        getMembershipTypes (page = 1, searching = true) {
+            this.searching = searching
+            this.$http.get('membership-types?page=' + page + '&search=' + this.searchBody).then( response => {
                 this.membershipTypes = response.data
                 this.membershipTypes.data.forEach(membershipType => {
                     this.$set(membershipType, 'deleting', false)
@@ -103,7 +104,7 @@ export default {
         deleteMembershipType (membershipType, index) {
             membershipType.deleting = true
             this.$http.delete(`membership-types/${ membershipType.id }`).then( response => {
-                this.getMembershipTypes()
+                this.getMembershipTypes(this.membershipTypes.current_page, false)
                 this.membershipTypes.data.splice(index, 1)
                 membershipType.deleting = false
                 this.$toastr.success('Tipo de membresía eliminada')
