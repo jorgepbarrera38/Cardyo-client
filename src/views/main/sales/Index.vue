@@ -76,16 +76,18 @@ export default {
     data () {
         return {
             sales: {},
+            searchBody: '',
             searching: true
         }
     },
     methods: {
         search (search) {
-            this.getSales(1, search)
+            this.searchBody = search
+            this.getSales()
         },
-        getSales (page = 1, search = '') {
-            this.searching = true
-            this.$http.get('sales?page=' + page + '&search=' + search).then( response => {
+        getSales (page = 1, searching = true) {
+            this.searching = searching
+            this.$http.get('sales?page=' + page + '&search=' + this.searchBody).then( response => {
                 this.sales = response.data
                 this.sales.data.forEach(sale => {
                     this.$set(sale, 'deleting', false)

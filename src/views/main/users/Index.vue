@@ -84,16 +84,18 @@ export default {
     data () {
         return {
             users: {},
+            searchBody: '',
             searching: true
         }
     },
     methods: {
         search (search) {
-            this.getUsers(1, search)
+            this.searchBody = search
+            this.getUsers()
         },
-        getUsers (page = 1, search = '') {
-            this.searching = true
-            this.$http.get('users?page=' + page + '&search=' + search).then( response => {
+        getUsers (page = 1, searching = true) {
+            this.searching = searching
+            this.$http.get('users?page=' + page + '&search=' + this.searchBody).then( response => {
                 this.users = response.data
                 this.users.data.forEach(user => {
                     this.$set(user, 'deleting', false)
@@ -104,7 +106,7 @@ export default {
         deleteUser (user, index) {
             user.deleting = true
             this.$http.delete(`users/${ user.id }`).then( response => {
-                this.getUsers()
+                this.getUsers(this.searchBody.current_page, false)
                 this.users.data.splice(index, 1)
                 user.deleting = false
                 this.$toastr.success('Usuario eliminado')

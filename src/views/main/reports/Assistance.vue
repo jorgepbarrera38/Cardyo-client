@@ -1,7 +1,7 @@
 <template>
     <div class="app-main__inner">
         <!--Titulo página-->
-        <PageTitle title="Reportes" icon="pe-7s-note2" subtitle=""/>     
+        <PageTitle title="Reportes" icon="pe-7s-news-paper" subtitle=""/>     
         <!--Fin titulo página-->
         <!--Contenido-->
         <div class="row">
@@ -28,7 +28,6 @@
                                 </div>
                                 <i class="fa fa-search" v-else></i> {{ searching ? 'Buscando' : 'Buscar' }}
                             </button>
-
                     </div>
                 </div>
             </div> 
@@ -37,9 +36,12 @@
                     <div class="card-header">
                         Resultados - Total registros: {{ assistances.total ? assistances.total : 0 }}
                         <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" 
-                                @click="hasPermission('sales.store') ? $router.push({ name: 'sales.create' }) : ''">
-                                <i class="fa fa-plus"></i> Nuevo
+                            <button class="active btn btn-success" :disabled="exporting ||  !assistances.total"
+                                @click="exportInExcel">
+                                <div class="spinner-border spinner-border-sm" role="status" v-if="exporting">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <i class="fa fa-file-excel" v-else></i> Exportar
                             </button>
                         </div>
                     </div>
@@ -76,7 +78,7 @@
 </template>
 <script>
 import PageTitle from '../components/PageTitle.vue'
-import moment from 'moment'
+import downloadJs from 'downloadjs'
 export default {
     components: { PageTitle },
     data () {
@@ -85,11 +87,16 @@ export default {
                 dateInitial: '',
                 dateFinal: ''
             },
+            dates2: {
+                dateInitial: '',
+                dateFinal: ''
+            },
             assistances: {},
             totalRows: 0,
             errors: null,
             searching: false,
             saving: false,
+            exporting: false,
         }
     },
     methods: {
@@ -98,14 +105,28 @@ export default {
 
             this.$http.get(`reports/get-assistances?page=${page}&dateInitial=${this.dates.dateInitial}&dateFinal=${this.dates.dateFinal}`)
                 .then( response => {
+                this.dates2 = { ...this.dates }
                 this.assistances = response.data
                 this.errors = null
                 this.searching = false
+                if (response.data.total == 0) {
+                    this.$toastr.info('No se encontraron registros')
+                }
             }).catch( error => {
                 this.searching = false
                 if (error.response.status == 422) {
                     this.errors = error.response.data.errors
                 }
+            })
+        },
+        exportInExcel () {
+            this.exporting = true
+            this.$http.get(`reports/get-assistances-in-excel?dateInitial=${this.dates2.dateInitial}&dateFinal=${this.dates2.dateFinal}`, { responseType: 'blob' })
+                .then( response => {
+                    this.exporting = false
+                    downloadJs(response.data)
+            }).catch( error => {
+                this.exporting = false
             })
         },
     }

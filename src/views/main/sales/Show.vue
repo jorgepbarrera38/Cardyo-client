@@ -84,7 +84,6 @@
                                                             </div>
                                                         </div>
                                                     </td>
-                                                    <td class="text" nowrap>{{ detail.product_name }}</td>
                                                     <td class="text-center">{{ detail.quantity }}</td>
                                                     <td class="text-center">${{ convertMoney(detail.price_unit) }}</td>
                                                     <td class="text-center">${{ convertMoney(detail.price_total) }}</td>

@@ -1,7 +1,7 @@
 <template>
     <div class="app-main__inner">
         <!--Titulo página-->
-        <PageTitle title="Reportes" icon="pe-7s-note2" subtitle=""/>     
+        <PageTitle title="Reportes" icon="pe-7s-news-paper" subtitle=""/>     
         <!--Fin titulo página-->
         <!--Contenido-->
         <div class="row">
@@ -31,13 +31,16 @@
                 </div>
             </div> 
             <div class="col-md-9">
-                <div class="main-card mb-3 card" v-if="type == 'productsWithLittleStock' || type == ''">
+                <div class="main-card mb-3 card" v-if="type2 == 'productsWithLittleStock' || type2 == ''">
                     <div class="card-header">
                         Resultados - Total registros: {{ products.total ? products.total : 0 }}
                         <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" 
-                                @click="hasPermission('products.store') ? $router.push({ name: 'products.create' }) : ''">
-                                <i class="fa fa-plus"></i> Nuevo
+                            <button class="active btn btn-success" :disabled="exporting ||  !products.total"
+                                @click="exportInExcel">
+                                <div class="spinner-border spinner-border-sm" role="status" v-if="exporting">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <i class="fa fa-file-excel" v-else></i> Exportar
                             </button>
                         </div>
                     </div>
@@ -69,9 +72,12 @@
                     <div class="card-header">
                         Resultados - Total registros: {{ products.total ? products.total : 0 }}
                         <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" 
-                                @click="hasPermission('products.store') ? $router.push({ name: 'products.create' }) : ''">
-                                <i class="fa fa-plus"></i> Nuevo
+                            <button class="active btn btn-success" :disabled="exporting ||  !products.total"
+                                @click="exportInExcel">
+                                <div class="spinner-border spinner-border-sm" role="status" v-if="exporting">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <i class="fa fa-file-excel" v-else></i> Exportar
                             </button>
                         </div>
                     </div>
@@ -108,16 +114,19 @@
 import PageTitle from '../components/PageTitle.vue'
 import formatNum from 'format-num'
 import moment from 'moment'
+import downloadJs from 'downloadjs'
 export default {
     components: { PageTitle },
     data () {
         return {
-            type: '',
+            type: 'productsWithLittleStock',
+            type2: 'productsWithLittleStock',
             products: {},
             totalRows: '',
             errors: null,
             searching: false,
             saving: false,
+            exporting: false,
         }
     },
     methods: {
@@ -126,10 +135,13 @@ export default {
 
             this.$http.get(`reports/get-stock-products?page=${page}&type=${this.type}`)
                 .then( response => {
+                this.type2 = this.type
                 this.products = response.data.products
                 this.errors = null
                 this.searching = false
-                console.log(response.data);
+                if (response.data.products.total == 0) {
+                    this.$toastr.info('No se encontraron registros')
+                }
             }).catch( error => {
                 this.searching = false
                 if (error.response.status == 422) {
@@ -142,12 +154,21 @@ export default {
         },
         dateWithHour (date) {
             return moment(date).format('lll')
-        }
+        },
+        exportInExcel () {
+            this.exporting = true
+            this.$http.get(`reports/get-stock-products-in-excel?type=${this.type2}`, { responseType: 'blob' })
+                .then( response => {
+                    this.exporting = false
+                    downloadJs(response.data)
+            }).catch( error => {
+                this.exporting = false
+            })
+        },
     },
     watch: {
         type () {
-            this.products = {}
-            this.totalRows = ''
+            
         }
     }
 }

@@ -1,7 +1,7 @@
 <template>
     <div class="app-main__inner">
         <!--Titulo página-->
-        <PageTitle title="Proveedores" icon="pe-7s-ticket" subtitle=""/>     
+        <PageTitle title="Inventarios" icon="pe-7s-box1" subtitle=""/>
         <!--Fin titulo página-->
         <!--Contenido-->
         <div class="row">
@@ -79,16 +79,18 @@ export default {
     data () {
         return {
             providers: {},
+            searchBody: '',
             searching: true
         }
     },
     methods: {
         search (search) {
-            this.getProviders(1, search)
+            this.searchBody = search
+            this.getProviders()
         },
-        getProviders (page = 1, search = '') {
-            this.searching = true
-            this.$http.get('inventory-providers?page=' + page + '&search=' + search).then( response => {
+        getProviders (page = 1, searching = true) {
+            this.searching = searching
+            this.$http.get('inventory-providers?page=' + page + '&search=' + this.searchBody).then( response => {
                 this.providers = response.data
                 this.providers.data.forEach(provider => {
                     this.$set(provider, 'deleting', false)
@@ -99,7 +101,7 @@ export default {
         deleteProvider (provider, index) {
             provider.deleting = true
             this.$http.delete(`inventory-providers/${ provider.id }`).then( response => {
-                this.getProviders()
+                this.getProviders(this.providers.current_page, false)
                 this.providers.data.splice(index, 1)
                 provider.deleting = false
                 this.$toastr.success('Proveedor eliminado')

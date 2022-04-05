@@ -1,7 +1,7 @@
 <template>
     <div class="app-main__inner">
         <!--Titulo página-->
-        <PageTitle title="Productos" icon="pe-7s-plugin" subtitle=""/>     
+        <PageTitle title="Inventarios" icon="pe-7s-box1" subtitle=""/>  
         <!--Fin titulo página-->
         <!--Contenido-->
         <div class="row">
@@ -104,16 +104,18 @@ export default {
     data () {
         return {
             products: {},
+            searchBody: '',
             searching: true
         }
     },
     methods: {
         search (search) {
-            this.getProducts(1, search)
+            this.searchBody = search
+            this.getProducts()
         },
-        getProducts (page = 1, search = '') {
-            this.searching = true
-            this.$http.get('inventory-products?page=' + page + '&search=' + search).then( response => {
+        getProducts (page = 1, searching = true) {
+            this.searching = searching
+            this.$http.get('inventory-products?page=' + page + '&search=' + this.searchBody).then( response => {
                 this.products = response.data
                 this.products.data.forEach(product => {
                     this.$set(product, 'deleting', false)
@@ -124,7 +126,7 @@ export default {
         deleteProduct (product, index) {
             product.deleting = true
             this.$http.delete(`inventory-products/${ product.id }`).then( response => {
-                this.getProducts()
+                this.getProducts(this.products.current_page, false)
                 this.products.data.splice(index, 1)
                 product.deleting = false
                 this.$toastr.success('Producto eliminado')

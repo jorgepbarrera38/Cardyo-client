@@ -78,16 +78,18 @@ export default {
     data () {
         return {
             turns: {},
+            searchBody: '',
             searching: true
         }
     },
     methods: {
         search (search) {
-            this.getTurns(1, search)
+            this.searchBody = search
+            this.getTurns()
         },
-        getTurns (page = 1, search = '') {
-            this.searching = true
-            this.$http.get('turns?page=' + page + '&search=' + search).then( response => {
+        getTurns (page = 1, searching = true) {
+            this.searching = searching
+            this.$http.get('turns?page=' + page + '&search=' + this.searchBody).then( response => {
                 this.turns = response.data
                 this.turns.data.forEach(turn => {
                     this.$set(turn, 'deleting', false)
@@ -98,8 +100,8 @@ export default {
         deleteTurn (turn, index) {
             turn.deleting = true
             this.$http.delete(`turns/${ turn.id }`).then( response => {
-                this.getTurns()
-                this.turns.data.splice(index, 1)
+                this.getTurns(this.turns.current_page, false)
+                //this.turns.data.splice(index, 1)
                 turn.deleting = false
                 this.$toastr.success('Turno eliminado')
             }).catch(error => {

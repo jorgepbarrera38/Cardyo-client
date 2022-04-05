@@ -7,11 +7,28 @@
         <div class="row">
             <div class="col-md-4 offset-md-4">
                 <div class="main-card mb-3 card">
-                    <div class="card-body"><h5 class="card-title">Iniciar sesión</h5>
+                    <div class="card-body"><h5 class="card-title text-center">Iniciar sesión</h5>
                         <!--<div class="alert alert-danger fade show" role="alert" v-if="errors">
                             <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
                         </div>-->
                         <form @submit.prevent="login">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div >
+                                        <center v-if="showSkeleton">
+                                            <vue-skeleton-loader
+                                                type="rect"
+                                                :width="200"
+                                                :height="200"
+                                                animation="fade"
+                                            />
+                                        </center>
+                                        <img width="200" :src="APP_URL + LOGO_COMPANY" @load="loadImage" v-show="!showSkeleton"
+                                            class="img img-thumbnail"
+                                            style="display:block;margin:auto;">
+                                    </div>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="position-relative form-group">
@@ -42,7 +59,7 @@
 </template>
 <script>
 import axios from 'axios'
-import { mapMutations } from 'vuex'
+import { mapState, mapMutations } from 'vuex'
 export default {
     data () {
         return {
@@ -51,10 +68,14 @@ export default {
                 password: '123'
             },
             errors: null,
-            logining: false
+            logining: false,
+            showSkeleton: true,
         }
     },
     methods: {
+        loadImage () {
+            this.showSkeleton = false
+        },
         ...mapMutations(['changeStateAuthUser', 'setNamesUser', 'setPermissionsUser']),
         login () {
             this.logining = true
@@ -83,6 +104,9 @@ export default {
                 }
             })
         },
+    },
+    computed: {
+        ...mapState(['APP_URL', 'LOGO_COMPANY'])
     }
 }
 </script>

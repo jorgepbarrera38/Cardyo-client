@@ -104,16 +104,18 @@ export default {
     data () {
         return {
             clients: {},
+            searchBody: '',
             searching: true
         }
     },
     methods: {
         search (search) {
-            this.getClients(1, search)
+            this.searchBody = search
+            this.getClients()
         },
-        getClients (page = 1, search = '') {
-            this.searching = true
-            this.$http.get('clients?page=' + page + '&search=' + search).then( response => {
+        getClients (page = 1, searching = true) {
+            this.searching = searching
+            this.$http.get('clients?page=' + page + '&search=' + this.searchBody).then( response => {
                 this.clients = response.data
                 this.clients.data.forEach(client => {
                     this.$set(client, 'deleting', false)
@@ -124,7 +126,7 @@ export default {
         deleteClient (client, index) {
             client.deleting = true
             this.$http.delete(`clients/${ client.id }`).then( response => {
-                this.getClients()
+                this.getClients(this.clients.current_page, false)
                 this.clients.data.splice(index, 1)
                 client.deleting = false
                 this.$toastr.success('Cliente eliminado')

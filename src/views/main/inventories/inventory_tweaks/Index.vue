@@ -1,7 +1,7 @@
 <template>
     <div class="app-main__inner">
         <!--Titulo página-->
-        <PageTitle title="Ajustes de inventario" icon="pe-7s-ticket" subtitle=""/>     
+        <PageTitle title="Inventarios" icon="pe-7s-box1" subtitle=""/>
         <!--Fin titulo página-->
         <!--Contenido-->
         <div class="row">
@@ -72,16 +72,18 @@ export default {
     data () {
         return {
             inventoryTweaks: {},
+            searchBody: '',
             searching: true
         }
     },
     methods: {
         search (search) {
-            this.getInventoryTweaks(1, search)
+            this.searchBody = search
+            this.getInventoryTweaks()
         },
-        getInventoryTweaks (page = 1, search = '') {
-            this.searching = true
-            this.$http.get('inventory-tweaks?page=' + page + '&search=' + search).then( response => {
+        getInventoryTweaks (page = 1, searching = true) {
+            this.searching = searching
+            this.$http.get('inventory-tweaks?page=' + page + '&search=' + this.searchBody).then( response => {
                 this.inventoryTweaks = response.data
                 this.searching = false
             })

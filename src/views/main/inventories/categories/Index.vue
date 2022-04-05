@@ -1,7 +1,7 @@
 <template>
     <div class="app-main__inner">
         <!--Titulo página-->
-        <PageTitle title="Categorías" icon="pe-7s-ticket" subtitle=""/>     
+        <PageTitle title="Inventarios" icon="pe-7s-box1" subtitle=""/>
         <!--Fin titulo página-->
         <!--Contenido-->
         <div class="row">
@@ -77,16 +77,18 @@ export default {
     data () {
         return {
             categories: {},
+            searchBody: '',
             searching: true
         }
     },
     methods: {
         search (search) {
-            this.getCategories(1, search)
+            this.searchBody = search
+            this.getCategories()
         },
-        getCategories (page = 1, search = '') {
-            this.searching = true
-            this.$http.get('inventory-categories?page=' + page + '&search=' + search).then( response => {
+        getCategories (page = 1, searching = true) {
+            this.searching = searching
+            this.$http.get('inventory-categories?page=' + page + '&search=' + this.searchBody).then( response => {
                 this.categories = response.data
                 this.categories.data.forEach(category => {
                     this.$set(category, 'deleting', false)
@@ -97,7 +99,7 @@ export default {
         deleteCategory (category, index) {
             category.deleting = true
             this.$http.delete(`inventory-categories/${ category.id }`).then( response => {
-                this.getCategories()
+                this.getCategories(this.categories.current_page, false)
                 this.categories.data.splice(index, 1)
                 category.deleting = false
                 this.$toastr.success('Categoría eliminada')

@@ -1,7 +1,7 @@
 <template>
     <div class="app-main__inner">
         <!--Titulo página-->
-        <PageTitle title="Compras" icon="pe-7s-ticket" subtitle=""/>     
+        <PageTitle title="Inventarios" icon="pe-7s-box1" subtitle=""/>
         <!--Fin titulo página-->
         <!--Contenido-->
         <div class="row">
@@ -82,16 +82,18 @@ export default {
     data () {
         return {
             purchases: {},
+            searchBody: '',
             searching: true
         }
     },
     methods: {
         search (search) {
-            this.getPurchases(1, search)
+            this.searchBody = search
+            this.getPurchases()
         },
-        getPurchases (page = 1, search = '') {
-            this.searching = true
-            this.$http.get('inventory-purchases?page=' + page + '&search=' + search).then( response => {
+        getPurchases (page = 1, searching = true) {
+            this.searching = searching
+            this.$http.get('inventory-purchases?page=' + page + '&search=' + this.searchBody).then( response => {
                 this.purchases = response.data
                 this.purchases.data.forEach(purchase => {
                     this.$set(purchase, 'deleting', false)

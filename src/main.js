@@ -57,7 +57,7 @@ Vue.prototype.$http = axios
 
 axios.get('config').then(response => {
   store.commit('setAPP_URL', response.data.APP_URL)
-  console.log(store.state.APP_URL);
+  store.commit('setLOGO_COMPANY', response.data.LOGO_COMPANY)
 })
 
 // Add a response interceptor
