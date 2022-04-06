@@ -161,11 +161,6 @@ export default {
                 let data =  [...this.client.body_measurements]
                 data.sort((a, b) => a[this.bodyMeasurement] - b[this.bodyMeasurement])
                 this.minDataChart = data[0][this.bodyMeasurement]
-                /*let p = document.querySelectorAll('[dy="5"]')
-                for (const iterator of p) {
-                    console.log(iterator);
-                    iterator.setAttribute('dy', 11)
-                }*/
                 
             } else {
                 this.$toastr.info('Se requieren por lo menos 2 registros para generar la gráfica')

@@ -17,6 +17,7 @@ export default new Vuex.Store({
     totalSalesToday: '',
     APP_URL: '',
     LOGO_COMPANY: null,
+    CONFIG: {}
   },
   mutations: {
     changeStateAuthUser (state, value) {
@@ -51,6 +52,9 @@ export default new Vuex.Store({
     },
     setLOGO_COMPANY (state, LOGO_COMPANY) {
       state.LOGO_COMPANY = LOGO_COMPANY
+    },
+    setCONFIG (state, CONFIG) {
+      state.CONFIG = CONFIG
     },
   },
   actions: {

@@ -135,7 +135,6 @@ export default {
         ...mapMutations(['setCompany', 'setAttendanceExpectedToday', 'setTotalAssistsToday', 'setProductsWithStockBelowStockmin', 'setProductsWithStockOverStockmin', 'setTotalSalesToday']),
         getData () {
             this.$http.get('dashboard/get-data').then( response => {
-                console.log(response.data.totalSalesToday);
                 this.setCompany(response.data.company ? response.data.company : {})
                 this.setAttendanceExpectedToday(response.data.attendanceExpectedToday)
                 this.setTotalAssistsToday(response.data.totalAssistsToday)

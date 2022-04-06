@@ -56,6 +56,8 @@ if (production) {
 Vue.prototype.$http = axios
 
 axios.get('config').then(response => {
+  //console.log(response.data);
+  store.commit('setCONFIG', response.data.CONFIG)
   store.commit('setAPP_URL', response.data.APP_URL)
   store.commit('setLOGO_COMPANY', response.data.LOGO_COMPANY)
 })

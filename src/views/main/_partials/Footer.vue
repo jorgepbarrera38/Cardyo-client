@@ -4,9 +4,9 @@
                         <div class="app-footer__inner">
                             <div class="app-footer-left">
                                 <ul class="nav">
-                                    <li class="nav-item">
-                                        <a href="https://web.facebook.com/digitalappsoftware" target="_blank" class="nav-link">
-                                            Desarrollado por DigitalApp
+                                    <li class="nav-item" v-if="CONFIG.company_name">
+                                        <a :href="CONFIG.company_facebook_url" target="_blank" class="nav-link">
+                                            Desarrollado por {{ CONFIG.company_name }}
                                         </a>
                                     </li>
                                     <!--<li class="nav-item">
@@ -37,3 +37,11 @@
                     </div>
                 </div>  
 </template>
+<script>
+import { mapState } from 'vuex'
+export default {
+    computed: {
+        ...mapState(['CONFIG'])
+    }
+}
+</script>
