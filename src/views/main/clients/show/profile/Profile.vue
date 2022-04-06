@@ -20,6 +20,9 @@
                         <i class="fa fa-phone"></i> {{ client.phonenumber }} <br>
                     </span>
                 </p>
+                <button class="btn btn-info" @click="$router.push({ name: 'clients.index' })">
+                    <i class="fa fa-undo"></i> Atrás
+                </button>
             </div>
         </div>
     </div>
