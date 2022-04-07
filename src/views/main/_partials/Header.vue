@@ -131,3 +131,8 @@ export default {
     }
 }
 </script>
+<style scoped>
+.app-header__logo .logo-src {
+    width: 181px !important;
+}
+</style>

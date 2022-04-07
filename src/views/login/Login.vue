@@ -39,7 +39,7 @@
                                 <div class="col-md-12">
                                     <div class="position-relative form-group">
                                         <label for="" class="">Contraseña (*)</label>
-                                        <input type="text" class="form-control" v-model="user.password" required>
+                                        <input type="password" class="form-control" v-model="user.password" required>
                                     </div>
                                 </div>
                             </div>

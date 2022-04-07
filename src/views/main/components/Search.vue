@@ -1,12 +1,18 @@
 <template>
-    <form class="form-inline" @submit.prevent="search">
-        <div class="mb-2 mr-sm-2 mb-sm-0 position-relative form-group">
-            <input :placeholder="placeholder" type="text" class="form-control" v-model="valueSearch" maxlength="100">
+    <div class="row">
+        <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+            <form @submit.prevent="search">
+                <div class="input-group">
+                    <input type="text" class="form-control" :placeholder="placeholder" v-model="valueSearch" maxlength="100">
+                    <div class="input-group-append">
+                        <button class="btn btn-primary">
+                            <i class="fa fa-search"></i> Buscar
+                        </button>
+                    </div>
+                </div>
+            </form>
         </div>
-        <button class="btn btn-primary">
-            <i class="fa fa-search"></i> Buscar
-        </button>
-    </form>
+    </div>
 </template>
 <script>
 export default {

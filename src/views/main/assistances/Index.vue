@@ -8,25 +8,30 @@
             <div class="col-md-12 col-lg-12">
                 <div class="main-card mb-3 card">
                     <div class="card-body"><h5 class="card-title">Marcar asistencia</h5>
-                        <form class="form-inline" @submit.prevent="searchClientMembership">
-                            <div class="position-relative form-group">
-                                <label for="" class="sr-only">Identificación</label>
-                                <input placeholder="Identificación" type="text" v-model="identification"
-                                    class="mr-2 form-control" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary" :disabled="searching">
-                                 <div class="spinner-border spinner-border-sm" role="status" v-if="searching">
-                                    <span class="sr-only">Loading...</span>
+                        
+                            <div class="row">
+                                <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
+                                    <form @submit.prevent="searchClientMembership">
+                                        <div class="input-group">
+                                            <input type="text" class="form-control" placeholder="Identificación" v-model="identification" required>
+                                            <div class="input-group-append">
+                                                <button class="btn btn-primary" :disabled="searching">
+                                                    <div class="spinner-border spinner-border-sm" role="status" v-if="searching">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                    <i class="fa fa-search" v-else></i> {{ searching ? 'Buscando' : 'Buscar' }}
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </form>
                                 </div>
-                                <i class="fa fa-search" v-else></i> {{ searching ? 'Buscando' : 'Buscar' }}
-                            </button>
-                        </form>
+                            </div>
                     </div>
                 </div>
             </div>
             <div class="col-md-2 col-lg-2" v-if="Object.keys(client).length">
                 <div class="card">
-                    <img class="card-img-top" :src="client.photo ? 'http://localhost:8000/' + client.photo : require('../../../assets/user.png') " 
+                    <img class="card-img-top" :src="client.photo ? APP_URL + client.photo : require('../../../assets/user.png') " 
                         alt="Card image cap">
                     <div class="card-body">
                         <h5 class="card-title">{{ client.full_names }}</h5>
@@ -89,6 +94,7 @@
 <script>
 import PageTitle from '../components/PageTitle.vue'
 import moment from 'moment'
+import { mapState } from 'vuex'
 export default {
     components: { PageTitle },
     data () {
@@ -152,6 +158,9 @@ export default {
                 return false
             }
         }
+    },
+    computed: {
+        ...mapState(['APP_URL'])
     }
 }
 </script>

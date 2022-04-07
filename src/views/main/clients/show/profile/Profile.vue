@@ -2,7 +2,7 @@
     <div class="container mt-4 mb-4 p-3 d-flex justify-content-center">
         <vue-loading type="spin" color="#3F6AD8" :size="{ width: '50px', height: '50px' }" v-if="!Object.keys(this.client).length"></vue-loading>    
         <div class="card" style="width: 18rem;" v-else>
-            <img class="card-img-top" :src="client.photo ? 'http://localhost:8000/' + client.photo : require('../../../../../assets/user.png') " 
+            <img class="card-img-top" :src="client.photo ? APP_URL + client.photo : require('../../../../../assets/user.png') " 
                 alt="Card image cap">
             <div class="card-body">
                 <h5 class="card-title">{{ client.full_names }}</h5>
@@ -29,6 +29,7 @@
 </template>
 <script>
 import { VueLoading } from 'vue-loading-template'
+import { mapState } from 'vuex'
 export default {
     components: {
       VueLoading
@@ -38,6 +39,9 @@ export default {
             type: Object,
             required: true
         }
+    },
+    computed: {
+        ...mapState(['APP_URL'])
     }
 }
 </script>
