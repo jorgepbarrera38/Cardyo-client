@@ -55,6 +55,7 @@
                                 <th class="text-center">Fecha de inicio</th>
                                 <th class="text-center">Fecha final</th>
                                 <th class="text-center">Turno</th>
+                                <th class="text-center">Observaciónes</th>
                                 <th class="text-center"></th>
                             </tr>
                             </thead>
@@ -65,7 +66,17 @@
                                     <td class="text-center" nowrap>{{ membership.date_start }}</td>
                                     <td class="text-center" nowrap>{{ membership.date_finish }}</td>
                                     <td class="text-center" nowrap>{{ membership.turn.name + ' ' + membership.turn.time_start + ' - ' + membership.turn.time_finish }}</td>
-                                    
+                                    <td class="text-center" nowrap>
+                                        <div class="badge badge-danger" v-if="daysToExpire(membership.date_finish) == 0">
+                                            ¡Vence hoy!
+                                        </div>
+                                        <div class="badge badge-danger" v-if="daysToExpire(membership.date_finish) == 1">
+                                            ¡Vence mañana!
+                                        </div>
+                                        <div class="badge badge-danger" v-if="daysToExpire(membership.date_finish) > 1 && daysToExpire(membership.date_finish) <= 3">
+                                            ¡Vence en {{ daysToExpire(membership.date_finish) }} días!
+                                        </div>
+                                    </td>                                  
                                     <td class="text-center" nowrap>
                                         <i class="fa fa-check-circle" v-if="membership.clientMembershipHasAssistanceToday"></i>
                                         <button type="button" v-else @click="markAttendance(membership)" :disabled="membership.markingAttendance"
@@ -99,7 +110,7 @@ export default {
     components: { PageTitle },
     data () {
         return {
-            identification: '',
+            identification: '1120573514',
             searching: false,
             client: {
             },
@@ -157,6 +168,11 @@ export default {
             } else {
                 return false
             }
+        },
+        daysToExpire (dateFinish) {
+            let dateFinishA = moment(dateFinish)
+            
+            return dateFinishA.diff(moment().startOf('day'), 'days')
         }
     },
     computed: {
