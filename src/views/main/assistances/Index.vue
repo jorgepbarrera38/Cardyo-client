@@ -110,7 +110,7 @@ export default {
     components: { PageTitle },
     data () {
         return {
-            identification: '1120573514',
+            identification: '',
             searching: false,
             client: {
             },

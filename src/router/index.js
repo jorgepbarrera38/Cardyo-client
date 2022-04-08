@@ -50,6 +50,7 @@ import ReportPurchase from '../views/main/reports/Purchase'
 import ReportInventoryTweak from '../views/main/reports/InventoryTweak'
 import ReportSale from '../views/main/reports/Sale'
 import ReportStockProduct from '../views/main/reports/StockProduct'
+import ReportMembershipPayed from '../views/main/reports/MembershipPayed'
 
 Vue.use(VueRouter)
 
@@ -280,6 +281,11 @@ const routes = [
         path: 'reportes/stock-de-productos',
         name: 'reports.stock-products',
         component: ReportStockProduct
+      },
+      {
+        path: 'reportes/membresias-pagadas',
+        name: 'reports.memberships-payed',
+        component: ReportMembershipPayed
       },
     ]
   },

@@ -199,6 +199,18 @@
                                     <ul>
                                         <li>
                                             <a href="#" v-if="authenticated"
+                                            @click.prevent="hasPermission('reports.show') ? goToRoute('reports.memberships-payed') : ''">
+                                                <i class="metismenu-icon"></i>
+                                                Membresías pagadas
+                                            </a>
+                                            <a href="#" v-else
+                                            @click.prevent="">
+                                                <i class="metismenu-icon"></i>
+                                                Membresías pagadas
+                                            </a>
+                                        </li>
+                                        <li>
+                                            <a href="#" v-if="authenticated"
                                             @click.prevent="hasPermission('reports.show') ? goToRoute('reports.asistances') : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Asistencias
