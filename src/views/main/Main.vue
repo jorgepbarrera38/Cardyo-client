@@ -1,5 +1,5 @@
 <template>
-    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header">
+    <div class="app-container app-theme-white body-tabs-shadow fixed-sidebar fixed-header" id="app-container">
         <Header/>
         <!--Theme and color-->
         <!--<ThemeAndColor/>-->

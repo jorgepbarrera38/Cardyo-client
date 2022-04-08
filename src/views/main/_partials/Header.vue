@@ -16,7 +16,7 @@
             </div>
             <div class="app-header__mobile-menu">
                 <div>
-                    <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav">
+                    <button type="button" class="hamburger hamburger--elastic mobile-toggle-nav" id="hamburger--elastic">
                         <span class="hamburger-box">
                             <span class="hamburger-inner"></span>
                         </span>

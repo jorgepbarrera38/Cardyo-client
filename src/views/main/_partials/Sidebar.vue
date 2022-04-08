@@ -34,7 +34,7 @@
                             <ul class="vertical-nav-menu">
                                 <li class="app-sidebar__heading">Dashboard</li>
                                 <li>
-                                    <a href="#" class="mm-active" @click.prevent="$router.push({ name: 'dashboard.index' })">
+                                    <a href="#" class="mm-active" @click.prevent="goToRoute('dashboard.index')">
                                         <i class="metismenu-icon pe-7s-gym"></i>
                                         Dashboard
                                     </a>
@@ -49,7 +49,7 @@
                                     <ul>
                                         <li>
                                             <a href="#" v-if="authenticated"
-                                            @click.prevent="hasPermission('membership_types.index') ? $router.push({ name: 'membership_types.index' }) : ''">
+                                            @click.prevent="hasPermission('membership_types.index') ? goToRoute('membership_types.index') : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Tipos de membresías
                                             </a>
@@ -61,7 +61,7 @@
                                         </li>
                                         <li>
                                             <a href="#" v-if="authenticated"
-                                                @click.prevent="hasPermission('turns.index') ? $router.push({ name: 'turns.index' }) : ''">
+                                                @click.prevent="hasPermission('turns.index') ? goToRoute('turns.index') : ''">
                                                 <i class="metismenu-icon">
                                                 </i>Turnos
                                             </a>
@@ -75,7 +75,7 @@
                                 </li>
                                 <li>
                                     <a href="#" v-if="authenticated"
-                                        @click.prevent="hasPermission('clients.index') ? $router.push({ name: 'clients.index' }) : ''">
+                                        @click.prevent="hasPermission('clients.index') ? goToRoute('clients.index') : ''">
                                         <i class="metismenu-icon pe-7s-users"></i>
                                         Clientes
                                     </a>
@@ -87,7 +87,7 @@
                                 </li>
                                 <li>
                                     <a href="#" v-if="authenticated"
-                                        @click.prevent="hasPermission('assistances.mark_attendance') ? $router.push({ name: 'assistances.index' }) : ''">
+                                        @click.prevent="hasPermission('assistances.mark_attendance') ? goToRoute('assistances.index') : ''">
                                         <i class="metismenu-icon pe-7s-note2"></i>
                                         Asistencia
                                     </a>
@@ -106,7 +106,7 @@
                                     <ul>
                                         <li>
                                             <a href="#" v-if="authenticated"
-                                                @click.prevent="hasPermission('inventory_categories.index') ? $router.push({ name: 'inventory-categories.index' }) : ''">
+                                                @click.prevent="hasPermission('inventory_categories.index') ? goToRoute('inventory-categories.index') : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Categorías
                                             </a>
@@ -118,7 +118,7 @@
                                         </li>
                                         <li>
                                             <a href="#" v-if="authenticated"
-                                                @click.prevent="hasPermission('inventory_products.index') ? $router.push({ name: 'inventory-products.index' }) : ''">
+                                                @click.prevent="hasPermission('inventory_products.index') ? goToRoute('inventory-products.index') : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Productos
                                             </a>
@@ -130,7 +130,7 @@
                                         </li>
                                         <li>
                                             <a href="#" v-if="authenticated"
-                                                @click.prevent="hasPermission('inventory_providers.index') ? $router.push({ name: 'inventory-providers.index' }) : ''">
+                                                @click.prevent="hasPermission('inventory_providers.index') ? goToRoute('inventory-providers.index') : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Proveedores
                                             </a>
@@ -142,7 +142,7 @@
                                         </li>
                                         <li>
                                             <a href="#" v-if="authenticated"
-                                                @click.prevent="hasPermission('inventory_purchases.index') ? $router.push({ name: 'inventory-purchases.index' }) : ''">
+                                                @click.prevent="hasPermission('inventory_purchases.index') ? goToRoute('inventory-purchases.index') : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Compras
                                             </a>
@@ -166,7 +166,7 @@
                                         </li>-->
                                         <li>
                                             <a href="#" v-if="authenticated"
-                                                @click.prevent="hasPermission('inventory_tweaks.index') ? $router.push({ name: 'inventory-tweaks.index' }) : ''">
+                                                @click.prevent="hasPermission('inventory_tweaks.index') ? goToRoute('inventory-tweaks.index') : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Ajustes de inventario
                                             </a>
@@ -180,7 +180,7 @@
                                 </li>
                                 <li>
                                     <a href="#" v-if="authenticated"
-                                        @click.prevent="hasPermission('sales.index') ? $router.push({ name: 'sales.index' }) : ''">
+                                        @click.prevent="hasPermission('sales.index') ? goToRoute('sales.index') : ''">
                                         <i class="metismenu-icon pe-7s-cart"></i>
                                         Ventas
                                     </a>
@@ -199,7 +199,7 @@
                                     <ul>
                                         <li>
                                             <a href="#" v-if="authenticated"
-                                            @click.prevent="hasPermission('reports.show') ? $router.push({ name: 'reports.asistances' }) : ''">
+                                            @click.prevent="hasPermission('reports.show') ? goToRoute('reports.asistances') : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Asistencias
                                             </a>
@@ -211,7 +211,7 @@
                                         </li>
                                          <li>
                                             <a href="#" v-if="authenticated"
-                                                @click.prevent="hasPermission('reports.show') ? $router.push({ name: 'reports.stock-products' }) : ''">
+                                                @click.prevent="hasPermission('reports.show') ? goToRoute('reports.stock-products') : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Stock de productos
                                             </a>
@@ -223,7 +223,7 @@
                                         </li>
                                         <li>
                                             <a href="#" v-if="authenticated"
-                                                @click.prevent="hasPermission('reports.show') ? $router.push({ name: 'reports.purchases' }) : ''">
+                                                @click.prevent="hasPermission('reports.show') ? goToRoute('reports.purchases') : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Compras
                                             </a>
@@ -235,7 +235,7 @@
                                         </li>
                                         <li>
                                             <a href="#" v-if="authenticated"
-                                                @click.prevent="hasPermission('reports.show') ? $router.push({ name: 'reports.inventory-tweaks' }) : ''">
+                                                @click.prevent="hasPermission('reports.show') ? goToRoute('reports.inventory-tweaks') : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Ajustes de inventario
                                             </a>
@@ -247,7 +247,7 @@
                                         </li>
                                         <li>
                                             <a href="#" v-if="authenticated"
-                                                @click.prevent="hasPermission('reports.show') ? $router.push({ name: 'reports.sales' }) : ''">
+                                                @click.prevent="hasPermission('reports.show') ? goToRoute('reports.sales') : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Ventas
                                             </a>
@@ -268,7 +268,7 @@
                                     <ul>
                                         <li>
                                             <a href="#" v-if="authenticated"
-                                                @click.prevent="hasPermission('users.index') ? $router.push({ name: 'users.index' }) : ''">
+                                                @click.prevent="hasPermission('users.index') ? goToRoute('users.index') : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Usuarios
                                             </a>
@@ -280,7 +280,7 @@
                                         </li>
                                         <li>
                                             <a href="#" v-if="authenticated"
-                                                @click.prevent="hasPermission('company.index') ? $router.push({ name: 'company.index' }) : ''">
+                                                @click.prevent="hasPermission('company.index') ? goToRoute('company.index') : ''">
                                                 <i class="metismenu-icon"></i>
                                                 Empresa
                                             </a>
@@ -302,6 +302,13 @@ import { mapState } from 'vuex'
 
 
 export default ({
+    methods: {
+        goToRoute (route) {
+            document.getElementById('app-container').classList.remove('sidebar-mobile-open')
+            document.getElementById('hamburger--elastic').classList.remove('is-active')
+            this.$router.push({ name: route })
+        }
+    },
     computed: {
         ...mapState(['authenticated'])
     }
