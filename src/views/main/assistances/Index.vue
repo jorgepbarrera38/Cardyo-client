@@ -55,7 +55,7 @@
                                 <th class="text-center">Fecha de inicio</th>
                                 <th class="text-center">Fecha final</th>
                                 <th class="text-center">Turno</th>
-                                <th class="text-center">Observaciónes</th>
+                                <th class="text-center"></th>
                                 <th class="text-center"></th>
                             </tr>
                             </thead>

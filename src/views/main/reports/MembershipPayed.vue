@@ -53,9 +53,10 @@
                                 <th>Fecha</th>
                                 <th>Cliente</th>
                                 <th>Turno</th>
-                                <th>Membresía</th>
+                                <th>Membresía nombre</th>
+                                <th>Membresía cantidad</th>
+                                <th>Membresía Tipo</th>
                                 <th>Cantidad</th>
-                                <th>Tipo</th>
                                 <th>Fecha inicio</th>
                                 <th>Fecha fin</th>
                                 <th>Precio unitario</th>
@@ -69,8 +70,9 @@
                                     <td class="text" nowrap>{{ membershipPayed.client.identification + ' - ' + membershipPayed.client.full_names }}</td>
                                     <td class="text" nowrap>{{ membershipPayed.turn.name + ' - ' + membershipPayed.turn.time_start + ' ' + membershipPayed.turn.time_finish }}</td>
                                     <td class="text" nowrap>{{ membershipPayed.membership_type.name }}</td>
-                                    <td class="text" nowrap>{{ membershipPayed.quantity }}</td>
+                                    <td class="text" nowrap>{{ membershipPayed.membership_type.quantity }}</td>
                                     <td class="text" nowrap>{{ membershipPayed.membership_type.type }}</td>
+                                    <td class="text" nowrap>{{ membershipPayed.quantity }}</td>
                                     <td class="text" nowrap>{{ membershipPayed.date_start }}</td>
                                     <td class="text" nowrap>{{ membershipPayed.date_finish }}</td>
                                     <td class="text" nowrap>${{ convertMoney(membershipPayed.price) }}</td>

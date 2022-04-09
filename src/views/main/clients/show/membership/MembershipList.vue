@@ -15,9 +15,10 @@
                         <thead>
                         <tr>
                             <th></th>
-                            <th>Membresía</th>
+                            <th>Membresía nombre</th>
+                            <th class="text-center">Membresía cantidad</th>
+                            <th class="text-center">Membresía tipo</th>
                             <th class="text-center">Cantidad</th>
-                            <th class="text-center">Tipo</th>
                             <th class="text-center">Precio unitario</th>
                             <th class="text-center">Precio total</th>
                             <th class="text-center">Fecha de inicio</th>
@@ -30,8 +31,9 @@
                             <tr v-for="(membership, index) in client.memberships" :key="membership.id" :title="membership.observations ? membership.observations : 'No hay observaciónes'">
                                 <td class="text"></td>
                                 <td class="text" nowrap>{{ membership.membership_type.name }}</td>
-                                <td class="text-center">{{ membership.quantity }}</td>
+                                <td class="text-center">{{ membership.membership_type.quantity }}</td>
                                 <td class="text-center">{{ membership.membership_type.type }}</td>
+                                <td class="text-center">{{ membership.quantity }}</td>
                                 <td class="text-center">{{ convertMoney(membership.price) }}</td>
                                 <td class="text-center">{{ convertMoney(membership.total_price) }}</td>
                                 <td class="text-center" nowrap>{{ membership.date_start }}</td>
