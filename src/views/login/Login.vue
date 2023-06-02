@@ -64,8 +64,8 @@ export default {
     data () {
         return {
             user: {
-                username: 'admin',
-                password: '123'
+                username: '',
+                password: ''
             },
             errors: null,
             logining: false,
