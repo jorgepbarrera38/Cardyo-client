@@ -74,18 +74,21 @@ export default {
     computed: {
         salesFormatted () {
             let data = []
-            this.client.sales.forEach(sale => {
-                sale.sale_details.forEach(detail => {  
-                    data.push({
-                        id_sale: sale.id,
-                        created_at: sale.created_at,
-                        product_name: detail.product_name,
-                        quantity: detail.quantity,
-                        price_unit: detail.price_unit,
-                        price_total: detail.price_total,
+            if (this.client.sales) {
+                this.client.sales.forEach(sale => {
+                    sale.sale_details.forEach(detail => {  
+                        data.push({
+                            id_sale: sale.id,
+                            created_at: sale.created_at,
+                            product_name: detail.product_name,
+                            quantity: detail.quantity,
+                            price_unit: detail.price_unit,
+                            price_total: detail.price_total,
+                        })
                     })
                 })
-            })
+
+            }
 
             return data
         }

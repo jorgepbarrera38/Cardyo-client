@@ -1,52 +1,47 @@
 <template>
-    <div class="app-main__inner">
-        <!--Titulo página-->
-        <PageTitle title="Clientes" icon="pe-7s-users" subtitle=""/>     
-        <!--Fin titulo página-->
-        <ul class="body-tabs body-tabs-layout tabs-animated body-tabs-animated nav">
-            <li class="nav-item">
-                <a role="tab" class="nav-link active" id="tab-1" data-toggle="tab" 
-                    @click.prevent="tab = 'Profile'"
-                    href="#">
-                    <span>Información personal</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a role="tab" :class="{'nav-link': true, disabled: searching}" id="tab-2" data-toggle="tab" 
-                    @click.prevent="tab = 'Membership'"
-                    href="#">
-                    <span>Membresías</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a role="tab" :class="{'nav-link': true, disabled: searching}" id="tab-2" data-toggle="tab" 
-                    @click.prevent="tab = 'BodyMeasurement'"
-                    href="#">
-                    <span>Medidas corporales</span>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a role="tab" :class="{'nav-link': true, disabled: searching}" id="tab-2" data-toggle="tab" 
-                    @click.prevent="tab = 'Shopping'"
-                    href="#">
-                    <span>Compras realizadas</span>
-                </a>
-            </li>
-        </ul>
-        <!--Contenido-->
+    <section class="content">
+      <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12 col-lg-12">
-                  <component v-bind:is="tab" 
-                    :client="client"
-                    @membershipSaved="getClient"
-                    @membershipDeleted="membershipDeleted"
-                    @bodyMeasurementDeleted="bodyMeasurementDeleted"
-                    >
-                  </component>
-            </div>
+            <div class="col-md-3">
+
+<div class="card card-primary card-outline">
+<div class="card-body box-profile">
+<div class="text-center">
+<img class="profile-user-img img-fluid img-circle" :src="client.photo ? APP_URL + client.photo : require('../../../../assets/user.png') " alt="User profile picture">
+</div>
+<h3 class="profile-username text-center">{{ client.full_names }}</h3>
+<!--<p class="text-muted text-center">Software Engineer</p>-->
+<ul class="list-group list-group-unbordered mb-3">
+<li class="list-group-item">
+<b>Identificación</b> <a class="float-right">{{ client.identification }}</a>
+</li>
+<li class="list-group-item">
+<b>Sexo</b> <a class="float-right">{{ client.sex }}</a>
+</li>
+<li class="list-group-item">
+<b>Fecha de nacimiento</b> <a class="float-right">{{ client.date_of_birth }}</a>
+</li>
+<li class="list-group-item">
+<b>Dirección</b> <a class="float-right">{{ client.address }}</a>
+</li>
+<li class="list-group-item">
+<b>Teléfono</b> <a class="float-right">{{ client.phonenumber }}</a>
+</li>
+</ul>
+<!--<a href="#" class="btn btn-primary btn-block"><b>Follow</b></a>-->
+</div>
+
+</div>
+
+</div>
+            <section class="col-md-9">
+                <Membership :client="client" @membershipDeleted="getClient" @membershipSaved="getClient"/>
+                <BodyMeasurement :client="client" @bodyMeasurementDeleted="bodyMeasurementDeleted"/>
+                <Shopping :client="client"/>
+            </section>
         </div>
-        <!--Fin contenido-->
-    </div>
+      </div>
+    </section>
 </template>
 <script>
 import PageTitle from '../../components/PageTitle'
@@ -54,6 +49,7 @@ import Profile from './profile/Profile'
 import Membership from './membership/Index'
 import BodyMeasurement from './body_measurement/Index'
 import Shopping from './shopping/Index'
+ import { mapState } from 'vuex'
 export default {
     components: { PageTitle, Profile, Membership, BodyMeasurement, Shopping },
     created () {
@@ -74,7 +70,7 @@ export default {
                 this.client.memberships.forEach(membership => {
                     this.$set(membership, 'deleting', false)
                     this.$set(membership, 'searchingAssistances', false)
-                })
+                })////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+
 
                 this.client.body_measurements.forEach(bodyMeasurement => {
                     this.$set(bodyMeasurement, 'deleting', false)
@@ -83,12 +79,15 @@ export default {
                 this.searching = false
             })
         },
-        membershipDeleted (index) {
+        /*membershipDeleted (index) {
             this.client.memberships.splice(index, 1)
-        },
+        },*/
         bodyMeasurementDeleted (index) {
             this.client.body_measurements.splice(index, 1)
         }
+    },
+    computed: {
+        ...mapState(['APP_URL'])
     }
 }
 </script>

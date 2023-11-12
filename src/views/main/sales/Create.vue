@@ -116,11 +116,10 @@
 </template>
 <script>
 import PageTitle from '../components/PageTitle.vue'
-import Skeleton from './_partials/Skeleton'
 import formatNum from 'format-num'
 import { mapState } from 'vuex'
 export default {
-    components: { PageTitle, Skeleton },
+    components: { PageTitle },
     created () {
         this.getDataToRegisterSale()
     },

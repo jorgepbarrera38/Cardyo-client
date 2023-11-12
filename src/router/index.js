@@ -63,7 +63,7 @@ const routes = [
       {
         path: 'login',
         name: 'login',
-        component: Login
+        component: Login,
       },
       {
         path: '/',
@@ -73,22 +73,34 @@ const routes = [
       {
         path: 'clientes',
         name: 'clients.index',
-        component: ClientIndex
+        component: ClientIndex,
+        meta: {
+          title: 'Clientes'
+        }
       },
       {
         path: 'clientes/:id',
         name: 'clients.show',
-        component: ClientShow
+        component: ClientShow,
+        meta: {
+          title: 'Clientes'
+        }
       },
       {
         path: 'clientes/nuevo',
         name: 'clients.create',
-        component: ClientCreate
+        component: ClientCreate,
+        meta: {
+          title: 'Clientes'
+        }
       },
       {
         path: 'clientes/:id/editar',
         name: 'clients.edit',
-        component: ClientEdit
+        component: ClientEdit,
+        meta: {
+          title: 'Clientes'
+        }
       },
       {
         path: 'tipos-de-membresias',

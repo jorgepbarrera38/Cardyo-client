@@ -46,7 +46,6 @@
                                         </td>
                                     </tr>
                             </transition-group>
-                            <Skeleton v-else/>
                         </table>
                     </div>
                     <div class="d-block text-center card-footer">
@@ -61,11 +60,10 @@
 <script>
 import PageTitle from '../../components/PageTitle'
 import Search from '../../components/Search'
-import Skeleton from './_partials/Skeleton'
 import formatNum from 'format-num'
 import moment from 'moment'
 export default {
-    components: { PageTitle, Skeleton, Search },
+    components: { PageTitle, Search },
     created () {
         this.getPurchases()
     },

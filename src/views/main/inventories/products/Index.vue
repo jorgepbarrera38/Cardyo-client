@@ -78,7 +78,6 @@
                                         </td>
                                     </tr>
                             </transition-group>
-                            <Skeleton v-else/>
                         </table>
                     </div>
                     <div class="d-block text-center card-footer">
@@ -92,12 +91,11 @@
 </template>
 <script>
 import PageTitle from '../../components/PageTitle.vue'
-import Skeleton from './_partials/Skeleton'
 import Search from '../../components/Search'
 import formatNum from 'format-num'
 import { mapState } from 'vuex'
 export default {
-    components: { PageTitle, Skeleton, Search },
+    components: { PageTitle, Search },
     created () {
         this.getProducts()
     },

@@ -46,7 +46,6 @@
                                         </td>
                                     </tr>
                             </transition-group>
-                            <Skeleton v-else/>
                         </table>
                     </div>
                     <div class="d-block text-center card-footer">
@@ -60,12 +59,11 @@
 </template>
 <script>
 import PageTitle from '../../components/PageTitle'
-import Skeleton from './_partials/Skeleton'
 import formatNum from 'format-num'
 import moment from 'moment'
 import Search from '../../components/Search'
 export default {
-    components: { PageTitle, Skeleton, Search },
+    components: { PageTitle, Search },
     created () {
         this.getInventoryTweaks()
     },

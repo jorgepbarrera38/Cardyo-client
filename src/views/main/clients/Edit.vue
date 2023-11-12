@@ -1,13 +1,14 @@
 <template>
-    <div class="app-main__inner">
-        <!--Titulo página-->
-        <PageTitle title="Clientes" icon="pe-7s-users" subtitle=""/>     
-        <!--Fin titulo página-->
-        <!--Contenido-->
+    <section class="content">
+      <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="main-card mb-3 card">
-                    <div class="card-body"><h5 class="card-title">Editar cliente</h5>
+            <section class="col-md-12">
+                <div class="card">
+                <div class="card-header">
+                    <h3 class="card-title">Editar cliente</h3>
+                </div>
+                <!-- /.card-header -->
+                    <div class="card-body">
                         <div class="alert alert-danger fade show" role="alert" v-if="errors">
                             <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
                         </div>
@@ -80,10 +81,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" :class="{'mt-1 btn btn-secondary mr-1': true, disabled: saving}" @click.prevent="$router.push({ name: 'clients.index' })">
+                            <a href="#" :class="{'mt-1 btn btn-secondary mr-1': true, disabled: saving, 'btn-sm': true }" @click.prevent="$router.push({ name: 'clients.index' })">
                                 <i class="fa fa-undo"></i> Atrás
                             </a>
-                            <button class="mt-1 btn btn-primary" :disabled="saving">
+                            <button class="mt-1 btn btn-primary btn-sm" :disabled="saving">
                                 <div class="spinner-border spinner-border-sm" role="status" v-if="saving">
                                     <span class="sr-only">Loading...</span>
                                 </div>
@@ -92,10 +93,11 @@
                         </form>
                     </div>
                 </div>
-            </div>
+            </section>
         </div>
-        <!--Fin contenido-->
-    </div>
+        <!-- /.row (main row) -->
+      </div><!-- /.container-fluid -->
+    </section>
 </template>
 <script>
 import PageTitle from '../components/PageTitle.vue'
