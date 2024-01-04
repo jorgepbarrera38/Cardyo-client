@@ -1,82 +1,84 @@
 <template>
 <div class="row">
     <div :class="{'col-md-8': showAssistancesFromMembership, 'col-md-12': !showAssistancesFromMembership}">
-        <div class="main-card mb-3 card">
+        <div class="card">
                 <div class="card-header">
-                    Membresías
+                    <h3 class="card-title">Membresías</h3>
                     <div class="card-tools">
                         <button class="active btn btn-primary btn-sm" @click="hasPermission('client_memberships.store') ? $emit('createMembership') : ''">
                             <i class="fa fa-plus"></i> Nuevo
                         </button>
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-borderless table-striped table-hover">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Membresía nombre</th>
-                            <th class="text-center">Membresía cantidad</th>
-                            <th class="text-center">Membresía tipo</th>
-                            <th class="text-center">Cantidad</th>
-                            <th class="text-center">Precio unitario</th>
-                            <th class="text-center">Precio total</th>
-                            <th class="text-center">Fecha de inicio</th>
-                            <th class="text-center">Fecha final</th>
-                            <th class="text-center">Turno</th>
-                            <th class="text-center"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(membership, index) in client.memberships" :key="membership.id" :title="membership.observations ? membership.observations : 'No hay observaciónes'">
-                                <td class="text"></td>
-                                <td class="text" nowrap>{{ membership.membership_type.name }}</td>
-                                <td class="text-center">{{ membership.membership_type.quantity }}</td>
-                                <td class="text-center">{{ membership.membership_type.type }}</td>
-                                <td class="text-center">{{ membership.quantity }}</td>
-                                <td class="text-center">{{ convertMoney(membership.price) }}</td>
-                                <td class="text-center">{{ convertMoney(membership.total_price) }}</td>
-                                <td class="text-center" nowrap>{{ membership.date_start }}</td>
-                                <td class="text-center" nowrap>{{ membership.date_finish }}</td>
-                                <td class="text-center" nowrap>{{ membership.turn.name + ' ' + membership.turn.time_start + ' - ' + membership.turn.time_finish }}</td>
-                                <td class="text-center">
-                                    <div class="badge badge-warning" v-if="membershipIsPending(membership.date_start)">Pendiente</div>
-                                    <div class="badge badge-success" v-if="membershipIsActive(membership.date_start, membership.date_finish)">Activa</div>
-                                    <div class="badge badge-secondary" v-if="membershipIsFinished(membership.date_finish)">Finalizada</div>
-                                </td>
-                                <td class="text-center" nowrap>
-                                    <button type="button" 
-                                        @click="hasPermission('client_memberships.update') ? $emit('editMembership', membership.id) : ''" 
-                                        title="Editar membresía"
-                                        class="btn btn-warning btn-sm mr-1">
-                                        <i class="fa fa-edit"></i> 
-                                    </button>
-                                    <button type="button" 
-                                        @click="hasPermission('client_memberships.delete') ? deleteMembership(membership, index) : ''"
-                                        :disabled="membership.deleting" 
-                                        title="Eliminar membresía"
-                                        class="btn btn-danger btn-sm mr-1">
-                                        <div class="spinner-border spinner-border-sm" v-if="membership.deleting"
-                                            role="status">
-                                            <span class="sr-only">Loading...</span>
-                                        </div>
-                                        <i class="fa fa-trash-alt" v-else></i> 
-                                    </button>
-                                    <button type="button" @click="getAndShowAsistancesFromMembership(membership)" :disabled="membership.searchingAssistances" title="Ver asistencias"
-                                        class="btn btn-info btn-sm mr-1">
-                                        <div class="spinner-border spinner-border-sm" v-if="membership.searchingAssistances"
-                                            role="status">
-                                            <span class="sr-only">Loading...</span>
-                                        </div>
-                                        <i class="fa fa-calendar" v-else></i> 
-                                    </button>
-                                </td>
+                <div class="card-body p-0">
+
+                
+                    <div class="table-responsive" style="max-height: 250px;">
+                        <table class="table table-sm table-hover">
+                            <thead>
+                            <tr>
+                                <th>Membresía nombre</th>
+                                <th>Membresía cantidad</th>
+                                <th>Membresía tipo</th>
+                                <th>Cantidad</th>
+                                <th>Precio unitario</th>
+                                <th>Precio total</th>
+                                <th>Fecha de inicio</th>
+                                <th>Fecha final</th>
+                                <th>Turno</th>
+                                <th></th>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="d-block text-center card-footer">
-                    
+                            </thead>
+                            <tbody>
+                                <tr v-for="(membership, index) in client.memberships" :key="membership.id" :title="membership.observations ? membership.observations : 'No hay observaciónes'">
+                                    <td nowrap>{{ membership.membership_type.name }}</td>
+                                    <td>{{ membership.membership_type.quantity }}</td>
+                                    <td>{{ membership.membership_type.type }}</td>
+                                    <td>{{ membership.quantity }}</td>
+                                    <td>{{ convertMoney(membership.price) }}</td>
+                                    <td>{{ convertMoney(membership.total_price) }}</td>
+                                    <td nowrap>{{ membership.date_start }}</td>
+                                    <td nowrap>{{ membership.date_finish }}</td>
+                                    <td>{{ membership.turn.name + ' ' + membership.turn.time_start + ' - ' + membership.turn.time_finish }}</td>
+                                    <td>
+                                        <div class="badge badge-warning" v-if="membershipIsPending(membership.date_start)">Pendiente</div>
+                                        <div class="badge badge-success" v-if="membershipIsActive(membership.date_start, membership.date_finish)">Activa</div>
+                                        <div class="badge badge-secondary" v-if="membershipIsFinished(membership.date_finish)">Finalizada</div>
+                                    </td>
+                                    <td class="text-center" nowrap>
+                                        <button type="button" 
+                                            @click="hasPermission('client_memberships.update') ? $emit('editMembership', membership.id) : ''" 
+                                            title="Editar membresía"
+                                            class="btn btn-warning btn-sm mr-1">
+                                            <i class="fa fa-edit"></i> 
+                                        </button>
+                                        <button type="button" 
+                                            @click="hasPermission('client_memberships.delete') ? deleteMembership(membership, index) : ''"
+                                            :disabled="membership.deleting" 
+                                            title="Eliminar membresía"
+                                            class="btn btn-danger btn-sm mr-1">
+                                            <div class="spinner-border spinner-border-sm" v-if="membership.deleting"
+                                                role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                            <i class="fa fa-trash-alt" v-else></i> 
+                                        </button>
+                                        <button type="button" @click="getAndShowAsistancesFromMembership(membership)" :disabled="membership.searchingAssistances" title="Ver asistencias"
+                                            class="btn btn-info btn-sm mr-1">
+                                            <div class="spinner-border spinner-border-sm" v-if="membership.searchingAssistances"
+                                                role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                            <i class="fa fa-calendar" v-else></i> 
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-block text-center card-footer">
+                        
+                    </div>
                 </div>
         </div>
     </div>

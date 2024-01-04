@@ -1,41 +1,36 @@
 <template>
         <div class="main-card mb-3 card">
                 <div class="card-header">
-                    Compras realizadas
-                    <!--<div class="btn-actions-pane-right">
-                        <button class="active btn btn-success" @click="$emit('createBodyMeasurement')">
-                            <i class="fa fa-plus"></i> Nuevo
-                        </button>
-                    </div>-->
+                    <h3 class="card-title">Compras realizadas</h3>
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-borderless table-striped table-hover">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Consecutivo compra</th>
-                            <th class="text-center">Fecha</th>
-                            <th class="text-center">Producto</th>
-                            <th class="text-center">Cantidad</th>
-                            <th class="text-center">Precio unitario</th>
-                            <th class="text-center">Total</th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(detail, index) in salesFormatted" :key="detail.id_sale">
-                                <td class="text"></td>
-                                <td class="text">{{ detail.id_sale }}</td>
-                                <td class="text-center">{{ dateWithHour(detail.created_at) }}</td>
-                                <td class="text-center" nowrap>{{ detail.product_name }}</td>
-                                <td class="text-center">{{ detail.quantity }}</td>
-                                <td class="text-center">{{ convertMoney(detail.price_unit) }}</td>
-                                <td class="text-center">{{ convertMoney(detail.price_total) }}</td>
+                <div class="card-body p-0">
+                    <div class="table-responsive" style="max-height: 250px;">
+                        <table class="table table-sm table-hover">
+                            <thead>
+                            <tr>
+                                <th>Consecutivo compra</th>
+                                <th>Fecha</th>
+                                <th>Producto</th>
+                                <th>Cantidad</th>
+                                <th>Precio unitario</th>
+                                <th>Total</th>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div class="d-block text-center card-footer">
-                    
+                            </thead>
+                            <tbody>
+                                <tr v-for="(detail, index) in salesFormatted" :key="detail.id_sale">
+                                    <td>{{ detail.id_sale }}</td>
+                                    <td>{{ dateWithHour(detail.created_at) }}</td>
+                                    <td nowrap>{{ detail.product_name }}</td>
+                                    <td>{{ detail.quantity }}</td>
+                                    <td>{{ convertMoney(detail.price_unit) }}</td>
+                                    <td>{{ convertMoney(detail.price_total) }}</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="d-block text-center card-footer">
+                        
+                    </div>
                 </div>
         </div>
 </template>

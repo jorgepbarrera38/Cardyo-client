@@ -1,108 +1,55 @@
 <template>
-        <div class="main-card mb-3 card">
+        <div class="card">
                 <div class="card-header">
-                    Medidas corporales
-                    <div class="btn-actions-pane-right">
-                        <button class="active btn btn-success" @click="hasPermission('client_body_measurements.store') ? $emit('createBodyMeasurement') : ''">
+                    <h3 class="card-title">Medidas corporales</h3>
+                    <div class="card-tools">
+                        <button class="active btn btn-primary btn-sm" @click="hasPermission('client_body_measurements.store') ? $emit('createBodyMeasurement') : ''">
                             <i class="fa fa-plus"></i> Nuevo
                         </button>
                     </div>
                 </div>
-                <div class="table-responsive">
-                    <table class="table table-borderless table-striped table-hover">
-                        <thead>
-                        <tr>
-                            <th></th>
-                            <th>Fecha</th>
-                            <th class="text-center">Altura</th>
-                            <th class="text-center">Peso</th>
-                            <th class="text-center">Bíceps</th>
-                            <th class="text-center">Antebrazos</th>
-                            <th class="text-center">Hombros</th>
-                            <th class="text-center">Pecho</th>
-                            <th class="text-center">Anchura cintura</th>
-                            <th class="text-center">Anchura a nivel del ombligo</th>
-                            <th class="text-center">Glúteos o cadera</th>
-                            <th class="text-center">Muslo</th>
-                            <th class="text-center">Pantorrillas</th>
-                            <th class="text-center"></th>
-                        </tr>
-                        </thead>
-                        <tbody>
-                            <tr v-for="(bodyMeasurement, index) in client.body_measurements" :key="bodyMeasurement.id">
-                                <td class="text"></td>
-                                <td class="text">{{ bodyMeasurement.date }}</td>
-                                <td class="text-center">{{ bodyMeasurement.height }} cm</td>
-                                <td class="text-center">{{ bodyMeasurement.weight }} kg</td>
-                                <td class="text-center">{{ bodyMeasurement.biceps }} cm</td>
-                                <td class="text-center">{{ bodyMeasurement.forearms }} cm</td>
-                                <td class="text-center">{{ bodyMeasurement.shoulders }} cm</td>
-                                <td class="text-center">{{ bodyMeasurement.chest }} cm</td>
-                                <td class="text-center">{{ bodyMeasurement.waist_width }} cm</td>
-                                <td class="text-center">{{ bodyMeasurement.width_at_navel_level }} cm</td>
-                                <td class="text-center">{{ bodyMeasurement.buttocks_or_hip }} cm</td>
-                                <td class="text-center">{{ bodyMeasurement.thigh }} cm</td>
-                                <td class="text-center">{{ bodyMeasurement.calves }} cm</td>
-                                
-                                <td class="text-center" nowrap>
-                                   <button type="button" 
-                                        @click="hasPermission('client_body_measurements.update') ? $emit('editBodyMeasurement', bodyMeasurement.id) : ''" 
-                                        title="Editar medidas corporales"
-                                        class="btn btn-warning btn-sm mr-1">
-                                        <i class="fa fa-edit"></i> 
-                                    </button>
-                                    <button type="button" 
-                                        @click="hasPermission('client_body_measurements.delete') ? deleteBodyMeasurement(bodyMeasurement, index) : ''" 
-                                        :disabled="bodyMeasurement.deleting" title="Eliminar medidas corporales"
-                                        class="btn btn-danger btn-sm mr-1">
-                                        <div class="spinner-border spinner-border-sm" v-if="bodyMeasurement.deleting"
-                                            role="status">
-                                            <span class="sr-only">Loading...</span>
-                                        </div>
-                                        <i class="fa fa-trash-alt" v-else></i> 
-                                    </button>
-                                </td>
+                <div class="card-body p-0">
+                    <div class="table-responsive" style="max-height: 250px;">
+                        <table class="table table-sm table-hover">
+                            <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Medida corporal</th>
+                                <th>Valor</th>
+                                <th></th>
                             </tr>
-                        </tbody>
-                    </table>
-                </div>
-                    <hr>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col-md-3 mb-3">
-                            <select class="form-control" v-model="bodyMeasurement">
-                                <option value="">Seleccione medida corporal</option>
-                                <option value="height">Altura</option>
-                                <option value="weight">Peso</option>
-                                <option value="biceps">Bíceps</option>
-                                <option value="forearms">Antebrazos</option>
-                                <option value="shoulders">Hombros</option>
-                                <option value="chest">Pecho</option>
-                                <option value="waist_width">Anchura cintura</option>
-                                <option value="width_at_navel_level">Anchura a nivel del ombligo</option>
-                                <option value="buttocks_or_hip">Glúteos o cadera</option>
-                                <option value="thigh">Muslo</option>
-                                <option value="calves">Pantorrillas</option>
-                            </select>
-                        </div>
-                        <div class="col-md-12">
-                            <TrendChart v-if="bodyMeasurement && client.body_measurements.length > 1"
-                                :datasets="datasetsChart"
-                                :grid="{
-                                    verticalLines: true,
-                                    horizontalLines: true,
-                                    //verticalLinesNumber: 1,
-                                    //horizontalLinesNumber: 7,
-                                }"
-                                :labels="labels"
-                                :min="minDataChart">
-                                </TrendChart>
-                        </div>
+                            </thead>
+                            <tbody>
+                                <tr v-for="(bodyMeasurement, index) in client.client_body_measurements" :key="bodyMeasurement.id">
+                                    <td>{{ bodyMeasurement.date }}</td>
+                                    <td>{{ bodyMeasurement.body_measurement.name }}</td>
+                                    <td>{{ bodyMeasurement.value }}</td>
+                                    
+                                    <td class="text-center" nowrap>
+                                        <button type="button" 
+                                            @click="hasPermission('client_body_measurements.update') ? $emit('editBodyMeasurement', bodyMeasurement.id) : ''" 
+                                            title="Editar medidas corporales"
+                                            class="btn btn-warning btn-sm mr-1">
+                                            <i class="fa fa-edit"></i> 
+                                        </button>
+                                        <button type="button" 
+                                            @click="hasPermission('client_body_measurements.delete') ? deleteBodyMeasurement(bodyMeasurement, index) : ''" 
+                                            :disabled="bodyMeasurement.deleting" title="Eliminar medidas corporales"
+                                            class="btn btn-danger btn-sm mr-1">
+                                            <div class="spinner-border spinner-border-sm" v-if="bodyMeasurement.deleting"
+                                                role="status">
+                                                <span class="sr-only">Loading...</span>
+                                            </div>
+                                            <i class="fa fa-trash-alt" v-else></i> 
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
                     </div>
-
-                </div>
-                <div class="d-block text-center card-footer">
-                    
+                    <div class="d-block text-center card-footer">
+                        
+                    </div>
                 </div>
         </div>
 </template>

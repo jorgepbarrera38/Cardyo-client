@@ -3,6 +3,7 @@
         @createBodyMeasurement="createBodyMeasurement"
         @closeFormCreateBodyMeasurement="closeFormCreateBodyMeasurement"
         @bodyMeasurementSaved="bodyMeasurementSaved"
+        @bodyMeasurementUpdated="bodyMeasurementUpdated"
         @bodyMeasurementDeleted="bodyMeasurementDeleted"
         @editBodyMeasurement="editBodyMeasurement">
     </component>
@@ -33,7 +34,11 @@ export default {
             this.component = 'BodyMeasurementList'
         },
         bodyMeasurementSaved () {
-            this.$emit('membershipSaved')
+            this.$emit('bodyMeasurementSaved')
+            //this.component = 'BodyMeasurementList'
+        },
+        bodyMeasurementUpdated () {
+            this.$emit('bodyMeasurementSaved')
             this.component = 'BodyMeasurementList'
         },
         bodyMeasurementDeleted (index) {

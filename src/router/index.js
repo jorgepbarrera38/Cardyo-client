@@ -52,6 +52,10 @@ import ReportSale from '../views/main/reports/Sale'
 import ReportStockProduct from '../views/main/reports/StockProduct'
 import ReportMembershipPayed from '../views/main/reports/MembershipPayed'
 
+import BodyMeasurementIndex from '../views/main/body_measurements/Index'
+import BodyMeasurementCreate from '../views/main/body_measurements/Create'
+import BodyMeasurementEdit from '../views/main/body_measurements/Edit'
+
 Vue.use(VueRouter)
 
 const routes = [
@@ -68,7 +72,10 @@ const routes = [
       {
         path: '/',
         name: 'dashboard.index',
-        component: Dashboard
+        component: Dashboard,
+        meta: {
+          title: 'Dashboard'
+        }
       },
       {
         path: 'clientes',
@@ -148,6 +155,30 @@ const routes = [
         component: TurnEdit,
         meta: {
           title: 'Turnos'
+        }
+      },
+      {
+        path: 'medidas-corporales',
+        name: 'body-measurements.index',
+        component: BodyMeasurementIndex,
+        meta: {
+          title: 'Medidas corporales'
+        }
+      },
+      {
+        path: 'medidas-corporales/nuevo',
+        name: 'body-measurements.create',
+        component: BodyMeasurementCreate,
+        meta: {
+          title: 'Medidas corporales'
+        }
+      },
+      {
+        path: 'medidas-corporales/:id/editar',
+        name: 'body-measurements.edit',
+        component: BodyMeasurementEdit,
+        meta: {
+          title: 'Medidas corporales'
         }
       },
       {

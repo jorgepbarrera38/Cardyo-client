@@ -40,7 +40,7 @@
             </div>
             <section class="col-md-9">
                 <Membership :client="client" @membershipDeleted="getClient" @membershipSaved="getClient"/>
-                <BodyMeasurement :client="client" @bodyMeasurementDeleted="bodyMeasurementDeleted"/>
+                <BodyMeasurement :client="client" @bodyMeasurementSaved="bodyMeasurementSaved" @bodyMeasurementDeleted="bodyMeasurementDeleted"/>
                 <Shopping :client="client"/>
             </section>
         </div>
@@ -77,7 +77,7 @@ export default {
                     this.$set(membership, 'searchingAssistances', false)
                 })////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////+
 
-                this.client.body_measurements.forEach(bodyMeasurement => {
+                this.client.client_body_measurements.forEach(bodyMeasurement => {
                     this.$set(bodyMeasurement, 'deleting', false)
                 })
 
@@ -88,7 +88,11 @@ export default {
             this.client.memberships.splice(index, 1)
         },*/
         bodyMeasurementDeleted (index) {
+            this.getClient()
             this.client.body_measurements.splice(index, 1)
+        },
+        bodyMeasurementSaved () {
+            this.getClient()
         }
     },
     computed: {

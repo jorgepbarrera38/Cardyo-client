@@ -3,7 +3,7 @@
         <div class="col-md-12">
             <div class="main-card mb-3 card">
                 <div class="card-header">
-                    Registrar membresía
+                    <h3 class="card-title">Registrar membresía</h3>
                 </div>
                 <div class="card-body">
                     <div class="alert alert-danger fade show" role="alert" v-if="errors">
