@@ -4,8 +4,8 @@
         <div class="main-card mb-3 card">
                 <div class="card-header">
                     Membresías
-                    <div class="btn-actions-pane-right">
-                        <button class="active btn btn-success" @click="hasPermission('client_memberships.store') ? $emit('createMembership') : ''">
+                    <div class="card-tools">
+                        <button class="active btn btn-primary btn-sm" @click="hasPermission('client_memberships.store') ? $emit('createMembership') : ''">
                             <i class="fa fa-plus"></i> Nuevo
                         </button>
                     </div>

@@ -1,14 +1,11 @@
 <template>
-    <div class="app-main__inner">
-        <!--Titulo página-->
-        <PageTitle title="Tipos de membresías" icon="pe-7s-id" subtitle=""/>     
-        <!--Fin titulo página-->
-        <!--Contenido-->
+    <div class="content">
+        <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="main-card mb-3 card">
+            <div class="col-md-12">
+                <div class="card">
                     <div class="card-header">
-                        Nuevo tipo de membresía
+                        <h3 class="card-title">Nuevo tipo de membresía</h3>
                     </div>
                     <div class="card-body">
                         <div class="alert alert-danger fade show" role="alert" v-if="errors">
@@ -45,10 +42,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" :class="{'mt-1 btn btn-secondary mr-1': true, disabled: saving}" @click.prevent="$router.push({ name: 'membership_types.index' })">
+                            <a href="#" :class="{'mt-1 btn btn-secondary btn-sm mr-1': true, disabled: saving}" @click.prevent="$router.push({ name: 'membership_types.index' })">
                                 <i class="fa fa-undo"></i> Atrás
                             </a>
-                            <button class="mt-1 btn btn-primary" :disabled="saving">
+                            <button class="mt-1 btn btn-primary btn-sm" :disabled="saving">
                                 <div class="spinner-border spinner-border-sm" role="status" v-if="saving">
                                     <span class="sr-only">Loading...</span>
                                 </div>
@@ -59,7 +56,7 @@
                 </div>
             </div>
         </div>
-        <!--Fin contenido-->
+        </div>
     </div>
 </template>
 <script>

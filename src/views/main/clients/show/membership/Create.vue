@@ -1,82 +1,89 @@
 <template>
-    <div class="main-card mb-3 card">
-        <div class="card-body"><h5 class="card-title">Registrar membresía</h5>
-            <div class="alert alert-danger fade show" role="alert" v-if="errors">
-                <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
-            </div>
-            <form @submit.prevent="save">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="position-relative form-group">
-                            <label for="" class="">Turno (*)</label>
-                            <select class="form-control" v-model="membership.turn_id">
-                                <option value="">Seleccione opción</option>
-                                <option :value="turn.id" v-for="turn in turns" :key="`turn-${ turn.id }`">
-                                    {{ turn.name + ' ' + turn.time_start + ' - ' + turn.time_finish }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="position-relative form-group">
-                            <label for="" class="">Tipo de membresía (*)</label>
-                            <select class="form-control" v-model="membership.membership_type_id">
-                                <option value="">Seleccione opción</option>
-                                <option :value="membershipType.id" 
-                                    v-for="membershipType in membershipTypes" :key="`membership-type-${ membershipType.id }`">
-                                        {{ membershipType.name + ' - ' + membershipType.quantity + ' ' + membershipType.type + ' $' + convertMoney(membershipType.price) }}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="position-relative form-group">
-                            <label for="" class="">Precio</label>
-                            <input type="number" class="form-control" disabled v-model="membership.price">
-                        </div>
-                    </div>
-                    <div class="col-md-2">
-                        <div class="position-relative form-group">
-                            <label for="" class="">Cantidad (*)</label>
-                            <input type="number" class="form-control" v-model="membership.quantity" min="1" max="1000">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="position-relative form-group">
-                            <label for="" class="">Fecha de inicio (*)</label>
-                            <input type="date" class="form-control" v-model="membership.date_start">
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="position-relative form-group">
-                            <label for="" class="">Fecha final</label>
-                            <input type="date" class="form-control" v-model="membership.date_finish" disabled>
-                        </div>
-                    </div>
-                    <div class="col-md-4">
-                        <div class="position-relative form-group">
-                            <label for="" class="">Precio total</label>
-                            <input type="number" class="form-control" disabled :value="membership.price * membership.quantity">
-                        </div>
-                    </div> 
-                    <div class="col-md-12">
-                        <div class="position-relative form-group">
-                            <label for="" class="">Observaciónes</label>
-                            <textarea rows="3" class="form-control" v-model="membership.observations" maxlength="500"></textarea>
-                        </div>
-                    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="main-card mb-3 card">
+                <div class="card-header">
+                    Registrar membresía
                 </div>
-
-                <a href="#" :class="{'mt-1 btn btn-secondary mr-1': true, disabled: saving}" @click.prevent="$emit('closeFormCreateMembership')">
-                    <i class="fa fa-undo"></i> Atrás
-                </a>
-                <button class="mt-1 btn btn-primary" :disabled="saving">
-                    <div class="spinner-border spinner-border-sm" role="status" v-if="saving">
-                        <span class="sr-only">Loading...</span>
+                <div class="card-body">
+                    <div class="alert alert-danger fade show" role="alert" v-if="errors">
+                        <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
                     </div>
-                    <i class="fa fa-save" v-else></i> Guardar
-                </button>
-            </form>
+                    <form @submit.prevent="save">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Turno (*)</label>
+                                    <select class="form-control" v-model="membership.turn_id">
+                                        <option value="">Seleccione opción</option>
+                                        <option :value="turn.id" v-for="turn in turns" :key="`turn-${ turn.id }`">
+                                            {{ turn.name + ' ' + turn.time_start + ' - ' + turn.time_finish }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Tipo de membresía (*)</label>
+                                    <select class="form-control" v-model="membership.membership_type_id">
+                                        <option value="">Seleccione opción</option>
+                                        <option :value="membershipType.id" 
+                                            v-for="membershipType in membershipTypes" :key="`membership-type-${ membershipType.id }`">
+                                                {{ membershipType.name + ' - ' + membershipType.quantity + ' ' + membershipType.type + ' $' + convertMoney(membershipType.price) }}
+                                        </option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Precio</label>
+                                    <input type="number" class="form-control" disabled v-model="membership.price">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Cantidad (*)</label>
+                                    <input type="number" class="form-control" v-model="membership.quantity" min="1" max="1000">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Fecha de inicio (*)</label>
+                                    <input type="date" class="form-control" v-model="membership.date_start">
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Fecha final</label>
+                                    <input type="date" class="form-control" v-model="membership.date_finish" disabled>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Precio total</label>
+                                    <input type="number" class="form-control" disabled :value="membership.price * membership.quantity">
+                                </div>
+                            </div> 
+                            <div class="col-md-12">
+                                <div class="position-relative form-group">
+                                    <label for="" class="">Observaciónes</label>
+                                    <textarea rows="3" class="form-control" v-model="membership.observations" maxlength="500"></textarea>
+                                </div>
+                            </div>
+                        </div>
+        
+                        <a href="#" :class="{'mt-1 btn btn-secondary btn-sm mr-1': true, disabled: saving}" @click.prevent="$emit('closeFormCreateMembership')">
+                            <i class="fa fa-undo"></i> Atrás
+                        </a>
+                        <button class="mt-1 btn btn-primary btn-sm" :disabled="saving">
+                            <div class="spinner-border spinner-border-sm" role="status" v-if="saving">
+                                <span class="sr-only">Loading...</span>
+                            </div>
+                            <i class="fa fa-save" v-else></i> Guardar
+                        </button>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </template>

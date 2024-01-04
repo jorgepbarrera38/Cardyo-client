@@ -1,14 +1,11 @@
 <template>
-    <div class="app-main__inner">
-        <!--Titulo página-->
-        <PageTitle title="Categorías" icon="pe-7s-ticket" subtitle=""/>     
-        <!--Fin titulo página-->
-        <!--Contenido-->
+    <div class="content">
+        <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="main-card mb-3 card">
+            <div class="col-md-12">
+                <div class="card">
                     <div class="card-header">
-                        Nueva categoría
+                        <h3 class="card-title">Nueva categoría</h3>
                     </div>
                     <div class="card-body">
                         <div class="alert alert-danger fade show" role="alert" v-if="errors">
@@ -23,10 +20,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" :class="{'mt-1 btn btn-secondary mr-1': true, disabled: saving}" @click.prevent="$router.push({ name: 'inventory-categories.index' })">
+                            <a href="#" :class="{'mt-1 btn btn-secondary btn-sm mr-1': true, disabled: saving}" @click.prevent="$router.push({ name: 'inventory-categories.index' })">
                                 <i class="fa fa-undo"></i> Atrás
                             </a>
-                            <button class="mt-1 btn btn-primary" :disabled="saving">
+                            <button class="mt-1 btn btn-primary btn-sm" :disabled="saving">
                                 <div class="spinner-border spinner-border-sm" role="status" v-if="saving">
                                     <span class="sr-only">Loading...</span>
                                 </div>
@@ -37,7 +34,7 @@
                 </div>
             </div>
         </div>
-        <!--Fin contenido-->
+        </div>
     </div>
 </template>
 <script>

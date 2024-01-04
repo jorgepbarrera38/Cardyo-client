@@ -1,19 +1,19 @@
 <template>
-    <div class="app-main__inner">
-        <!--Titulo página-->
-        <PageTitle title="Asistencias" icon="pe-7s-note2" subtitle=""/>     
-        <!--Fin titulo página-->
-        <!--Contenido-->
+    <div class="content">
+        <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="main-card mb-3 card">
-                    <div class="card-body"><h5 class="card-title">Marcar asistencia</h5>
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Marcar asistencia</h3>
+                    </div>
+                    <div class="card-body">
                         
                             <div class="row">
                                 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6">
                                     <form @submit.prevent="searchClientMembership">
                                         <div class="input-group">
-                                            <input type="text" class="form-control" placeholder="Identificación" v-model="identification" required>
+                                            <input type="text" class="form-control" placeholder="Identificación cliente" v-model="identification" required>
                                             <div class="input-group-append">
                                                 <button class="btn btn-primary" :disabled="searching">
                                                     <div class="spinner-border spinner-border-sm" role="status" v-if="searching">
@@ -26,6 +26,7 @@
                                     </form>
                                 </div>
                             </div>
+
                     </div>
                 </div>
             </div>
@@ -42,12 +43,12 @@
                 </div>
             </div>
             <div class="col-md-10 col-lg-10" v-if="Object.keys(client).length">
-                <div class="main-card mb-3 card">
+                <div class="card">
                     <div class="card-header">
-                        Membresías activas
+                        <h3 class="card-title">Membresías activas</h3>
                     </div>
                      <div class="table-responsive">
-                        <table class="table table-borderless table-striped table-hover">
+                        <table class="table table-sm table-hover">
                             <thead>
                             <tr>
                                 <th></th>
@@ -61,8 +62,8 @@
                             </thead>
                             <tbody>
                                 <tr v-for="(membership, index) in client.memberships" :key="membership.id" :title="membership.observations ? membership.observations : 'No hay observaciónes'">
-                                    <td class="text"></td>
-                                    <td class="text" nowrap>{{ membership.membership_type.name }}</td>
+                                    <td></td>
+                                    <td nowrap>{{ membership.membership_type.name }}</td>
                                     <td class="text-center" nowrap>{{ membership.date_start }}</td>
                                     <td class="text-center" nowrap>{{ membership.date_finish }}</td>
                                     <td class="text-center" nowrap>{{ membership.turn.name + ' ' + membership.turn.time_start + ' - ' + membership.turn.time_finish }}</td>
@@ -99,7 +100,7 @@
             </div>
             
         </div>
-        <!--Fin contenido-->
+    </div>
     </div>
 </template>
 <script>

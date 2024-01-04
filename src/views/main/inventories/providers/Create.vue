@@ -1,49 +1,46 @@
 <template>
-    <div class="app-main__inner">
-        <!--Titulo página-->
-        <PageTitle title="Proveedores" icon="pe-7s-ticket" subtitle=""/>     
-        <!--Fin titulo página-->
-        <!--Contenido-->
-        <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="main-card mb-3 card">
-                    <div class="card-header">
-                        Nuevo proveedor
-                    </div>
-                    <div class="card-body">
-                        <div class="alert alert-danger fade show" role="alert" v-if="errors">
-                            <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Nuevo proveedor</h3>
                         </div>
-                        <form @submit.prevent="save">
-                            <div class="row">
-                                <div class="col-md-3">
-                                    <div class="position-relative form-group">
-                                        <label for="" class="">Código (*)</label>
-                                        <input type="text" class="form-control" v-model="provider.code" maxlength="30">
-                                    </div>
-                                </div>
-                                <div class="col-md-9">
-                                    <div class="position-relative form-group">
-                                        <label for="" class="">Nombre (*)</label>
-                                        <input type="text" class="form-control" v-model="provider.name" maxlength="90">
-                                    </div>
-                                </div>
+                        <div class="card-body">
+                            <div class="alert alert-danger fade show" role="alert" v-if="errors">
+                                <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
                             </div>
-                            <a href="#" :class="{'mt-1 btn btn-secondary mr-1': true, disabled: saving}" @click.prevent="$router.push({ name: 'inventory-providers.index' })">
-                                <i class="fa fa-undo"></i> Atrás
-                            </a>
-                            <button class="mt-1 btn btn-primary" :disabled="saving">
-                                <div class="spinner-border spinner-border-sm" role="status" v-if="saving">
-                                    <span class="sr-only">Loading...</span>
+                            <form @submit.prevent="save">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="position-relative form-group">
+                                            <label for="" class="">Código (*)</label>
+                                            <input type="text" class="form-control" v-model="provider.code" maxlength="30">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-9">
+                                        <div class="position-relative form-group">
+                                            <label for="" class="">Nombre (*)</label>
+                                            <input type="text" class="form-control" v-model="provider.name" maxlength="90">
+                                        </div>
+                                    </div>
                                 </div>
-                                <i class="fa fa-save" v-else></i> Guardar
-                            </button>
-                        </form>
+                                <a href="#" :class="{'mt-1 btn btn-secondary btn-sm mr-1': true, disabled: saving}" @click.prevent="$router.push({ name: 'inventory-providers.index' })">
+                                    <i class="fa fa-undo"></i> Atrás
+                                </a>
+                                <button class="mt-1 btn btn-primary btn-sm" :disabled="saving">
+                                    <div class="spinner-border spinner-border-sm" role="status" v-if="saving">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <i class="fa fa-save" v-else></i> Guardar
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!--Fin contenido-->
     </div>
 </template>
 <script>

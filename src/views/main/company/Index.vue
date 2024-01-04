@@ -1,54 +1,51 @@
 <template>
-    <div class="app-main__inner">
-        <!--Titulo página-->
-        <PageTitle title="Empresa" icon="pe-7s-clock" subtitle=""/>     
-        <!--Fin titulo página-->
-        <!--Contenido-->
-        <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="main-card mb-3 card">
-                    <div class="card-header">
-                        Datos de empresa
-                    </div>
-                    <div class="card-body">
-                        <div class="alert alert-danger fade show" role="alert" v-if="errors">
-                            <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12 col-lg-12">
+                    <div class="main-card mb-3 card">
+                        <div class="card-header">
+                            <h3 class="card-title">Datos de empresa</h3>
                         </div>
-                        <form @submit.prevent="save">
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="position-relative form-group">
-                                        <label for="" class="">Nombre (*)</label>
-                                        <input type="text" class="form-control" v-model="company.name">
+                        <div class="card-body">
+                            <div class="alert alert-danger fade show" role="alert" v-if="errors">
+                                <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
+                            </div>
+                            <form @submit.prevent="save">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="position-relative form-group">
+                                            <label for="" class="">Nombre (*)</label>
+                                            <input type="text" class="form-control" v-model="company.name">
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-4">
-                                    <div class="position-relative form-group">
-                                        <label for="" class="">Logo</label> <br>
-                                        <img v-if="company.photo" class="img img-thumbnail" width="200"  alt="" :src="APP_URL + company.photo">
-                                        <croppa v-model="myCroppa" 
-                                                placeholder="Seleccione imagen"
-                                                :placeholder-font-size="14"
-                                                :prevent-white-space="true"></croppa>
-                                        
-                                        
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="position-relative form-group">
+                                            <label for="" class="">Logo</label> <br>
+                                            <img v-if="company.photo" class="img img-thumbnail" width="200"  alt="" :src="APP_URL + company.photo">
+                                            <croppa v-model="myCroppa" 
+                                                    placeholder="Seleccione imagen"
+                                                    :placeholder-font-size="14"
+                                                    :prevent-white-space="true"></croppa>
+                                            
+                                            
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                            <button class="mt-1 btn btn-primary" :disabled="saving">
-                                <div class="spinner-border spinner-border-sm" role="status" v-if="saving">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-                                <i class="fa fa-save" v-else></i> Guardar
-                            </button>
-                        </form>
+                                <button class="mt-1 btn btn-primary btn-sm" :disabled="saving">
+                                    <div class="spinner-border spinner-border-sm" role="status" v-if="saving">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <i class="fa fa-save" v-else></i> Guardar
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!--Fin contenido-->
     </div>
 </template>
 <script>

@@ -1,94 +1,96 @@
 <template>
-    <div class="app-main__inner">
-        <!--Titulo página-->
-        <PageTitle title="Inventarios" icon="pe-7s-box1" subtitle=""/>
-        <!--Fin titulo página-->
-        <!--Contenido-->
+    <div class="content">
+        <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="main-card mb-3 card">
+            <div class="col-md-12">
+                <div class="card">
                     <div class="card-header">
-                        Proveedores
-                        <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" 
+                        <h3 class="card-title">Proveedores</h3>
+                        <div class="card-tools">
+                            <button class="active btn btn-primary btn-sm" 
                                 @click="hasPermission('inventory_providers.store') ? $router.push({ name: 'inventory-providers.create' }) : ''">
                                 <i class="fa fa-plus"></i> Nuevo
                             </button>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <Search placeholder="Código o nombre proveedor" @search="search"></Search>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Código</th>
-                                <th>Nombre</th>
-                                <th class="text-center"></th>
-                            </tr>
-                            </thead>
-                            <transition-group tag="tbody" name="fade" v-if="!searching">>
-                                    <tr v-for="(provider, index) in providers.data" :key="provider.id">
-                                        <td class="text"></td>
-                                        <td class="text" nowrap>{{ provider.code }}</td>
-                                        <td class="text" nowrap>{{ provider.name }}</td>
-                                        <td class="text-center" nowrap>
-                                            <button type="button"
-                                                @click="hasPermission('inventory_providers.update') ? $router.push({ name: 'inventory-providers.edit', params: { id: provider.id } }) : ''"
-                                                title="Editar"
-                                                class="btn btn-warning btn-sm mr-1">
-                                                <i class="fa fa-edit"></i> 
-                                            </button>
-                                            <button type="button" 
-                                                @click="hasPermission('inventory_providers.delete') ? deleteProvider(provider, index) : ''" :disabled="provider.deleting"
-                                                title="Eliminar"
-                                                class="btn btn-danger btn-sm">
-                                                <div class="spinner-border spinner-border-sm" v-if="provider.deleting"
-                                                    role="status">
-                                                    <span class="sr-only">Loading...</span>
-                                                </div>
-                                                <i class="fa fa-trash-alt" v-else></i> 
-                                            </button>
-                                        </td>
-                                    </tr>
-                            </transition-group>
-                        </table>
-                    </div>
+                    <div class="card-body p-0">
+
+                        <div class="input-group input-group-sm" style="width: 300px; margin: 0.75rem">
+                            <input type="text" name="table_search" class="form-control float-right" @keyup.enter="getProviders" placeholder="Código o nombre proveedor" v-model="search">
+                            <div class="input-group-append">
+                                <button class="btn btn-default" @click="getProviders">
+                                <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+                    
+                        <vue-loading type="spin" color="#3F6AD8" :size="{ width: '50px', height: '50px' }" v-if="searching"></vue-loading>    
+                        <div class="table-responsive" v-else>
+                            <table class="table table-sm table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Código</th>
+                                    <th>Nombre</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr v-for="(provider, index) in providers.data" :key="provider.id">
+                                            <td nowrap>{{ provider.code }}</td>
+                                            <td nowrap>{{ provider.name }}</td>
+                                            <td nowrap>
+                                                <button type="button"
+                                                    @click="hasPermission('inventory_providers.update') ? $router.push({ name: 'inventory-providers.edit', params: { id: provider.id } }) : ''"
+                                                    title="Editar"
+                                                    class="btn btn-warning btn-sm mr-1">
+                                                    <i class="fa fa-edit"></i> 
+                                                </button>
+                                                <button type="button" 
+                                                    @click="hasPermission('inventory_providers.delete') ? deleteProvider(provider, index) : ''" :disabled="provider.deleting"
+                                                    title="Eliminar"
+                                                    class="btn btn-danger btn-sm">
+                                                    <div class="spinner-border spinner-border-sm" v-if="provider.deleting"
+                                                        role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                    <i class="fa fa-trash-alt" v-else></i> 
+                                                </button>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </div>
                     <div class="d-block text-center card-footer">
                         <pagination :limit="1" :data="providers" @pagination-change-page="getProviders"></pagination>
                     </div>
                 </div>
+                </div>
             </div>
         </div>
-        <!--Fin contenido-->
+        </div>
     </div>
 </template>
 <script>
 import PageTitle from '../../components/PageTitle'
 import Search from '../../components/Search'
 import formatNum from 'format-num'
+import { VueLoading } from 'vue-loading-template'
 export default {
-    components: { PageTitle, Search },
+    components: { PageTitle, Search, VueLoading },
     created () {
         this.getProviders()
     },
     data () {
         return {
             providers: {},
-            searchBody: '',
+            search: '',
             searching: true
         }
     },
     methods: {
-        search (search) {
-            this.searchBody = search
-            this.getProviders()
-        },
-        getProviders (page = 1, searching = true) {
-            this.searching = searching
-            this.$http.get('inventory-providers?page=' + page + '&search=' + this.searchBody).then( response => {
+        getProviders (page = 1) {
+            this.searching = true
+            this.$http.get('inventory-providers?page=' + page + '&search=' + this.search).then( response => {
                 this.providers = response.data
                 this.providers.data.forEach(provider => {
                     this.$set(provider, 'deleting', false)

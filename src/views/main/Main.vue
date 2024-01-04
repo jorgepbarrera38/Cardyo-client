@@ -192,42 +192,142 @@
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item">
+            <a href="" @click.prevent="$router.push({ name: 'turns.index' })" class="nav-link">
+              <i class="nav-icon fas fa-clock"></i>
+              <p>Turnos</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" @click.prevent="$router.push({ name: 'membership_types.index' })" class="nav-link">
+              <i class="nav-icon fas fa-id-card"></i>
+              <p>Tipos de membresías</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="" @click.prevent="$router.push({ name: 'clients.index' })" class="nav-link">
-            <i class="nav-icon fas fa-users"></i>
+              <i class="nav-icon fas fa-users"></i>
               <p>Clientes</p>
             </a>
           </li>
           <li class="nav-item">
+            <a href="" @click.prevent="$router.push({ name: 'assistances.index' })" class="nav-link">
+              <i class="nav-icon fas fa-calendar-check"></i>
+              <p>Asistencia</p>
+            </a>
+          </li>
+          <li class="nav-item">
+            <a href="" @click.prevent="$router.push({ name: 'sales.index' })" class="nav-link">
+              <i class="nav-icon fas fa-piggy-bank"></i>
+              <p>Ventas</p>
+            </a>
+          </li>
+          <li class="nav-item">
             <a href="#" class="nav-link">
-              <i class="nav-icon fas fa-chart-pie"></i>
+              <i class="nav-icon fas fa-boxes"></i>
               <p>
-                Charts
+                Inventarios
                 <i class="right fas fa-angle-left"></i>
               </p>
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="" @click.prevent="$router.push({ name: 'clients.index' })" class="nav-link">
+                <a href="" @click.prevent="$router.push({ name: 'inventory-categories.index' })" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Clientes</p>
+                  <p>Categorías</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/flot.html" class="nav-link">
+                <a href="" @click.prevent="$router.push({ name: 'inventory-products.index' })" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Flot</p>
+                  <p>Productos</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/inline.html" class="nav-link">
+                <a href="" @click.prevent="$router.push({ name: 'inventory-providers.index' })" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>Inline</p>
+                  <p>Proveedores</p>
                 </a>
               </li>
               <li class="nav-item">
-                <a href="pages/charts/uplot.html" class="nav-link">
+                <a href="" @click.prevent="$router.push({ name: 'inventory-purchases.index' })" class="nav-link">
                   <i class="far fa-circle nav-icon"></i>
-                  <p>uPlot</p>
+                  <p>Compras</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" @click.prevent="$router.push({ name: 'inventory-tweaks.index' })" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Ajustes de inventario</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-clipboard-list"></i>
+              <p>
+                Reportes
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="" @click.prevent="$router.push({ name: 'reports.memberships-payed' })" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Membresías pagadas</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" @click.prevent="$router.push({ name: 'reports.asistances' })" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Asistencias</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" @click.prevent="$router.push({ name: 'reports.stock-products' })" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Stock de productos</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" @click.prevent="$router.push({ name: 'reports.purchases' })" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Compras</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" @click.prevent="$router.push({ name: 'reports.inventory-tweaks' })" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Ajustes de inventario</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" @click.prevent="$router.push({ name: 'reports.sales' })" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Ventas</p>
+                </a>
+              </li>
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a href="#" class="nav-link">
+              <i class="nav-icon fas fa-clipboard-list"></i>
+              <p>
+                Sistema
+                <i class="right fas fa-angle-left"></i>
+              </p>
+            </a>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="" @click.prevent="$router.push({ name: 'users.index' })" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Usuarios</p>
+                </a>
+              </li>
+              <li class="nav-item">
+                <a href="" @click.prevent="$router.push({ name: 'company.index' })" class="nav-link">
+                  <i class="far fa-circle nav-icon"></i>
+                  <p>Empresa</p>
                 </a>
               </li>
             </ul>

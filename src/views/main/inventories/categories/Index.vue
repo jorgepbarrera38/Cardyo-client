@@ -1,92 +1,94 @@
 <template>
-    <div class="app-main__inner">
-        <!--Titulo página-->
-        <PageTitle title="Inventarios" icon="pe-7s-box1" subtitle=""/>
-        <!--Fin titulo página-->
-        <!--Contenido-->
+    <div class="content">
+        <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="main-card mb-3 card">
+            <div class="col-md-12">
+                <div class="card">
                     <div class="card-header">
-                        Categorías
-                        <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" 
+                        <h3 class="card-title">Categorías</h3>
+                        <div class="card-tools">
+                            <button class="active btn btn-primary btn-sm" 
                                 @click="hasPermission('inventory_categories.store') ? $router.push({ name: 'inventory-categories.create' }) : ''">
                                 <i class="fa fa-plus"></i> Nuevo
                             </button>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <Search placeholder="Nombre categoría" @search="search"></Search>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Nombre</th>
-                                <th class="text-center"></th>
-                            </tr>
-                            </thead>
-                            <transition-group tag="tbody" name="fade" v-if="!searching">>
-                                    <tr v-for="(category, index) in categories.data" :key="category.id">
-                                        <td class="text"></td>
-                                        <td class="text" nowrap>{{ category.name }}</td>
-                                        <td class="text-center" nowrap>
-                                            <button type="button" 
-                                                @click="hasPermission('inventory_categories.update') ? $router.push({ name: 'inventory-categories.edit', params: { id: category.id } }) : ''"
-                                                title="Editar"
-                                                class="btn btn-warning btn-sm mr-1">
-                                                <i class="fa fa-edit"></i> 
-                                            </button>
-                                            <button type="button" 
-                                                @click="hasPermission('inventory_categories.delete') ? deleteCategory(category, index) : ''" :disabled="category.deleting"
-                                                title="Eliminar"
-                                                class="btn btn-danger btn-sm">
-                                                <div class="spinner-border spinner-border-sm" v-if="category.deleting"
-                                                    role="status">
-                                                    <span class="sr-only">Loading...</span>
-                                                </div>
-                                                <i class="fa fa-trash-alt" v-else></i> 
-                                            </button>
-                                        </td>
+                    <div class="card-body p-0">
+
+                        <div class="input-group input-group-sm" style="width: 300px; margin: 0.75rem">
+                            <input type="text" name="table_search" class="form-control float-right" @keyup.enter="getCategories" placeholder="Nombre categoría" v-model="search">
+                            <div class="input-group-append">
+                                <button class="btn btn-default" @click="getCategories">
+                                <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <vue-loading type="spin" color="#3F6AD8" :size="{ width: '50px', height: '50px' }" v-if="searching"></vue-loading>    
+                        <div class="table-responsive" v-else>
+                            <table class="table table-sm table-hover">
+                                <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th></th>
                                     </tr>
-                            </transition-group>
-                        </table>
-                    </div>
-                    <div class="d-block text-center card-footer">
-                        <pagination :limit="1" :data="categories" @pagination-change-page="getCategories"></pagination>
-                    </div>
+                                </thead>
+                                <tbody>
+                                        <tr v-for="(category, index) in categories.data" :key="category.id">
+                                            <td nowrap>{{ category.name }}</td>
+                                            <td nowrap>
+                                                <button type="button" 
+                                                    @click="hasPermission('inventory_categories.update') ? $router.push({ name: 'inventory-categories.edit', params: { id: category.id } }) : ''"
+                                                    title="Editar"
+                                                    class="btn btn-warning btn-sm mr-1">
+                                                    <i class="fa fa-edit"></i> 
+                                                </button>
+                                                <button type="button" 
+                                                    @click="hasPermission('inventory_categories.delete') ? deleteCategory(category, index) : ''" :disabled="category.deleting"
+                                                    title="Eliminar"
+                                                    class="btn btn-danger btn-sm">
+                                                    <div class="spinner-border spinner-border-sm" v-if="category.deleting"
+                                                        role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                    <i class="fa fa-trash-alt" v-else></i> 
+                                                </button>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-block text-center card-footer">
+                            <pagination :limit="1" :data="categories" @pagination-change-page="getCategories"></pagination>
+                        </div>
+                </div>
                 </div>
             </div>
         </div>
-        <!--Fin contenido-->
+        </div>
     </div>
 </template>
 <script>
 import PageTitle from '../../components/PageTitle'
 import Search from '../../components/Search'
 import formatNum from 'format-num'
+import { VueLoading } from 'vue-loading-template'
 export default {
-    components: { PageTitle, Search },
+    components: { PageTitle, Search, VueLoading },
     created () {
         this.getCategories()
     },
     data () {
         return {
             categories: {},
-            searchBody: '',
+            search: '',
             searching: true
         }
     },
     methods: {
-        search (search) {
-            this.searchBody = search
-            this.getCategories()
-        },
-        getCategories (page = 1, searching = true) {
-            this.searching = searching
-            this.$http.get('inventory-categories?page=' + page + '&search=' + this.searchBody).then( response => {
+        getCategories (page = 1) {
+            this.searching = true
+            this.$http.get('inventory-categories?page=' + page + '&search=' + this.search).then( response => {
                 this.categories = response.data
                 this.categories.data.forEach(category => {
                     this.$set(category, 'deleting', false)

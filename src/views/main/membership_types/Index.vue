@@ -1,97 +1,99 @@
 <template>
-    <div class="app-main__inner">
-        <!--Titulo página-->
-        <PageTitle title="Tipos de membresías" icon="pe-7s-id" subtitle=""/>     
-        <!--Fin titulo página-->
-        <!--Contenido-->
+    <div class="content">
+        <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="main-card mb-3 card">
+            <div class="col-md-12">
+                <div class="card">
                     <div class="card-header">
-                        Tipos de membresías
-                        <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" @click="hasPermission('membership_types.store') ? $router.push({ name: 'membership_types.create' }) : ''">
+                        <h3 class="card-title">Tipos de membresías</h3>
+                        <div class="card-tools">
+                            <button class="active btn btn-primary btn-sm" @click="hasPermission('membership_types.store') ? $router.push({ name: 'membership_types.create' }) : ''">
                                 <i class="fa fa-plus"></i> Nuevo
                             </button>
                         </div>
                     </div>
-                    <div class="card-body">
-                        <Search placeholder="Nombre membresía" @search="search"></Search>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Nombre</th>
-                                <th class="text-center">Tipo</th>
-                                <th class="text-center">Cantidad</th>
-                                <th class="text-center">Precio</th>
-                                <th class="text-center"></th>
-                            </tr>
-                            </thead>
-                            <transition-group tag="tbody" name="fade" v-if="!searching">>
-                                    <tr v-for="(membershipType, index) in membershipTypes.data" :key="membershipType.id">
-                                        <td class="text"></td>
-                                        <td class="text" nowrap>{{ membershipType.name }}</td>
-                                        <td class="text-center">{{ membershipType.type }}</td>
-                                        <td class="text-center">{{ membershipType.quantity }}</td>
-                                        <td class="text-center">${{ convertMoney(membershipType.price) }}</td>
-                                        <td class="text-center" nowrap>
-                                            <button type="button" 
-                                                @click="hasPermission('membership_types.update') ? $router.push({ name: 'membership_types.edit', params: { id: membershipType.id } }) : ''"
-                                                title="Editar"
-                                                class="btn btn-warning btn-sm mr-1">
-                                                <i class="fa fa-edit"></i> 
-                                            </button>
-                                            <button type="button" 
-                                                @click="hasPermission('membership_types.delete') ? deleteMembershipType(membershipType, index) : ''" :disabled="membershipType.deleting"
-                                                title="Eliminar"
-                                                class="btn btn-danger btn-sm">
-                                                <div class="spinner-border spinner-border-sm" v-if="membershipType.deleting"
-                                                    role="status">
-                                                    <span class="sr-only">Loading...</span>
-                                                </div>
-                                                <i class="fa fa-trash-alt" v-else></i> 
-                                            </button>
-                                        </td>
-                                    </tr>
-                            </transition-group>
-                        </table>
-                    </div>
-                    <div class="d-block text-center card-footer">
-                        <pagination :limit="1" :data="membershipTypes" @pagination-change-page="getMembershipTypes"></pagination>
+                    <div class="card-body p-0">
+
+                        <div class="input-group input-group-sm" style="width: 300px; margin: 0.75rem">
+                            <input type="text" name="table_search" class="form-control float-right" @keyup.enter="getMembershipTypes" placeholder="Nombre membresía" v-model="search">
+                            <div class="input-group-append">
+                                <button class="btn btn-default" @click="getMembershipTypes">
+                                <i class="fas fa-search"></i>
+                                </button>
+                            </div>
+                        </div>
+
+                        <vue-loading type="spin" color="#3F6AD8" :size="{ width: '50px', height: '50px' }" v-if="searching"></vue-loading>                        
+                        <div class="table-responsive" v-else>
+                            <table class="table table-sm table-hover">
+                                <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Tipo</th>
+                                    <th>Cantidad</th>
+                                    <th>Precio</th>
+                                    <th></th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                        <tr v-for="(membershipType, index) in membershipTypes.data" :key="membershipType.id">
+                                            <td nowrap>{{ membershipType.name }}</td>
+                                            <td>{{ membershipType.type }}</td>
+                                            <td>{{ membershipType.quantity }}</td>
+                                            <td>${{ convertMoney(membershipType.price) }}</td>
+                                            <td nowrap>
+                                                <button type="button" 
+                                                    @click="hasPermission('membership_types.update') ? $router.push({ name: 'membership_types.edit', params: { id: membershipType.id } }) : ''"
+                                                    title="Editar"
+                                                    class="btn btn-warning btn-sm mr-1">
+                                                    <i class="fa fa-edit"></i> 
+                                                </button>
+                                                <button type="button" 
+                                                    @click="hasPermission('membership_types.delete') ? deleteMembershipType(membershipType, index) : ''" :disabled="membershipType.deleting"
+                                                    title="Eliminar"
+                                                    class="btn btn-danger btn-sm">
+                                                    <div class="spinner-border spinner-border-sm" v-if="membershipType.deleting"
+                                                        role="status">
+                                                        <span class="sr-only">Loading...</span>
+                                                    </div>
+                                                    <i class="fa fa-trash-alt" v-else></i> 
+                                                </button>
+                                            </td>
+                                        </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-block text-center card-footer">
+                            <pagination :limit="1" :data="membershipTypes" @pagination-change-page="getMembershipTypes"></pagination>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!--Fin contenido-->
+    </div>
     </div>
 </template>
 <script>
 import PageTitle from '../components/PageTitle'
 import Search from '../components/Search'
 import formatNum from 'format-num'
+import { VueLoading } from 'vue-loading-template'
 export default {
-    components: { PageTitle, Search },
+    components: { PageTitle, Search, VueLoading },
     created () {
         this.getMembershipTypes()
     },
     data () {
         return {
             membershipTypes: {},
-            searchBody: '',
+            search: '',
             searching: true,
         }
     },
     methods: {
-        search (search) {
-            this.searchBody = search
-            this.getMembershipTypes()
-        },
-        getMembershipTypes (page = 1, searching = true) {
-            this.searching = searching
-            this.$http.get('membership-types?page=' + page + '&search=' + this.searchBody).then( response => {
+        getMembershipTypes (page = 1) {
+            this.searching = true
+            this.$http.get('membership-types?page=' + page + '&search=' + this.search).then( response => {
                 this.membershipTypes = response.data
                 this.membershipTypes.data.forEach(membershipType => {
                     this.$set(membershipType, 'deleting', false)

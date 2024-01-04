@@ -1,93 +1,93 @@
 <template>
-    <div class="app-main__inner">
-        <!--Titulo página-->
-        <PageTitle title="Reportes" icon="pe-7s-news-paper" subtitle=""/>     
-        <!--Fin titulo página-->
-        <!--Contenido-->
-        <div class="row">
-            <div class="col-md-3">
-                <div class="main-card mb-3 card">
-                        <div class="card-header">Reporte de membresías pagadas</div>
-                    <div class="card-body">
-                            <div class="alert alert-danger fade show" role="alert" v-if="errors">
-                                <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Fecha inicial</label>
-                                <input type="date" v-model="dates.dateInitial"
-                                    class="mr-2 form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Fecha final</label>
-                                <input type="date" v-model="dates.dateFinal"
-                                    class="mr-2 form-control" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary" :disabled="searching" @click="getMembershipsPayed(1, true)">
-                                 <div class="spinner-border spinner-border-sm" role="status" v-if="searching">
-                                    <span class="sr-only">Loading...</span>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Reporte de membresías pagadas</h3>
+                        </div>
+                        <div class="card-body">
+                                <div class="alert alert-danger fade show" role="alert" v-if="errors">
+                                    <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
                                 </div>
-                                <i class="fa fa-search" v-else></i> {{ searching ? 'Buscando' : 'Buscar' }}
-                            </button>
-                    </div>
-                </div>
-            </div> 
-            <div class="col-md-9">
-                <div class="main-card mb-3 card">
-                    <div class="card-header">
-                        Resultados - Total registros: {{ membershipsPayed.total ? membershipsPayed.total : 0 }}
-                        <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" :disabled="exporting ||  !membershipsPayed.total"
-                                @click="exportInExcel">
-                                <div class="spinner-border spinner-border-sm" role="status" v-if="exporting">
-                                    <span class="sr-only">Loading...</span>
+                                <div class="form-group">
+                                    <label for="">Fecha inicial</label>
+                                    <input type="date" v-model="dates.dateInitial"
+                                        class="mr-2 form-control" required>
                                 </div>
-                                <i class="fa fa-file-excel" v-else></i> Exportar
-                            </button>
+                                <div class="form-group">
+                                    <label for="">Fecha final</label>
+                                    <input type="date" v-model="dates.dateFinal"
+                                        class="mr-2 form-control" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-sm" :disabled="searching" @click="getMembershipsPayed(1, true)">
+                                    <div class="spinner-border spinner-border-sm" role="status" v-if="searching">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <i class="fa fa-search" v-else></i> {{ searching ? 'Buscando' : 'Buscar' }}
+                                </button>
                         </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Fecha</th>
-                                <th>Cliente</th>
-                                <th>Turno</th>
-                                <th>Membresía nombre</th>
-                                <th>Membresía cantidad</th>
-                                <th>Membresía Tipo</th>
-                                <th>Cantidad</th>
-                                <th>Fecha inicio</th>
-                                <th>Fecha fin</th>
-                                <th>Precio unitario</th>
-                                <th>Precio Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(membershipPayed, index) in membershipsPayed.data" :key="membershipPayed.id">
-                                    <td class="text"></td>
-                                    <td class="text" nowrap>{{ dateWithHour(membershipPayed.created_at) }}</td>
-                                    <td class="text" nowrap>{{ membershipPayed.client.identification + ' - ' + membershipPayed.client.full_names }}</td>
-                                    <td class="text" nowrap>{{ membershipPayed.turn.name + ' - ' + membershipPayed.turn.time_start + ' ' + membershipPayed.turn.time_finish }}</td>
-                                    <td class="text" nowrap>{{ membershipPayed.membership_type.name }}</td>
-                                    <td class="text" nowrap>{{ membershipPayed.membership_type.quantity }}</td>
-                                    <td class="text" nowrap>{{ membershipPayed.membership_type.type }}</td>
-                                    <td class="text" nowrap>{{ membershipPayed.quantity }}</td>
-                                    <td class="text" nowrap>{{ membershipPayed.date_start }}</td>
-                                    <td class="text" nowrap>{{ membershipPayed.date_finish }}</td>
-                                    <td class="text" nowrap>${{ convertMoney(membershipPayed.price) }}</td>
-                                    <td class="text" nowrap>${{ convertMoney(membershipPayed.total_price) }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
+                </div> 
+                <div class="col-md-9">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Resultados - Total registros: {{ membershipsPayed.total ? membershipsPayed.total : 0 }}</h3>
+                            <div class="card-tools">
+                                <button class="active btn btn-success btn-sm" :disabled="exporting ||  !membershipsPayed.total"
+                                    @click="exportInExcel">
+                                    <div class="spinner-border spinner-border-sm" role="status" v-if="exporting">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <i class="fa fa-file-excel" v-else></i> Exportar
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover">
+                                    <thead>
+                                        <tr>
+                                            <th>Fecha</th>
+                                            <th>Cliente</th>
+                                            <th>Turno</th>
+                                            <th>Membresía nombre</th>
+                                            <th>Membresía cantidad</th>
+                                            <th>Membresía Tipo</th>
+                                            <th>Cantidad</th>
+                                            <th>Fecha inicio</th>
+                                            <th>Fecha fin</th>
+                                            <th>Precio unitario</th>
+                                            <th>Precio Total</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(membershipPayed, index) in membershipsPayed.data" :key="membershipPayed.id">
+                                            <td nowrap>{{ dateWithHour(membershipPayed.created_at) }}</td>
+                                            <td nowrap>{{ membershipPayed.client.identification + ' - ' + membershipPayed.client.full_names }}</td>
+                                            <td nowrap>{{ membershipPayed.turn.name + ' - ' + membershipPayed.turn.time_start + ' ' + membershipPayed.turn.time_finish }}</td>
+                                            <td nowrap>{{ membershipPayed.membership_type.name }}</td>
+                                            <td nowrap>{{ membershipPayed.membership_type.quantity }}</td>
+                                            <td nowrap>{{ membershipPayed.membership_type.type }}</td>
+                                            <td nowrap>{{ membershipPayed.quantity }}</td>
+                                            <td nowrap>{{ membershipPayed.date_start }}</td>
+                                            <td nowrap>{{ membershipPayed.date_finish }}</td>
+                                            <td nowrap>${{ convertMoney(membershipPayed.price) }}</td>
+                                            <td nowrap>${{ convertMoney(membershipPayed.total_price) }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-block text-center card-footer">
+                                <pagination :limit="1" :data="membershipsPayed" @pagination-change-page="getMembershipsPayed"></pagination>
+                            </div>
+                        </div>
                     </div>
-                    <div class="d-block text-center card-footer">
-                      <pagination :limit="1" :data="membershipsPayed" @pagination-change-page="getMembershipsPayed"></pagination>
-                    </div>
-                </div>
-            </div>           
+                </div>           
+            </div>
         </div>
-        <!--Fin contenido-->
     </div>
 </template>
 <script>
@@ -118,6 +118,7 @@ export default {
     methods: {
         getMembershipsPayed (page = 1, searching = false) {
             this.searching = searching,
+            this.membershipsPayed = {}
 
             this.$http.get(`reports/get-memberships-payed?page=${page}&dateInitial=${this.dates.dateInitial}&dateFinal=${this.dates.dateFinal}`)
                 .then( response => {

@@ -105,199 +105,316 @@ const routes = [
       {
         path: 'tipos-de-membresias',
         name: 'membership_types.index',
-        component: MembershipTypeIndex
+        component: MembershipTypeIndex,
+        meta: {
+          title: 'Tipos de membresías'
+        }
       },
       {
         path: 'tipos-de-membresias/nuevo',
         name: 'membership_types.create',
-        component: MembershipTypeCreate
+        component: MembershipTypeCreate,
+        meta: {
+          title: 'Tipos de membresías'
+        }
       },
       {
         path: 'tipos-de-membresias/:id/editar',
         name: 'membership_types.edit',
-        component: MembershipTypeEdit
+        component: MembershipTypeEdit,
+        meta: {
+          title: 'Tipos de membresías'
+        }
       },
       {
         path: 'turnos',
         name: 'turns.index',
-        component: TurnIndex
+        component: TurnIndex,
+        meta: {
+          title: 'Turnos'
+        }
       },
       {
         path: 'turnos/nuevo',
         name: 'turns.create',
-        component: TurnCreate
+        component: TurnCreate,
+        meta: {
+          title: 'Turnos'
+        }
       },
       {
         path: 'turnos/:id/editar',
         name: 'turns.edit',
-        component: TurnEdit
+        component: TurnEdit,
+        meta: {
+          title: 'Turnos'
+        }
       },
       {
         path: 'asistencia',
         name: 'assistances.index',
-        component: AssistanceIndex
+        component: AssistanceIndex,
+        meta: {
+          title: 'Asistencia'
+        }
       },
       {
         path: 'inventario/categorias',
         name: 'inventory-categories.index',
-        component: InventoryCategoryIndex
+        component: InventoryCategoryIndex,
+        meta: {
+          title: 'Inventarios'
+        }
       },
       {
         path: 'inventario/categorias/nuevo',
         name: 'inventory-categories.create',
-        component: InventoryCategoryCreate
+        component: InventoryCategoryCreate,
+        meta: {
+          title: 'Inventarios'
+        }
       },
       {
         path: 'inventario/categorias/:id/editar',
         name: 'inventory-categories.edit',
-        component: InventoryCategoryEdit
+        component: InventoryCategoryEdit,
+        meta: {
+          title: 'Inventarios'
+        }
       },
       {
         path: 'inventario/productos',
         name: 'inventory-products.index',
-        component: InventoryProductIndex
+        component: InventoryProductIndex,
+        meta: {
+          title: 'Inventarios'
+        }
       },
       {
         path: 'inventario/productos/nuevo',
         name: 'inventory-products.create',
-        component: InventoryProductCreate
+        component: InventoryProductCreate,
+        meta: {
+          title: 'Inventarios'
+        }
       },
       {
         path: 'inventario/productos/:id/editar',
         name: 'inventory-products.edit',
-        component: InventoryProductEdit
+        component: InventoryProductEdit,
+        meta: {
+          title: 'Inventarios'
+        }
       },
       {
         path: 'inventario/proveedores',
         name: 'inventory-providers.index',
-        component: InventoryProviderIndex
+        component: InventoryProviderIndex,
+        meta: {
+          title: 'Inventarios'
+        }
       },
       {
         path: 'inventario/proveedores/nuevo',
         name: 'inventory-providers.create',
-        component: InventoryProviderCreate
+        component: InventoryProviderCreate,
+        meta: {
+          title: 'Inventarios'
+        }
       },
       {
         path: 'inventario/proveedores/:id/editar',
         name: 'inventory-providers.edit',
-        component: InventoryProviderEdit
+        component: InventoryProviderEdit,
+        meta: {
+          title: 'Inventarios'
+        }
       },
       {
         path: 'inventario/compras',
         name: 'inventory-purchases.index',
-        component: InventoryPurchaseIndex
+        component: InventoryPurchaseIndex,
+        meta: {
+          title: 'Inventarios'
+        }
       },
       {
         path: 'inventario/compras/nuevo',
         name: 'inventory-purchases.create',
-        component: InventoryPurchaseCreate
+        component: InventoryPurchaseCreate,
+        meta: {
+          title: 'Inventarios'
+        }
       },
       {
         path: 'inventario/compras/:id',
         name: 'inventory-purchases.show',
-        component: InventoryPurchaseShow
+        component: InventoryPurchaseShow,
+        meta: {
+          title: 'Inventarios'
+        }
       },
       {
         path: 'inventario/devolucion-de-compras',
         name: 'inventory-purchase-returns.index',
-        component: InventoryPurchaseReturnIndex
+        component: InventoryPurchaseReturnIndex,
+        meta: {
+          title: 'Inventarios'
+        }
       },
       {
         path: 'inventario/devolucion-de-compras/nuevo',
         name: 'inventory-purchase-returns.create',
-        component: InventoryPurchaseReturnCreate
+        component: InventoryPurchaseReturnCreate,
+        meta: {
+          title: 'Inventarios'
+        }
       },
       {
         path: 'inventario/devolucion-de-compras/:id',
         name: 'inventory-purchase-returns.show',
-        component: InventoryPurchaseReturnShow
+        component: InventoryPurchaseReturnShow,
+        meta: {
+          title: 'Inventarios'
+        }
       },
 
       {
         path: 'inventario/ajustes-de-inventario',
         name: 'inventory-tweaks.index',
-        component: InventoryTweakIndex
+        component: InventoryTweakIndex,
+        meta: {
+          title: 'Inventarios'
+        }
       },
       {
         path: 'inventario/ajustes-de-inventario/nuevo',
         name: 'inventory-tweaks.create',
-        component: InventoryTweakCreate
+        component: InventoryTweakCreate,
+        meta: {
+          title: 'Inventarios'
+        }
       },
       {
         path: 'inventario/ajustes-de-inventario/:id',
         name: 'inventory-tweaks.show',
-        component: InventoryTweakShow
+        component: InventoryTweakShow,
+        meta: {
+          title: 'Inventarios'
+        }
       },
       {
         path: 'ventas',
         name: 'sales.index',
-        component: SaleIndex
+        component: SaleIndex,
+        meta: {
+          title: 'Ventas'
+        }
       },
       {
         path: 'ventas/nuevo',
         name: 'sales.create',
-        component: SaleCreate
+        component: SaleCreate,
+        meta: {
+          title: 'Ventas'
+        }
       },
       {
         path: 'ventas/:id',
         name: 'sales.show',
-        component: SaleShow
+        component: SaleShow,
+        meta: {
+          title: 'Ventas'
+        }
       },
       {
         path: 'usuarios',
         name: 'users.index',
-        component: UserIndex
+        component: UserIndex,
+        meta: {
+          title: 'Sistema'
+        }
       },
       {
         path: 'usuarios/nuevo',
         name: 'users.create',
-        component: UserCreate
+        component: UserCreate,
+        meta: {
+          title: 'Sistema'
+        }
       },
       {
         path: 'usuarios/:id/edit',
         name: 'users.edit',
-        component: UserEdit
+        component: UserEdit,
+        meta: {
+          title: 'Sistema'
+        }
       },
       {
         path: 'usuarios/:id/actualizar-permisos',
         name: 'users.update_permissions',
-        component: UserUpdatePermission
+        component: UserUpdatePermission,
+        meta: {
+          title: 'Sistema'
+        }
       },
       {
         path: 'empresa',
         name: 'company.index',
-        component: CompanyIndex
+        component: CompanyIndex,
+        meta: {
+          title: 'Sistema'
+        }
       },
 
       {
         path: 'reportes/asistencias',
         name: 'reports.asistances',
-        component: ReportAsistance
+        component: ReportAsistance,
+        meta: {
+          title: 'Reportes'
+        }
       },
       {
         path: 'reportes/compras',
         name: 'reports.purchases',
-        component: ReportPurchase
+        component: ReportPurchase,
+        meta: {
+          title: 'Reportes'
+        }
       },
       {
         path: 'reportes/ajustes-de-inventario',
         name: 'reports.inventory-tweaks',
-        component: ReportInventoryTweak
+        component: ReportInventoryTweak,
+        meta: {
+          title: 'Reportes'
+        }
       },
       {
         path: 'reportes/ventas',
         name: 'reports.sales',
-        component: ReportSale
+        component: ReportSale,
+        meta: {
+          title: 'Reportes'
+        }
       },
       {
         path: 'reportes/stock-de-productos',
         name: 'reports.stock-products',
-        component: ReportStockProduct
+        component: ReportStockProduct,
+        meta: {
+          title: 'Reportes'
+        }
       },
       {
         path: 'reportes/membresias-pagadas',
         name: 'reports.memberships-payed',
-        component: ReportMembershipPayed
+        component: ReportMembershipPayed,
+        meta: {
+          title: 'Reportes'
+        }
       },
     ]
   },

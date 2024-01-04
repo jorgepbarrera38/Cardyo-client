@@ -1,117 +1,100 @@
 <template>
-    <div class="app-main__inner">
-        <!--Titulo página-->
-        <PageTitle title="Ventas" icon="pe-7s-clock" subtitle=""/>     
-        <!--Fin titulo página-->
-        <!--Contenido-->
-        <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="main-card mb-3 card">
-                    <div class="card-header">
-                        Nueva venta
-                    </div>
-                    <div class="card-body">
-                        <div class="alert alert-danger fade show" role="alert" v-if="errors">
-                            <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Nueva venta</h3>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="position-relative form-group">
-                                    <label for="" class="">Cliente (*)</label>
-                                    <v-select :options="clients" label="identificationAndNames" 
-                                        :reduce="client => client.id"
-                                        v-model="sale.client_id"></v-select>
+                        <div class="card-body">
+                            <div class="alert alert-danger fade show" role="alert" v-if="errors">
+                                <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="position-relative form-group">
+                                        <label for="" class="">Cliente (*)</label>
+                                        <v-select :options="clients" label="identificationAndNames" 
+                                            :reduce="client => client.id"
+                                            v-model="sale.client_id"></v-select>
+                                    </div>
                                 </div>
                             </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="position-relative form-group">
+                                        <label for="" class="">Producto (*)</label>
+                                        <v-select :options="products" label="name" 
+                                            v-model="productSelected"></v-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="position-relative form-group">
+                                        <button class="btn btn-primary btn-sm" @click="addProductSaleDetails">
+                                            <i class="fa fa-plus"></i> Agregar
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="table-responsive">
+                                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                            <thead>
+                                            <tr>
+                                                <th>Producto</th>
+                                                <th>Precio unitario</th>
+                                                <th>Cantidad</th>
+                                                <th>Subtotal</th>
+                                                <th></th>
+                                            </tr>
+                                            </thead>
+                                                <tbody>
+                                                    <tr v-for="(detail, index) in sale.details" :key="detail.id">
+                                                        <td nowrap>
+                                                            <img width="40" 
+                                                            :src="detail.product_photo ? APP_URL + detail.product_photo : require('../../../assets/product.png') "
+                                                            alt="" class="rounded-circle">
+                                                            {{ detail.product_name }}
+                                                        </td>
+                                                        <td>${{ convertMoney(detail.price_unit) }}</td>
+                                                        <td>
+                                                            <input type="number" class="form-control" v-model="detail.quantity">
+                                                        </td>
+                                                        <td>${{ convertMoney(detail.quantity * detail.price_unit) }}</td>
+                                                        <td nowrap>
+                                                            <button type="button" @click="deleteProductSaleDetails(index)"
+                                                                class="btn btn-danger btn-sm">
+                                                                <i class="fa fa-trash-alt"></i> 
+                                                            </button>
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td></td>
+                                                        <td nowrap></td>
+                                                        <td><strong>Total</strong></td>
+                                                        <td>${{ total }}</td>
+                                                        <td></td>
+                                                    </tr>
+                                                </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <hr>
+                            <a href="#" :class="{'mt-1 btn btn-secondary btn-sm mr-1': true, disabled: saving}" @click.prevent="$router.push({ name: 'sales.index' })">
+                                <i class="fa fa-undo"></i> Atrás
+                            </a>
+                            <button class="mt-1 btn btn-primary btn-sm" :disabled="saving" @click="save">
+                                <div class="spinner-border spinner-border-sm" role="status" v-if="saving">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <i class="fa fa-save" v-else></i> Guardar
+                            </button>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="position-relative form-group">
-                                    <label for="" class="">Producto (*)</label>
-                                    <v-select :options="products" label="name" 
-                                        v-model="productSelected"></v-select>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="position-relative form-group">
-                                    <button class="btn btn-success" @click="addProductSaleDetails">
-                                        <i class="fa fa-plus"></i> Agregar
-                                    </button>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="table-responsive">
-                                    <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-                                        <thead>
-                                        <tr>
-                                            <th></th>
-                                            <th>Producto</th>
-                                            <th class="text-center">Precio unitario</th>
-                                            <th class="text-center">Cantidad</th>
-                                            <th class="text-center">Subtotal</th>
-                                            <th class="text-center"></th>
-                                        </tr>
-                                        </thead>
-                                            <tbody>
-                                                <tr v-for="(detail, index) in sale.details" :key="detail.id">
-                                                    <td class="text"></td>
-                                                    <td class="text" nowrap>
-                                                        <div class="widget-content p-0">
-                                                            <div class="widget-content-wrapper">
-                                                                <div class="widget-content-left mr-3">
-                                                                    <div class="widget-content-left">
-                                                                        <img width="40" 
-                                                                        :src="detail.product_photo ? APP_URL + detail.product_photo : require('../../../assets/product.png') "
-                                                                        alt="" class="rounded-circle">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="widget-content-left flex2">
-                                                                    <div class="">{{ detail.product_name }}</div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </td>
-                                                    <td class="text-center">${{ convertMoney(detail.price_unit) }}</td>
-                                                    <td class="text-center">
-                                                        <input type="number" class="form-control" v-model="detail.quantity">
-                                                    </td>
-                                                    <td class="text-center">${{ convertMoney(detail.quantity * detail.price_unit) }}</td>
-                                                    <td class="text-center" nowrap>
-                                                        <button type="button" @click="deleteProductSaleDetails(index)"
-                                                            class="btn btn-danger btn-sm">
-                                                            <i class="fa fa-trash-alt"></i> 
-                                                        </button>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="text"></td>
-                                                    <td class="text" nowrap></td>
-                                                    <td class="text-center"></td>
-                                                    <td class="text-center"><strong>Total</strong></td>
-                                                    <td class="text-center">${{ total }}</td>
-                                                    <td class="text-center" nowrap>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <a href="#" :class="{'mt-1 btn btn-secondary mr-1': true, disabled: saving}" @click.prevent="$router.push({ name: 'sales.index' })">
-                            <i class="fa fa-undo"></i> Atrás
-                        </a>
-                        <button class="mt-1 btn btn-primary" :disabled="saving" @click="save">
-                            <div class="spinner-border spinner-border-sm" role="status" v-if="saving">
-                                <span class="sr-only">Loading...</span>
-                            </div>
-                            <i class="fa fa-save" v-else></i> Guardar
-                        </button>
                     </div>
                 </div>
             </div>
         </div>
-        <!--Fin contenido-->
     </div>
 </template>
 <script>

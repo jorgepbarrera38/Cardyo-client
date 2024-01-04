@@ -1,128 +1,127 @@
 <template>
-    <div class="app-main__inner">
-        <!--Titulo página-->
-        <PageTitle title="Reportes" icon="pe-7s-news-paper" subtitle=""/>     
-        <!--Fin titulo página-->
-        <!--Contenido-->
-        <div class="row">
-            <div class="col-md-3">
-                <div class="main-card mb-3 card">
-                        <div class="card-header">Reporte de ajustes de inventario</div>
-                    <div class="card-body">
-                            <div class="alert alert-danger fade show" role="alert" v-if="errors">
-                                <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Fecha inicial</label>
-                                <input type="date" v-model="dates.dateInitial"
-                                    class="mr-2 form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Fecha final</label>
-                                <input type="date" v-model="dates.dateFinal"
-                                    class="mr-2 form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Tipo</label>
-                                <select class="form-control" v-model="dates.type">
-                                    <option value="summarized">Resumido</option>
-                                    <option value="detailed">Detallado</option>
-                                </select>
-                            </div>
-                            <button type="submit" class="btn btn-primary" :disabled="searching" @click="getInventoryTweaks(1, true)">
-                                 <div class="spinner-border spinner-border-sm" role="status" v-if="searching">
-                                    <span class="sr-only">Loading...</span>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Reporte de ajustes de inventario</h3>
+                        </div>
+                        <div class="card-body">
+                                <div class="alert alert-danger fade show" role="alert" v-if="errors">
+                                    <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
                                 </div>
-                                <i class="fa fa-search" v-else></i> {{ searching ? 'Buscando' : 'Buscar' }}
-                            </button>
+                                <div class="form-group">
+                                    <label for="">Fecha inicial</label>
+                                    <input type="date" v-model="dates.dateInitial"
+                                        class="mr-2 form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Fecha final</label>
+                                    <input type="date" v-model="dates.dateFinal"
+                                        class="mr-2 form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Tipo</label>
+                                    <select class="form-control" v-model="dates.type">
+                                        <option value="summarized">Resumido</option>
+                                        <option value="detailed">Detallado</option>
+                                    </select>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-sm" :disabled="searching" @click="getInventoryTweaks(1, true)">
+                                    <div class="spinner-border spinner-border-sm" role="status" v-if="searching">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <i class="fa fa-search" v-else></i> {{ searching ? 'Buscando' : 'Buscar' }}
+                                </button>
 
-                    </div>
-                </div>
-            </div> 
-            <div class="col-md-9">
-                <div class="main-card mb-3 card" v-if="dates2.type == 'summarized'">
-                    <div class="card-header">
-                        Resultados - Total registros: {{ inventoryTweaks.total ? inventoryTweaks.total : 0 }}
-                        <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" :disabled="exporting ||  !inventoryTweaks.total"
-                                @click="exportInExcel">
-                                <div class="spinner-border spinner-border-sm" role="status" v-if="exporting">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-                                <i class="fa fa-file-excel" v-else></i> Exportar
-                            </button>
                         </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Consecutivo</th>
-                                <th>Fecha</th>
-                                <th>Tipo</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(inventoryTweak, index) in inventoryTweaks.data" :key="inventoryTweak.id">
-                                    <td class="text"></td>
-                                    <td class="text" nowrap>{{ inventoryTweak.id }}</td>
-                                    <td class="text" nowrap>{{ dateWithHour(inventoryTweak.created_at) }}</td>
-                                    <td class="text" nowrap>{{ inventoryTweak.type }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="d-block text-center card-footer">
-                      <pagination :limit="1" :data="inventoryTweaks" @pagination-change-page="getInventoryTweaks"></pagination>
-                    </div>
-                </div>
-                <div class="main-card mb-3 card" v-else>
-                    <div class="card-header">
-                        Resultados - Total registros: {{ inventoryTweaks.total ? inventoryTweaks.total : 0 }}
-                        <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" :disabled="exporting ||  !inventoryTweaks.total"
-                                @click="exportInExcel">
-                                <div class="spinner-border spinner-border-sm" role="status" v-if="exporting">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-                                <i class="fa fa-file-excel" v-else></i> Exportar
-                            </button>
+                </div> 
+                <div class="col-md-9">
+                    <div class="card" v-if="dates2.type == 'summarized'">
+                        <div class="card-header">
+                            <h3 class="card-title">Resultados - Total registros: {{ inventoryTweaks.total ? inventoryTweaks.total : 0 }}</h3>
+                            <div class="card-tools">
+                                <button class="active btn btn-success btn-sm" :disabled="exporting ||  !inventoryTweaks.total"
+                                    @click="exportInExcel">
+                                    <div class="spinner-border spinner-border-sm" role="status" v-if="exporting">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <i class="fa fa-file-excel" v-else></i> Exportar
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Consecutivo</th>
-                                <th>Fecha</th>
-                                <th>Tipo</th>
-                                <th>Producto</th>
-                                <th>Cantidad</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <template v-for="inventoryTweak in inventoryTweaks.data">
-                                    <tr v-for="inventoryTweakDetail in inventoryTweak.tweak_details" :key="inventoryTweakDetail.id">
-                                        <td class="text"></td>
-                                        <td class="text" nowrap>{{ inventoryTweak.id }}</td>
-                                        <td class="text" nowrap>{{ dateWithHour(inventoryTweak.created_at) }}</td>
-                                        <td class="text" nowrap>{{ inventoryTweak.type }}</td>
-                                        <td class="text" nowrap>{{ inventoryTweakDetail.product.name }}</td>
-                                        <td class="text" nowrap>{{ inventoryTweakDetail.quantity }}</td>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Consecutivo</th>
+                                        <th>Fecha</th>
+                                        <th>Tipo</th>
                                     </tr>
-                                </template>
-                            </tbody>
-                        </table>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(inventoryTweak, index) in inventoryTweaks.data" :key="inventoryTweak.id">
+                                            <td nowrap>{{ inventoryTweak.id }}</td>
+                                            <td nowrap>{{ dateWithHour(inventoryTweak.created_at) }}</td>
+                                            <td nowrap>{{ inventoryTweak.type }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-block text-center card-footer">
+                                <pagination :limit="1" :data="inventoryTweaks" @pagination-change-page="getInventoryTweaks"></pagination>
+                            </div>
+                        </div>
                     </div>
-                    <div class="d-block text-center card-footer">
-                      <pagination :limit="1" :data="inventoryTweaks" @pagination-change-page="getInventoryTweaks"></pagination>
+                    <div class="card" v-else>
+                        <div class="card-header">
+                            <h3 class="card-title">Resultados - Total registros: {{ inventoryTweaks.total ? inventoryTweaks.total : 0 }}</h3>
+                            <div class="card-tools">
+                                <button class="active btn btn-success btn-sm" :disabled="exporting ||  !inventoryTweaks.total"
+                                    @click="exportInExcel">
+                                    <div class="spinner-border spinner-border-sm" role="status" v-if="exporting">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <i class="fa fa-file-excel" v-else></i> Exportar
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Consecutivo</th>
+                                        <th>Fecha</th>
+                                        <th>Tipo</th>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template v-for="inventoryTweak in inventoryTweaks.data">
+                                            <tr v-for="inventoryTweakDetail in inventoryTweak.tweak_details" :key="inventoryTweakDetail.id">
+                                                <td nowrap>{{ inventoryTweak.id }}</td>
+                                                <td nowrap>{{ dateWithHour(inventoryTweak.created_at) }}</td>
+                                                <td nowrap>{{ inventoryTweak.type }}</td>
+                                                <td nowrap>{{ inventoryTweakDetail.product.name }}</td>
+                                                <td nowrap>{{ inventoryTweakDetail.quantity }}</td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-block text-center card-footer">
+                                <pagination :limit="1" :data="inventoryTweaks" @pagination-change-page="getInventoryTweaks"></pagination>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>           
+                </div>           
+            </div>
         </div>
-        <!--Fin contenido-->
     </div>
 </template>
 <script>

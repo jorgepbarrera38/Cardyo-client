@@ -1,143 +1,144 @@
 <template>
-    <div class="app-main__inner">
-        <!--Titulo página-->
-        <PageTitle title="Reportes" icon="pe-7s-news-paper" subtitle=""/>     
-        <!--Fin titulo página-->
-        <!--Contenido-->
-        <div class="row">
-            <div class="col-md-3">
-                <div class="main-card mb-3 card">
-                        <div class="card-header">Reporte de ventas</div>
-                    <div class="card-body">
-                            <div class="alert alert-danger fade show" role="alert" v-if="errors">
-                                <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Fecha inicial</label>
-                                <input type="date" v-model="dates.dateInitial"
-                                    class="mr-2 form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Fecha final</label>
-                                <input type="date" v-model="dates.dateFinal"
-                                    class="mr-2 form-control" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Tipo</label>
-                                <select class="form-control" v-model="dates.type">
-                                    <option value="summarized">Resumido</option>
-                                    <option value="detailed">Detallado</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="">Incluír anuladas</label>
-                                <input type="checkbox" v-model="dates.status"
-                                    class="ml-2" required>
-                            </div>
-                            <button type="submit" class="btn btn-primary" :disabled="searching" @click="getSales(1, true)">
-                                 <div class="spinner-border spinner-border-sm" role="status" v-if="searching">
-                                    <span class="sr-only">Loading...</span>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Reporte de ventas</h3>
+                        </div>
+                        <div class="card-body">
+                                <div class="alert alert-danger fade show" role="alert" v-if="errors">
+                                    <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
                                 </div>
-                                <i class="fa fa-search" v-else></i> {{ searching ? 'Buscando' : 'Buscar' }}
-                            </button>
+                                <div class="form-group">
+                                    <label for="">Fecha inicial</label>
+                                    <input type="date" v-model="dates.dateInitial"
+                                        class="mr-2 form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Fecha final</label>
+                                    <input type="date" v-model="dates.dateFinal"
+                                        class="mr-2 form-control" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Tipo</label>
+                                    <select class="form-control" v-model="dates.type">
+                                        <option value="summarized">Resumido</option>
+                                        <option value="detailed">Detallado</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="">Incluír anuladas</label>
+                                    <input type="checkbox" v-model="dates.status"
+                                        class="ml-2" required>
+                                </div>
+                                <button type="submit" class="btn btn-primary btn-sm" :disabled="searching" @click="getSales(1, true)">
+                                    <div class="spinner-border spinner-border-sm" role="status" v-if="searching">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <i class="fa fa-search" v-else></i> {{ searching ? 'Buscando' : 'Buscar' }}
+                                </button>
 
-                    </div>
-                </div>
-            </div> 
-            <div class="col-md-9">
-                <div class="main-card mb-3 card" v-if="dates2.type == 'summarized'">
-                    <div class="card-header">
-                        Resultados - Total registros: {{ sales.total ? sales.total : 0 }}
-                        <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" :disabled="exporting ||  !sales.total"
-                                @click="exportInExcel">
-                                <div class="spinner-border spinner-border-sm" role="status" v-if="exporting">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-                                <i class="fa fa-file-excel" v-else></i> Exportar
-                            </button>
                         </div>
                     </div>
-                    <div class="table-responsive">
-                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Consecutivo</th>
-                                <th>Fecha</th>
-                                <th>Cliente</th>
-                                <th>Estado</th>
-                                <th>Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <tr v-for="(sale, index) in sales.data" :key="sale.id">
-                                    <td class="text"></td>
-                                    <td class="text" nowrap>{{ sale.id }}</td>
-                                    <td class="text" nowrap>{{ dateWithHour(sale.created_at) }}</td>
-                                    <td class="text" nowrap>{{ sale.client.identification + ' - ' + sale.client.full_names }}</td>
-                                    <td class="text" nowrap>{{ sale.status }}</td>
-                                    <td class="text" nowrap>${{ convertMoney(sale.total) }}</td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <div class="d-block text-center card-footer">
-                      <pagination :limit="1" :data="sales" @pagination-change-page="getSales"></pagination>
-                    </div>
-                </div>
-                <div class="main-card mb-3 card" v-else>
-                    <div class="card-header">
-                        Resultados - Total registros: {{ sales.total ? sales.total : 0 }}
-                        <div class="btn-actions-pane-right">
-                            <button class="active btn btn-success" :disabled="exporting ||  !sales.total"
-                                @click="exportInExcel">
-                                <div class="spinner-border spinner-border-sm" role="status" v-if="exporting">
-                                    <span class="sr-only">Loading...</span>
-                                </div>
-                                <i class="fa fa-file-excel" v-else></i> Exportar
-                            </button>
+                </div> 
+                <div class="col-md-9">
+                    <div class="card" v-if="dates2.type == 'summarized'">
+                        <div class="card-header">
+                            <h3 class="card-title">Resultados - Total registros: {{ sales.total ? sales.total : 0 }}</h3>
+                            <div class="card-tools">
+                                <button class="active btn btn-success btn-sm" :disabled="exporting ||  !sales.total"
+                                    @click="exportInExcel">
+                                    <div class="spinner-border spinner-border-sm" role="status" v-if="exporting">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <i class="fa fa-file-excel" v-else></i> Exportar
+                                </button>
+                            </div>
                         </div>
-                    </div>
-                    <div class="table-responsive">
-                        <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-                            <thead>
-                            <tr>
-                                <th></th>
-                                <th>Consecutivo</th>
-                                <th>Fecha</th>
-                                <th>Cliente</th>
-                                <th>Estado</th>
-                                <th>Producto</th>
-                                <th>Cantidad</th>
-                                <th>Precio unitario</th>
-                                <th>Total</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                                <template v-for="sale in sales.data">
-                                    <tr v-for="saleDetail in sale.sale_details" :key="sale.id">
-                                        <td class="text"></td>
-                                        <td class="text" nowrap>{{ sale.id }}</td>
-                                        <td class="text" nowrap>{{ dateWithHour(sale.created_at) }}</td>
-                                        <td class="text" nowrap>{{ sale.client.identification + ' - ' + sale.client.full_names }}</td>
-                                        <td class="text" nowrap>{{ sale.status }}</td>
-                                        <td class="text" nowrap>{{ saleDetail.product_name }}</td>
-                                        <td class="text" nowrap>{{ saleDetail.quantity }}</td>
-                                        <td class="text" nowrap>${{ convertMoney(saleDetail.price_unit) }}</td>
-                                        <td class="text" nowrap>${{ convertMoney(saleDetail.price_total) }}</td>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Consecutivo</th>
+                                        <th>Fecha</th>
+                                        <th>Cliente</th>
+                                        <th>Estado</th>
+                                        <th>Total</th>
                                     </tr>
-                                </template>
-                            </tbody>
-                        </table>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(sale, index) in sales.data" :key="sale.id">
+                                            <td nowrap>{{ sale.id }}</td>
+                                            <td nowrap>{{ dateWithHour(sale.created_at) }}</td>
+                                            <td nowrap>{{ sale.client.identification + ' - ' + sale.client.full_names }}</td>
+                                            <td nowrap>{{ sale.status }}</td>
+                                            <td nowrap>${{ convertMoney(sale.total) }}</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-block text-center card-footer">
+                                <pagination :limit="1" :data="sales" @pagination-change-page="getSales"></pagination>
+                            </div>
+                        </div>
                     </div>
-                    <div class="d-block text-center card-footer">
-                      <pagination :limit="1" :data="sales" @pagination-change-page="getSales"></pagination>
+                    <div class="card" v-else>
+                        <div class="card-header">
+                            <h3 class="card-title">
+                                <h3 class="card-title">Resultados - Total registros: {{ sales.total ? sales.total : 0 }}</h3>
+                            </h3>
+                            <div class="card-tools">
+                                <button class="active btn btn-success btn-sm" :disabled="exporting ||  !sales.total"
+                                    @click="exportInExcel">
+                                    <div class="spinner-border spinner-border-sm" role="status" v-if="exporting">
+                                        <span class="sr-only">Loading...</span>
+                                    </div>
+                                    <i class="fa fa-file-excel" v-else></i> Exportar
+                                </button>
+                            </div>
+                        </div>
+                        <div class="card-body p-0">
+                            <div class="table-responsive">
+                                <table class="table table-sm table-hover">
+                                    <thead>
+                                    <tr>
+                                        <th>Consecutivo</th>
+                                        <th>Fecha</th>
+                                        <th>Cliente</th>
+                                        <th>Estado</th>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio unitario</th>
+                                        <th>Total</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <template v-for="sale in sales.data">
+                                            <tr v-for="saleDetail in sale.sale_details" :key="sale.id">
+                                                <td nowrap>{{ sale.id }}</td>
+                                                <td nowrap>{{ dateWithHour(sale.created_at) }}</td>
+                                                <td nowrap>{{ sale.client.identification + ' - ' + sale.client.full_names }}</td>
+                                                <td nowrap>{{ sale.status }}</td>
+                                                <td nowrap>{{ saleDetail.product_name }}</td>
+                                                <td nowrap>{{ saleDetail.quantity }}</td>
+                                                <td nowrap>${{ convertMoney(saleDetail.price_unit) }}</td>
+                                                <td nowrap>${{ convertMoney(saleDetail.price_total) }}</td>
+                                            </tr>
+                                        </template>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="d-block text-center card-footer">
+                                <pagination :limit="1" :data="sales" @pagination-change-page="getSales"></pagination>
+                            </div>
+                        </div>
                     </div>
-                </div>
-            </div>           
+                </div>           
+            </div>
         </div>
-        <!--Fin contenido-->
     </div>
 </template>
 <script>

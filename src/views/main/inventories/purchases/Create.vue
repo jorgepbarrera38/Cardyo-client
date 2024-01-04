@@ -1,143 +1,127 @@
 <template>
-    <div class="app-main__inner">
-        <!--Titulo página-->
-        <PageTitle title="Compras" icon="pe-7s-ticket" subtitle=""/>     
-        <!--Fin titulo página-->
-        <!--Contenido-->
-        <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="main-card mb-3 card">
-                    <div class="card-header">
-                        Nueva compra
-                    </div>
-                    <div class="card-body">
-                        <div class="alert alert-danger fade show" role="alert" v-if="errors">
-                            <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
+    <div class="content">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <h3 class="card-title">Nueva compra</h3>
                         </div>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="position-relative form-group">
-                                    <label for="" class="">Proveedor (*)</label>
-                                    <v-select :options="providers" label="fullName" 
-                                        :reduce="provider => provider.id"
-                                        v-model="purchase.inventory_provider_id"></v-select>
+                        <div class="card-body">
+                            <div class="alert alert-danger fade show" role="alert" v-if="errors">
+                                <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="position-relative form-group">
+                                        <label for="" class="">Proveedor (*)</label>
+                                        <v-select :options="providers" label="fullName" 
+                                            :reduce="provider => provider.id"
+                                            v-model="purchase.inventory_provider_id"></v-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="position-relative form-group">
+                                        <label for="" class="">Factura (*)</label>
+                                        <input type="text" class="form-control" v-model="purchase.bill" maxlength="30">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="position-relative form-group">
+                                        <label for="" class="">Fecha factura (*)</label>
+                                        <input type="date" class="form-control" v-model="purchase.date_bill">
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="position-relative form-group">
+                                        <label for="" class="">Observaciónes (*)</label>
+                                        <textarea rows="3" class="form-control" v-model="purchase.observations"></textarea>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="position-relative form-group">
-                                    <label for="" class="">Factura (*)</label>
-                                    <input type="text" class="form-control" v-model="purchase.bill" maxlength="30">
+                            <hr>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="position-relative form-group">
+                                        <label for="" class="">Producto (*)</label>
+                                        <v-select :options="products" label="name" v-model="productToAdd.product"></v-select>
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="position-relative form-group">
+                                        <label for="" class="">Cantidad (*)</label>
+                                        <input type="number" class="form-control" v-model="productToAdd.quantity">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="position-relative form-group">
+                                        <label for="" class="">Precio unitario (*)</label>
+                                        <input type="number" class="form-control" v-model="productToAdd.price_unit">
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="position-relative form-group">
-                                    <label for="" class="">Fecha factura (*)</label>
-                                    <input type="date" class="form-control" v-model="purchase.date_bill">
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="position-relative form-group">
-                                    <label for="" class="">Observaciónes (*)</label>
-                                    <textarea rows="3" class="form-control" v-model="purchase.observations"></textarea>
-                                </div>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row">
-                            <div class="col-md-4">
-                                <div class="position-relative form-group">
-                                    <label for="" class="">Producto (*)</label>
-                                    <v-select :options="products" label="name" v-model="productToAdd.product"></v-select>
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="position-relative form-group">
-                                    <label for="" class="">Cantidad (*)</label>
-                                    <input type="number" class="form-control" v-model="productToAdd.quantity">
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <div class="position-relative form-group">
-                                    <label for="" class="">Precio unitario (*)</label>
-                                    <input type="number" class="form-control" v-model="productToAdd.price_unit">
-                                </div>
-                            </div>
-                        </div>
-                        <button class="mt-1 btn btn-success" @click="addProductToDetail">
-                            <i class="fa fa-plus"></i> Agregar
-                        </button>
-                        <hr>
-                        <div class="table-responsive">
-                            <table class="align-middle mb-0 table table-borderless table-striped table-hover">
-                                <thead>
-                                <tr>
-                                    <th></th>
-                                    <th>Producto</th>
-                                    <th>Cantidad</th>
-                                    <th>Precio unitario</th>
-                                    <th>Total</th>
-                                    <th class="text-center"></th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                    <tr v-for="(detail, index) in purchase.details" :key="'detail-' + index">
-                                        <td class="text"></td>
-                                        <td class="text" nowrap>
-                                            <div class="widget-content p-0">
-                                                <div class="widget-content-wrapper">
-                                                    <div class="widget-content-left mr-3">
-                                                        <div class="widget-content-left">
-                                                            <img width="40" 
-                                                            :src="detail.inventory_product_photo ? APP_URL + detail.inventory_product_photo : require('../../../../assets/product.png') "
-                                                            alt="" class="rounded-circle">
-                                                        </div>
-                                                    </div>
-                                                    <div class="widget-content-left flex2">
-                                                        <div class="">{{ detail.inventory_product_name }}</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </td>
-                                        <td class="text" nowrap>
-                                            <input type="number" class="form-control" v-model="detail.quantity">
-                                        </td>
-                                        <td class="text" nowrap>
-                                            <input type="number" class="form-control" v-model="detail.price_unit">
-                                        </td>
-                                        <td class="text" nowrap>{{ convertMoney(detail.quantity * detail.price_unit) }}</td>
-                                        <td class="text-center" nowrap>
-                                            <button type="button" @click="deleteProductFromDetail(index)" class="btn btn-danger btn-sm">
-                                                <i class="fa fa-trash-alt"></i> 
-                                            </button>
-                                        </td>
-                                    </tr>
+                            <button class="mt-1 btn btn-primary btn-sm" @click="addProductToDetail">
+                                <i class="fa fa-plus"></i> Agregar
+                            </button>
+                            <hr>
+                            <div class="table-responsive">
+                                <table class="align-middle mb-0 table table-borderless table-striped table-hover">
+                                    <thead>
                                     <tr>
-                                        <td class="text"></td>
-                                        <td class="text" nowrap></td>
-                                        <td class="text-center"></td>
-                                        <td class="text-center"><strong>Total</strong></td>
-                                        <td class="text-center">{{ total }}</td>
-                                        <td class="text-center" nowrap>
-                                        </td>
+                                        <th>Producto</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio unitario</th>
+                                        <th>Total</th>
+                                        <th></th>
                                     </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <hr>
-                        <a href="#" :class="{'mt-1 btn btn-secondary mr-1': true, disabled: saving}" @click.prevent="$router.push({ name: 'inventory-purchases.index' })">
-                            <i class="fa fa-undo"></i> Atrás
-                        </a>
-                        <button class="mt-1 btn btn-primary" :disabled="saving" @click="save">
-                            <div class="spinner-border spinner-border-sm" role="status" v-if="saving">
-                                <span class="sr-only">Loading...</span>
+                                    </thead>
+                                    <tbody>
+                                        <tr v-for="(detail, index) in purchase.details" :key="'detail-' + index">
+                                            <td class="text" nowrap>
+                                                <img width="40" 
+                                                :src="detail.inventory_product_photo ? APP_URL + detail.inventory_product_photo : require('../../../../assets/product.png') "
+                                                alt="" class="rounded-circle">
+                                                {{ detail.inventory_product_name }}
+                                            </td>
+                                            <td class="text" nowrap>
+                                                <input type="number" class="form-control" v-model="detail.quantity">
+                                            </td>
+                                            <td class="text" nowrap>
+                                                <input type="number" class="form-control" v-model="detail.price_unit">
+                                            </td>
+                                            <td class="text" nowrap>{{ convertMoney(detail.quantity * detail.price_unit) }}</td>
+                                            <td class="text-center" nowrap>
+                                                <button type="button" @click="deleteProductFromDetail(index)" class="btn btn-danger btn-sm">
+                                                    <i class="fa fa-trash-alt"></i> 
+                                                </button>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td></td>
+                                            <td nowrap></td>
+                                            <td><strong>Total</strong></td>
+                                            <td>{{ total }}</td>
+                                            <td></td>
+                                            <td></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
-                            <i class="fa fa-save" v-else></i> Guardar
-                        </button>
+                            <hr>
+                            <a href="#" :class="{'mt-1 btn btn-secondary btn-sm mr-1': true, disabled: saving}" @click.prevent="$router.push({ name: 'inventory-purchases.index' })">
+                                <i class="fa fa-undo"></i> Atrás
+                            </a>
+                            <button class="mt-1 btn btn-primary btn-sm" :disabled="saving" @click="save">
+                                <div class="spinner-border spinner-border-sm" role="status" v-if="saving">
+                                    <span class="sr-only">Loading...</span>
+                                </div>
+                                <i class="fa fa-save" v-else></i> Guardar
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>
         </div>
-        <!--Fin contenido-->
     </div>
 </template>
 <script>

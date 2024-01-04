@@ -1,13 +1,13 @@
 <template>
-    <div class="app-main__inner">
-        <!--Titulo página-->
-        <PageTitle title="Productos" icon="pe-7s-plugin" subtitle=""/>     
-        <!--Fin titulo página-->
-        <!--Contenido-->
+    <div class="content">
+        <div class="container-fluid">
         <div class="row">
-            <div class="col-md-12 col-lg-12">
-                <div class="main-card mb-3 card">
-                    <div class="card-body"><h5 class="card-title">Editar producto</h5>
+            <div class="col-lg-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h3 class="card-title">Editar producto</h3>
+                    </div>
+                    <div class="card-body">
                         <div class="alert alert-danger fade show" role="alert" v-if="errors">
                             <li v-for="(error, index) in errors" :key="'errors-' + index">{{ error[0] }}</li>
                         </div>
@@ -69,10 +69,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <a href="#" :class="{'mt-1 btn btn-secondary mr-1': true, disabled: saving}" @click.prevent="$router.push({ name: 'inventory-products.index' })">
+                            <a href="#" :class="{'mt-1 btn btn-secondary btn-sm mr-1': true, disabled: saving}" @click.prevent="$router.push({ name: 'inventory-products.index' })">
                                 <i class="fa fa-undo"></i> Atrás
                             </a>
-                            <button class="mt-1 btn btn-primary" :disabled="saving">
+                            <button class="mt-1 btn btn-primary btn-sm" :disabled="saving">
                                 <div class="spinner-border spinner-border-sm" role="status" v-if="saving">
                                     <span class="sr-only">Loading...</span>
                                 </div>
@@ -83,7 +83,7 @@
                 </div>
             </div>
         </div>
-        <!--Fin contenido-->
+        </div>
     </div>
 </template>
 <script>
