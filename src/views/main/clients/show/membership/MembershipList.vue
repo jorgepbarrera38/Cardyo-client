@@ -86,8 +86,8 @@
         <div class="main-card mb-3 card">
                 <div class="card-header">
                     Asistencias
-                    <div class="btn-actions-pane-right">
-                        <button class="active btn btn-danger" @click="showAssistancesFromMembership = false">
+                    <div class="card-tools">
+                        <button class="active btn btn-danger btn-sm" @click="showAssistancesFromMembership = false">
                             <i class="fa fa-undo"></i> Cerrar
                         </button>
                     </div>
